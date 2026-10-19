@@ -1,0 +1,55 @@
+/* The other section labs reuse the pilot's step/navigation language while
+   keeping each section's own diagram and model controls. */
+.deep-lab-open { background: #f6f4ee; }
+.deep-lab-open .intro, .deep-lab-open .rail { display: none; }
+.deep-lab-open .layout { grid-template-columns: minmax(0, 1fr); }
+.deep-lab-open.lab-map-open .layout { grid-template-columns: 260px minmax(0, 1fr); }
+.deep-lab-open.lab-map-open .rail { display: block; }
+.deep-lab-open .lesson-head { margin: 18px 0 10px; }
+.deep-lab-open:not([data-deep-mode="notes"]):not([data-deep-mode="quiz"]) .lesson-head { display: none; }
+.deep-lab-open .lesson-head .goals, .deep-lab-open .lesson-overview { display: none; }
+#deep-lab { --lab-dark: #142333; --lab-ink: #21352b; --lab-green: #d3f583; --lab-line: #d6ddce; color: var(--lab-ink); }
+#deep-lab button { min-height: 44px; border-radius: 9px; font-size: 14px; }
+#deep-lab button:focus-visible, #deep-lab summary:focus-visible { outline: 3px solid #c06b1b; outline-offset: 3px; }
+#deep-lab .lab-tab { padding: 9px 18px; border: 1px solid transparent; background: transparent; color: #506050; }
+#deep-lab .lab-tab[aria-pressed="true"] { background: #253e2e; color: #f1f7df; }
+#deep-lab .lab-step { border: 1px solid #d8dece; background: #efefe6; color: #57604c; padding: 8px 5px; border-radius: 6px; font-size: 12px; line-height: 1.4; }
+#deep-lab .lab-step[aria-current] { border-color: #354a28; background: #e2efc5; color: #23351c; box-shadow: inset 0 -3px #617e35; font-weight: 800; }
+#deep-lab .lab-button { border: 1px solid #c2cdb5; background: #f9faf3; color: #34472c; padding: 10px 15px; font-weight: 700; }
+#deep-lab .lab-primary { background: #d3f583; border-color: #a3c75d; color: #253a16; }
+#deep-lab .lab-choice { color: #30402b; border: 1px solid #c7d0be; background: #fffef8; padding: 11px 14px; text-align: left; line-height: 1.6; }
+#deep-lab .lab-choice[aria-pressed="true"] { border: 2px solid #446126; background: #eaf4d6; padding: 10px 13px; font-weight: 700; }
+#deep-lab .lab-text-button { border: 0; background: transparent; color: #536641; text-decoration: underline; text-underline-offset: 4px; padding: 8px 3px; font-size: 13px; }
+#deep-lab .lab-bench { grid-template-columns: minmax(0, 1.5fr) minmax(320px, 1fr); }
+#deep-lab .lab-scene { position: relative; }
+#deep-lab .lab-scene-head { padding-bottom: 12px; color: #b3d885; }
+#deep-lab .lab-scene .stage { display: flex; flex-direction: column; margin: 0; border-radius: 0; box-shadow: none; background: transparent; flex: 1; }
+#deep-lab .stage .scene { flex: 0 0 auto; }
+#deep-lab .stage canvas { height: 310px; }
+#deep-lab .stage-controls { border-left: 0; border-top: 1px solid #35546c; padding: 15px 20px; }
+#deep-lab .stage-controls h3 { margin: 3px 0 12px; }
+#deep-lab .stage figcaption { padding: 10px 20px; }
+#deep-lab .lab-task { background: #fffdf5; }
+.deep-presets, .deep-symbols { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
+#deep-lab .deep-symbols .lab-choice { min-width: 60px; text-align: center; }
+#deep-lab .lab-equation { font-size: clamp(14px, 1.7vw, 19px); }
+.deep-scene-cover { position: absolute; z-index: 2; inset: 45px 0 0; display: grid; place-items: center; padding: 25px; text-align: center; color: #f5f7e4; background: #142333f2; font-size: 18px; line-height: 1.8; }
+#deep-lab .lab-model { padding-bottom: 15px; }
+@media (max-width: 1100px) {
+  .deep-lab-open.lab-map-open .layout { grid-template-columns: minmax(0, 1fr); }
+  .deep-lab-open.lab-map-open .rail { position: static; max-height: 360px; }
+  #deep-lab .lab-bench { grid-template-columns: minmax(0, 1.15fr) minmax(290px, 1fr); }
+}
+@media (max-width: 760px) {
+  .deep-lab-open .shell { padding: 0 16px 35px; }
+  .deep-lab-open .top-note { display: none; }
+  #deep-lab .lab-bench { grid-template-columns: minmax(0, 1fr); }
+  #deep-lab .lab-steps { display: flex; overflow-x: auto; }
+  #deep-lab .lab-step { flex: 0 0 108px; }
+  #deep-lab .lab-tab { flex: 1 1 auto; padding: 9px 8px; font-size: 12px; }
+  #deep-lab .lab-mobile-mission { display: block; padding: 0 16px; color: #edf2df; }
+  #deep-lab .stage canvas { height: 230px; }
+  #deep-lab .lab-scene .stage { display: flex; }
+  #deep-lab .lab-task { padding: 22px; }
+  #deep-lab .lab-recap-flow { grid-template-columns: 1fr; }
+}
