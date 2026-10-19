@@ -26,14 +26,12 @@
     colors: {
       head: "#fffbe6",
       abdomen: "#e8ffb0",
-      abdomenCore: "#b8ff6a",
       trail: "#d8ff9e",
       interface: "#8fd8cf",
       fringe: "#e8ffb0",
       night: "#091524"
     },
     abdomenPulseRange: [0.35, 1],
-    glowTremorHz: 10,
     trailDotCount: 8,
     syncPeriod: 2,
     autoLoop: true,
@@ -53,6 +51,14 @@
   if (!ctx) return;
 
   const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const flyArtwork = new Image();
+  flyArtwork.onload = () => {
+    if (destroyed || !sprites) return;
+    sprites.body = makeFireflyBody();
+    if (reduceQuery.matches) drawStaticFrame();
+    else drawFrame(storyTime(elapsed));
+  };
+  flyArtwork.src = "firefly-mark.svg";
 
   let width = 1;
   let height = 1;
@@ -102,11 +108,12 @@
   }
 
   const TAU = Math.PI * 2;
+  const FLY_SCALE = 0.55;
   const phaseNames = Object.keys(CONFIG.phaseDurations);
   const pulsePeriods = [1.7, 0.9, 2.3, 1.2, 2.0];
   const pathNow = {};
   const motion = { x: 0, y: 0, dir: lastDir, speed: 0 };
-  const mainFly = { m: motion, dir: lastDir, hover: 0, head: {}, abdomen: {} };
+  const mainFly = { m: motion, dir: lastDir, hover: 0, abdomen: {} };
   const abdomenState = { intensity: 1, shrink: 0 };
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -364,44 +371,11 @@
   }
 
   function makeFireflyBody() {
+    if (!flyArtwork.complete || !flyArtwork.naturalWidth) return null;
     const c = document.createElement("canvas");
-    c.width = 160;
-    c.height = 96;
-    const g = c.getContext("2d");
-    g.translate(80, 48);
-    g.scale(4, 4);
-    const shell = g.createLinearGradient(0, -5, 0, 5);
-    shell.addColorStop(0, "#739c80");
-    shell.addColorStop(0.24, "#304f4b");
-    shell.addColorStop(0.70, "#152a2c");
-    shell.addColorStop(1, "#08171e");
-    g.fillStyle = shell;
-    g.strokeStyle = "#a4ccb561";
-    g.lineWidth = 0.45;
-    g.beginPath(); g.ellipse(-4.6, 0, 6.2, 4.4, 0, 0, TAU); g.fill(); g.stroke();
-    g.save();
-    g.beginPath(); g.ellipse(-4.6, 0, 6.2, 4.4, 0, 0, TAU); g.clip();
-    g.strokeStyle = "#0c212d99";
-    g.lineWidth = 0.6;
-    [-8, -5, -2].forEach(x => {
-      g.beginPath(); g.ellipse(x, 0, 1.2, 4.5, 0, -Math.PI / 2, Math.PI / 2); g.stroke();
-    });
-    g.restore();
-    const thorax = g.createLinearGradient(0, -3, 0, 3);
-    thorax.addColorStop(0, "#658b77");
-    thorax.addColorStop(0.45, "#244239");
-    thorax.addColorStop(1, "#0a191d");
-    g.fillStyle = thorax;
-    g.beginPath(); g.ellipse(0.2, 0, 2.9, 3.0, 0, 0, TAU); g.fill();
-    const face = g.createRadialGradient(2.3, -1.6, 0, 3, 0, 4.5);
-    face.addColorStop(0, "#fffde7");
-    face.addColorStop(0.58, "#e9e6b8");
-    face.addColorStop(1, "#6b8563");
-    g.fillStyle = face;
-    g.beginPath(); g.ellipse(3, 0, 3.6, 3.25, 0, 0, TAU); g.fill();
-    g.strokeStyle = "#f1ffce80";
-    g.lineWidth = 0.45;
-    g.beginPath(); g.ellipse(-4.6, -0.7, 5.7, 3.2, 0, Math.PI * 1.1, Math.PI * 1.7); g.stroke();
+    c.width = 360;
+    c.height = 276;
+    c.getContext("2d").drawImage(flyArtwork, 0, 0, c.width, c.height);
     return c;
   }
 
@@ -879,91 +853,39 @@
     const dir = m.dir;
     const hover = clamp(1 - m.speed / 0.05, 0, 1);
     mainFly.hover = hover;
-    mainFly.head.x = px(m.x) + dir.x * 3.0 * unit;
-    mainFly.head.y = py(m.y) + dir.y * 3.0 * unit;
-    mainFly.abdomen.x = px(m.x) - dir.x * 4.6 * unit;
-    mainFly.abdomen.y = py(m.y) - dir.y * 4.6 * unit;
+    mainFly.abdomen.x = px(m.x) - (dir.x * 18 + dir.y * 3) * unit * FLY_SCALE;
+    mainFly.abdomen.y = py(m.y) - (dir.y * 18 - dir.x * 3) * unit * FLY_SCALE;
     return mainFly;
-  }
-
-  function drawHeadGlow(parts, scale, intensity, fade) {
-    drawSprite(sprites.head, parts.head.x, parts.head.y, 13 * unit * scale, intensity * 0.9 * fade);
-    ctx.globalAlpha = Math.min(1, intensity) * fade;
-    ctx.fillStyle = CONFIG.colors.head;
-    ctx.beginPath();
-    ctx.arc(parts.head.x, parts.head.y, 2.7 * unit, 0, TAU);
-    ctx.fill();
-  }
-
-  function drawAbdomenGlow(parts, scale, intensity, fade) {
-    drawSprite(sprites.abdomen, parts.abdomen.x, parts.abdomen.y, 21 * unit * scale, intensity * fade);
-    ctx.save();
-    ctx.globalAlpha = intensity * fade;
-    ctx.fillStyle = CONFIG.colors.abdomenCore;
-    ctx.translate(parts.abdomen.x, parts.abdomen.y);
-    ctx.rotate(Math.atan2(parts.dir.y, parts.dir.x));
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 4.7 * unit * scale, 3.2 * unit * scale, 0, 0, TAU);
-    ctx.fill();
-    ctx.globalAlpha = intensity * 0.75 * fade;
-    ctx.fillStyle = "#f4ffcf";
-    ctx.beginPath(); ctx.ellipse(-0.6 * unit, -0.8 * unit, 2.8 * unit * scale, 1.4 * unit * scale, -0.12, 0, TAU); ctx.fill();
-    ctx.restore();
   }
 
   function drawFirefly(t, fade, staticMode) {
     const parts = fireflyParts(t);
-    const tremorHz = CONFIG.glowTremorHz * (0.83 + clamp(parts.m.speed / 0.1, 0, 1) * 0.26);
-    const tremor = staticMode ? 1 : 1 + 0.03 * Math.sin(t * TAU * tremorHz);
     const light = staticMode ? { intensity: 0.95, shrink: 0 } : abdomenLight(t);
-    const abdomenScale = (1 + 0.14 * parts.hover) * (1 - light.shrink) * tremor;
-    const headScale = (1 + 0.06 * parts.hover) * tremor;
-    const headI = staticMode ? 1 : headLight(t);
+    const pulse = (1 - light.shrink) * (1 + 0.08 * parts.hover);
+    const flap = staticMode ? 0 : Math.sin(TAU * 11 * t);
 
     ctx.save();
-    ctx.globalAlpha = fade;
     ctx.translate(px(parts.m.x), py(parts.m.y));
     ctx.rotate(Math.atan2(parts.dir.y, parts.dir.x));
-    ctx.drawImage(sprites.body, -20 * unit, -12 * unit, 40 * unit, 24 * unit);
-    ctx.restore();
-    ctx.save();
-    drawHeadGlow(parts, headScale, headI, fade);
-    drawAbdomenGlow(parts, abdomenScale, light.intensity, fade);
-    ctx.restore();
-
-    let lookX = 0.55 * clamp(parts.m.speed / 0.08, 0, 1);
-    let lookY = 0;
-    if (t > 6.25 && t < 7.25) lookX = -1.1;
-    if (t < 1.45) lookX = 0.45 * Math.sin(t * 2.2);
-    if (t > 3.4 && t < 3.95) lookX = -0.45;
-    if (staticMode) lookX = 0.4;
-    const eyeGap = 1.25 * unit;
-    const eyeR = 0.92 * unit;
-    const ex = parts.head.x + lookX * unit;
-    const ey = parts.head.y + lookY * unit;
-    const proud = t > 4.58 && t < 5.08;
-
-    ctx.save();
-    ctx.globalAlpha = 0.78 * fade;
-    ctx.strokeStyle = "#0b1a18";
-    ctx.fillStyle = "#0b1a18";
-    if (proud && !staticMode) {
-      ctx.lineWidth = Math.max(0.9, 1.15 * unit);
-      [-1, 1].forEach((side) => {
-        ctx.beginPath();
-        ctx.arc(ex + side * eyeGap, ey + 1.1 * unit, 1.35 * unit, Math.PI * 1.08, Math.PI * 1.92);
-        ctx.stroke();
-      });
-    } else {
-      [-1, 1].forEach((side) => {
-        ctx.beginPath();
-        ctx.arc(ex + side * eyeGap, ey, eyeR, 0, TAU);
-        ctx.fill();
-        ctx.fillStyle = "#fffbe6";
-        ctx.beginPath(); ctx.arc(ex + side * eyeGap - 0.2 * unit, ey - 0.2 * unit, 0.22 * unit, 0, TAU); ctx.fill();
-        ctx.fillStyle = "#0b1a18";
-      });
+    ctx.scale(FLY_SCALE, FLY_SCALE);
+    drawSprite(sprites.abdomen, -18 * unit, 3 * unit, 24 * unit * pulse, light.intensity * 0.62 * fade);
+    if (!staticMode && sprites.body) {
+      ctx.globalAlpha = (0.2 + 0.1 * Math.abs(flap)) * fade;
+      ctx.fillStyle = "#b6e6d9";
+      ctx.strokeStyle = "#d5f6e7";
+      ctx.lineWidth = 0.65 * unit;
+      ctx.beginPath();
+      ctx.moveTo(5 * unit, -6 * unit);
+      ctx.quadraticCurveTo(-8 * unit, (-26 - flap * 3) * unit, -25 * unit, (-19 - flap * 4) * unit);
+      ctx.quadraticCurveTo(-18 * unit, -12 * unit, 5 * unit, -6 * unit);
+      ctx.fill(); ctx.stroke();
     }
+    if (sprites.body) {
+      ctx.globalAlpha = fade;
+      ctx.drawImage(sprites.body, -31 * unit, -24 * unit, 62 * unit, 48 * unit);
+    }
+    drawSprite(sprites.abdomen, -18 * unit, 3 * unit, 6 * unit * pulse, light.intensity * 0.26 * fade);
+    drawSprite(sprites.head, 17.5 * unit, -1.5 * unit, 5 * unit, headLight(t) * 0.12 * fade);
     ctx.restore();
   }
 
@@ -1222,6 +1144,7 @@
   function destroy() {
     if (destroyed) return;
     destroyed = true;
+    flyArtwork.onload = null;
     running = false;
     if (rafId) cancelAnimationFrame(rafId);
     rafId = 0;

@@ -16,15 +16,6 @@
   color: #a8c8c3;
 }
 
-.immersive-home .brand-symbol {
-  border-color: #c8efbd;
-}
-
-.immersive-home .brand-symbol::before,
-.immersive-home .brand-symbol::after {
-  border-color: #c8efbd;
-}
-
 .immersive-home .nav-course {
   border-color: #aacbb259;
   background: #16303180;

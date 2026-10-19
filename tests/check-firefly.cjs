@@ -16,6 +16,7 @@ const instrumented = source.replace("  window.FireflyHero = {", `
   window.__heroDebug = {
     pathAt, abdomenLight, headLight, storyTime, ROUTE,
     snapshot: () => ({ elapsed, running, paused, destroyed, width, height, sceneTop, sceneHeight, dpr,
+      artworkReady: !!sprites?.body,
       heading: { ...lastDir },
       trails: trail.length, activeTrail: trail.filter(dot => dot.active).length,
       branches: trail.filter(dot => dot.active && dot.branch >= 0).map(dot => dot.branch),
@@ -87,6 +88,7 @@ function installFrameDriver() {
     page.on("response", response => { if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
     page.on("requestfailed", request => errors.push(request.failure().errorText));
     await page.goto(base);
+    await page.waitForFunction(() => window.__heroDebug?.snapshot().artworkReady);
     await page.waitForTimeout(200); // Allow the resize observer's single debounced refresh.
     await page.evaluate(() => window.__frames.advance(0.05));
     return { context, page };
@@ -126,6 +128,7 @@ function installFrameDriver() {
       assert.equal(initial.radius, "0px");
       assert.ok(initial.bitmapPixels <= 4000000 + viewport.width + viewport.height);
       const snapshot = await state(page);
+      assert.equal(snapshot.artworkReady, true, "Detailed firefly sprite must be loaded before playback checks");
       assert.equal(snapshot.dpr, Math.min(2, Math.sqrt(4000000 / (viewport.width * viewport.height))));
       assert.equal(snapshot.trails, viewport.width < 768 ? 4 : 8);
       assert.equal(snapshot.moving, viewport.width < 768 ? 30 : 48);
