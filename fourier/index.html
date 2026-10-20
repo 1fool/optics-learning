@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>傅里叶光学 · 1.1–1.2</title>
+  <link rel="stylesheet" href="../course/optics-course/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="fourier-course/style.css">
+  <script defer src="../course/optics-course/vendor/katex/katex.min.js"></script>
+  <script defer src="fourier-course/lesson-data.js"></script>
+  <script defer src="fourier-course/guided-data.js"></script>
+  <script defer src="fourier-course/app.js"></script>
+  <script defer src="fourier-course/cover-physics.js"></script>
+  <script defer src="fourier-course/cover.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="傅里叶光学 / Fourier Optics"><span class="brand-symbol" aria-hidden="true">∿</span><span>傅里叶光学 <small>FOURIER OPTICS / VOL. 01</small></span></a>
+    <div class="top-actions"><a class="site-home-link" href="../">← 网站首页</a><span id="scope-label" class="scope">教材样章 · 1.1–1.2</span><button id="cover-open" type="button">开始页</button><button id="language" type="button" aria-label="切换语言 / Switch language">EN</button></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" aria-label="课程目录">
+      <div class="side-label">COURSE MAP / 课程地图</div>
+      <details open><summary id="chapter-label">第 1 章 · 傅里叶分析</summary>
+        <button type="button" class="lesson-link" data-lesson="1.1"></button>
+        <details open><summary id="section-label">1.2 · 脉冲函数</summary>
+          <button type="button" class="lesson-link nested" data-lesson="1.2.1"></button>
+          <button type="button" class="lesson-link nested" data-lesson="1.2.2"></button>
+        </details>
+      </details>
+      <div class="side-foot" id="side-foot"></div>
+    </aside>
+    <main id="main" tabindex="-1">
+      <div class="eyebrow" id="breadcrumb"></div>
+      <div class="lesson-head"><div><div id="lesson-kicker" class="kicker"></div><h1 id="lesson-title"></h1><p id="lesson-lead"></p></div><div class="page-stamp"><span id="page-label"></span><a id="source-link" target="_blank" rel="noopener"></a></div></div>
+      <nav id="views" class="view-tabs" aria-label="学习模式"></nav>
+      <div id="content"></div>
+      <div class="next-row"><button id="prev" type="button"></button><button id="next" type="button"></button></div>
+    </main>
+  </div>
+  <div class="quick-tools" aria-label="学习快捷工具">
+    <button id="quick-symbols" type="button" aria-label="本节符号" aria-haspopup="dialog" aria-controls="symbol-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2.5-1.5-5-1.5-8-1v13c3-.6 5.5-.5 8 1 2.5-1.5 5-1.6 8-1V5c-3-.5-5.5-.5-8 1Zm0 0v13M7 9h2m-2 3h2m6-3h2m-2 3h2"/></svg><span id="quick-symbols-label">本节符号</span></button>
+    <button id="back-to-top" type="button" aria-label="返回顶部" title="返回顶部" hidden><span aria-hidden="true">↑</span></button>
+  </div>
+  <dialog id="symbol-dialog" aria-labelledby="symbol-dialog-title">
+    <div class="symbol-heading"><div id="symbol-move" class="symbol-move" tabindex="0" role="group" aria-describedby="symbol-move-hint"><h2 id="symbol-dialog-title"></h2><small id="symbol-move-hint"></small></div><button id="close-symbols" type="button">关闭</button></div>
+    <p id="symbol-dialog-note"></p>
+    <div class="symbol-scroll"><table><thead><tr id="symbol-head"></tr></thead><tbody id="symbol-rows"></tbody></table></div>
+    <button id="resize-symbols" type="button" aria-label="调整符号卡片大小"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 19 19 7M13 19l6-6M19 19h-6"/></svg></button>
+  </dialog>
+  <dialog id="cover" class="cover" aria-label="傅里叶光学开场动画 / Fourier optics introduction">
+    <div class="cover-shell">
+      <canvas id="cover-canvas" width="960" height="540" role="img"></canvas>
+      <header class="cover-bar">
+        <div class="cover-brand"><span aria-hidden="true">∿</span><b>FOURIER / OPTICS</b><small id="cover-preview-label">应用预览</small></div>
+        <div class="cover-top-actions"><button id="cover-lang" type="button" aria-label="切换语言 / Switch language">EN</button><button id="cover-skip" type="button">跳过开场 →</button></div>
+      </header>
+      <div class="cover-visual-top"><strong id="cover-scene-name"></strong><span id="cover-scene-counter"></span></div>
+      <div class="cover-bottom">
+        <div class="cover-visual-bottom"><span id="cover-readout" aria-live="off"></span><div class="cover-controls"><button id="cover-play" type="button"></button><button id="cover-replay" type="button"></button><button id="cover-enter" type="button"></button></div></div>
+        <nav class="cover-chapters" id="cover-chapters" aria-label="动画时间点"></nav>
+        <div class="cover-sliders"><label for="cover-timeline"><span id="cover-timeline-label"></span><output id="cover-time" for="cover-timeline"></output><input id="cover-timeline" type="range" min="0" max="22000" step="100" value="0"></label></div>
+        <div class="cover-progress" aria-hidden="true"><span id="cover-progress"></span></div>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,98 @@
+// Original teaching text adapted from the local third edition; formulas and page ranges are checked against PDF 6–12.
+const pair = (zh, en) => ({ zh, en });
+const formula = (title, before, tex, after) => ({ title: pair(...title), before: pair(...before), tex, after: pair(...after) });
+const question = (id, stem, choices, answer, explanations) => ({ id, stem: pair(...stem), choices: choices.map(c => pair(...c)), answer, explanations: explanations.map(c => pair(...c)) });
+const symbol = (tex, meaning, unit, condition, control) => ({ tex, meaning: pair(...meaning), unit: pair(...unit), condition: pair(...condition), control });
+
+window.FourierLessons = [
+  {
+    id: "1.1", title: pair("一些常用函数", "Some useful functions"), pages: "4–7", pdf: "6–9", firstPage: 6,
+    lead: pair("一个孔径如何用函数描述？先看曲线如何随尺度变化，再把它读作一维缝或二维孔的透过率。", "How can a function describe an aperture? Vary its scale first, then read its graph as a slit or two-dimensional pupil transmission."),
+    challenge: pair("宽度参数 a 从 1 增大后，哪种说法对矩形窗和高斯函数都成立？", "When scale a increases from 1, what is true of both the rectangular window and the Gaussian?"),
+    choices: [pair("横向范围变宽，峰值仍为 1", "They widen horizontally; their peak remains 1"), pair("峰值随 a 增大", "Their peak grows with a"), pair("每一点都变为 0", "Both vanish everywhere")],
+    choiceFeedback: [pair("对。这里改变的是横向尺度，不是峰值；面积一般会改变。", "Yes. The horizontal scale changes, not the peak; the area generally changes."), pair("峰值未乘以 a；高斯和矩形在原点始终为 1。", "Neither peak is multiplied by a; both equal 1 at the origin."), pair("扩大尺度不会抹去中心；比较实线与 a=1 虚线。", "Increasing scale does not erase the center. Compare the solid line with the a=1 dashed line.")],
+    transfer: { stem: pair("新情境：圆孔半径 r₀=1.5，点 (1.2,1.0) 在孔内吗？", "New case: with pupil radius r₀=1.5, is (1.2,1.0) inside?"), choices: [pair("在孔内", "Inside"), pair("在孔外", "Outside")], answer: 1, feedback: [pair("要比较半径，不是逐项比较坐标；√(1.2²+1.0²)≈1.562>1.5。", "Compare radial distance, not each coordinate separately: √(1.2²+1.0²)≈1.562>1.5."), pair("对。半径约 1.562，大于孔径半径 1.5，因此透过率为 0。", "Yes. Radius ≈1.562 exceeds 1.5, so transmission is 0.")] },
+    labHint: pair("选函数、拖动 a，比较实线和 a=1 的虚线；在 x=0 与边界附近观察。", "Choose a function and change a. Compare the solid graph with the dashed a=1 reference at x=0 and near the edges."),
+    symbols: [
+      symbol("x", ["横向坐标", "Horizontal coordinate"], ["长度", "length"], ["演示坐标无量纲", "Dimensionless in this demo"]),
+      symbol("a", ["函数的横向尺度；矩形窗的全宽", "Horizontal scale; full width of rect"], ["与 x 相同", "same as x"], ["a>0", "a>0"], "a"),
+      symbol("u=x/a", ["sinc 的无量纲自变量", "Dimensionless sinc argument"], ["无量纲", "dimensionless"], ["—", "—"]),
+      symbol("r", ["点到圆心的距离 √(x²+y²)", "Distance √(x²+y²) from the center"], ["与 x 相同", "same as x"], ["—", "—"]),
+      symbol("r_0", ["圆孔半径", "Circular pupil radius"], ["与 x 相同", "same as x"], ["r₀>0；图中选 circ 时取 a", "r₀>0; diagram uses a for circ"])
+    ],
+    recap: [pair("step 与 sgn 表示开关与正负号；在 x=0，教材约定 step(0)=1/2、sgn(0)=0。", "step and sgn model switching and sign; the book takes step(0)=1/2 and sgn(0)=0."), pair("rect 和 circ 分别选取一维区间与二维圆域；边界等号按本书定义。", "rect and circ select a one-dimensional interval and a two-dimensional disk; boundary equality follows this book."), pair("tri、sinc、Gaus 都有中心峰 1，但形状、零点与衰减不同。", "tri, sinc and Gaus all peak at 1, but have different shapes, zeros and decay.")],
+    notes: [
+      formula(["阶跃与符号", "Step and sign"], ["用门函数保留右半轴；此处单点取值按教材约定，并不影响通常积分。", "A step passes the right half-axis. The single-point convention follows the book and does not change ordinary integrals."], String.raw`\operatorname{step}(x)=\begin{cases}1&x>0\\\tfrac12&x=0\\0&x<0\end{cases},\quad \operatorname{sgn}(x)=2\operatorname{step}(x)-1`, ["因此负半轴为 −1，零点为 0，正半轴为 1。", "Hence the sign is −1 on the left, 0 at the origin and 1 on the right."]),
+      formula(["矩形窗：宽度 a", "Rectangular window: width a"], ["让 x 落在以原点为中心、宽 a 的区间内时取 1；a>0，x 与 a 同单位。", "Set the value to 1 inside an origin-centered interval of width a; a>0 and x has the same unit as a."], String.raw`\operatorname{rect}(x/a)=\begin{cases}1&|x|\le a/2\\0&\text{otherwise}\end{cases}`, ["它可表示理想狭缝的振幅透过率。二维矩形窗可由 x、y 两个一维窗相乘得到。", "It can model an ideal slit amplitude transmission. Multiply independent x and y windows for a rectangular two-dimensional aperture."]),
+      formula(["三角形：底宽 2a", "Triangle: base width 2a"], ["从中心 1 线性下降，到 x=±a 为 0；注意 a 是半底宽。", "Decrease linearly from 1 at the center to 0 at x=±a; a is the half-base width."], String.raw`\operatorname{tri}(x/a)=\begin{cases}1-|x|/a&|x|\le a\\0&\text{otherwise}\end{cases}`, ["它在本书中也用于表示某些非相干成像系统的光学传递函数形状。", "The book also uses this shape for optical transfer functions of some incoherent imaging systems."]),
+      formula(["归一化 sinc", "Normalized sinc"], ["这里采用 sin(πu)/(πu) 的约定，u=x/a 是无量纲量；原点取连续极限 1。", "Here sinc(u)=sin(πu)/(πu), where u=x/a is dimensionless; use the continuous limit 1 at the origin."], String.raw`\operatorname{sinc}(x/a)=\frac{\sin(\pi x/a)}{\pi x/a},\quad \operatorname{sinc}(0)=1`, ["非零整数倍 x=±a, ±2a… 是零点，不等于“在区间外全为零”。本书用二维 sinc 乘积描述矩孔的夫琅禾费衍射图样。", "Its zeros are x=±a, ±2a, …; it is not zero everywhere outside an interval. The book uses a product of two sinc functions for rectangular-aperture Fraunhofer diffraction."]),
+      formula(["高斯曲线", "Gaussian curve"], ["中心为 1；尺度 a 增大时更宽，而不是更高。下式采用教材的 π 归一化。", "It peaks at 1; larger a makes it wider, not taller. This is the book's π-normalized convention."], String.raw`\operatorname{Gaus}(x/a)=\exp[-\pi(x/a)^2],\qquad \int_{-\infty}^{\infty}\operatorname{Gaus}(x/a)\,dx=a`, ["a>0。二维可把 x、y 方向高斯相乘，尺度 a、b>0 时曲面下体积为 ab；这里的面积或体积不能直接叫作光束总功率。", "For a>0, multiply Gaussian factors along x and y; scales a,b>0 give volume ab under the surface. Neither this area nor volume is automatically beam power."]),
+      formula(["二维圆域", "Two-dimensional disk"], ["先由坐标算半径 r=√(x²+y²)；再比较 r 与孔径半径 r₀。", "First compute radius r=√(x²+y²), then compare it with pupil radius r₀."], String.raw`\operatorname{circ}(r/r_0)=\begin{cases}1&r\le r_0\\0&r>r_0\end{cases},\quad r=\sqrt{x^2+y^2}`, ["r₀>0，圆内为 1、圆外为 0，可表示理想圆孔透过率。", "For r₀>0 the disk is 1 inside and 0 outside; it can model an ideal circular aperture."])
+    ],
+    questions: [
+      question("fo-1.1:q1", ["rect(x/a) 在哪段取 1？", "Where is rect(x/a) equal to 1?"], [["|x|≤a/2", "|x|≤a/2"], ["|x|≤a", "|x|≤a"], ["仅 x=0", "Only x=0"]], 0, [["对，a 是总宽度。", "Correct: a is the full width."], ["这会把全宽误作 2a；那是 tri 的底宽。", "That makes the width 2a; that is the base of tri."], ["窗内整个区间都取 1，不只有中心点。", "It is 1 over the entire interval, not just at its center."]]),
+      question("fo-1.1:q2", ["sinc(x/a) 的第一个非零正零点在哪里？", "Where is the first positive zero of sinc(x/a)?"], [["x=a/2", "x=a/2"], ["x=a", "x=a"], ["x=0", "x=0"]], 1, [["那是矩形窗的边界；sinc 的分子在 πx/a=π 时首次为零。", "That is a rect boundary; the sinc numerator first vanishes at πx/a=π."], ["对。sin(πx/a)=0 且分母非零，首次在 x=a。", "Yes. The numerator vanishes while the denominator is nonzero first at x=a."], ["原点用极限定义，sinc(0)=1。", "At the origin take the limit: sinc(0)=1."]]),
+      question("fo-1.1:q3", ["高斯 Gaus(x/a) 中 a 翻倍，峰值与面积如何变？", "If a doubles in Gaus(x/a), how do its peak and area change?"], [["峰值翻倍、面积不变", "Peak doubles, area stays"], ["峰值不变、面积翻倍", "Peak stays, area doubles"], ["都不变", "Both stay"]], 1, [["中心 exp(0)=1，不会增高；面积随尺度 a 增大。", "At the center exp(0)=1; only its width/area grows."], ["对，中心仍为 1，变量替换 u=x/a 给出面积 a。", "Yes. The peak is 1 and substituting u=x/a gives area a."], ["横向变宽使面积增加。", "Widening horizontally increases area."]])
+    ]
+  },
+  {
+    id: "1.2.1", title: pair("δ 函数的定义与性质", "The delta distribution"), pages: "7–10", pdf: "9–12", firstPage: 9,
+    lead: pair("怎样把越来越窄的脉冲用于“读取”某一点的函数值？观察宽度、峰值与面积，再看它如何在积分中起作用。", "How can a narrowing pulse read a function at a point? Watch width, height and area, then see what its integral does."),
+    challenge: pair("脉冲越来越窄而面积一直为 1，峰值会怎样？", "If a pulse narrows while its area stays 1, what happens to its peak?"),
+    choices: [pair("升高", "It rises"), pair("保持 1", "It stays 1"), pair("降到 0", "It falls to 0")],
+    choiceFeedback: [pair("对。图中是有限宽近似，极限 δ 不具有普通函数的有限峰值。", "Yes. The plot is a finite-width approximation; the limiting delta has no ordinary finite peak."), pair("若宽度缩小而高度固定，面积就会趋于 0。", "With fixed height, a shrinking width would make the area tend to 0."), pair("面积固定需要更高，而不是更低。", "Fixed area requires a higher, not a lower, peak.")],
+    transfer: { stem: pair("新情境：若 g(x)=2+x²，脉冲中心移至 x₀=1，极限加权积分是多少？", "New case: if g(x)=2+x² and the impulse centers at x₀=1, what is the limiting weighted integral?"), choices: [pair("2", "2"), pair("3", "3"), pair("4", "4")], answer: 1, feedback: [pair("2 是 g(0)；位移后应读取 x₀=1。", "2 is g(0); the shifted impulse samples at x₀=1."), pair("对。δ(x−1) 对连续 g 的积分给 g(1)=2+1²=3。", "Yes. Integrating δ(x−1) against continuous g yields g(1)=2+1²=3."), pair("要代入 x₀=1，不是把函数值再乘以脉冲的“高度”。", "Substitute x₀=1; do not multiply by a supposed delta peak height.")] },
+    labHint: pair("选择矩形或高斯脉冲，改变 N 和中心 x₀；看面积固定时，加权积分如何靠近 f(x₀)。", "Choose a rectangular or Gaussian pulse, vary N and center x₀; observe a fixed-area weighted integral approach f(x₀)."),
+    symbols: [
+      symbol("x", ["横向坐标", "Horizontal coordinate"], ["长度", "length"], ["演示坐标无量纲", "Dimensionless in this demo"]),
+      symbol("x_0", ["脉冲中心／取样位置", "Impulse center / sample position"], ["与 x 相同", "same as x"], ["—", "—"], "x0"),
+      symbol("N", ["近似脉冲的收缩倍数", "Concentration parameter of finite pulse"], ["x 单位的倒数", "inverse unit of x"], ["N>0", "N>0"], "n"),
+      symbol("\\delta", ["单位权重理想脉冲；以积分作用定义", "Unit-weight ideal impulse, defined by its integral action"], ["一维：1/长度；二维：1/面积", "1D: inverse length; 2D: inverse area"], ["不是普通函数的点值", "Not an ordinary point value"]),
+      symbol("f", ["积分中被取样的连续函数", "Continuous function sampled by the integral"], ["依所选函数", "depends on f"], ["图中 f(x)=1/(1+x²)", "Diagram: f(x)=1/(1+x²)"]),
+      symbol("a,b", ["二维 δ 坐标缩放因子", "2D delta coordinate scale factors"], ["无量纲", "dimensionless"], ["a,b≠0", "a,b≠0"]),
+      symbol("r", ["二维点到原点的距离 √(x²+y²)", "Distance √(x²+y²) to the 2D origin"], ["长度", "length"], ["仅用于选读的径向近似", "Only in the optional radial approximation"]),
+      symbol("J_1", ["第一类一阶贝塞尔函数", "Bessel function of the first kind, order one"], ["无量纲", "dimensionless"], ["选读近似；自变量须无量纲", "Optional approximation; argument is dimensionless"])
+    ],
+    recap: [pair("δ 不是“原点数值无限大”的普通函数；它通过对连续测试函数的积分作用定义。", "Delta is not an ordinary function with an infinite numerical value at the origin; its meaning is its action under an integral on a continuous test function."), pair("N rect(Nx) 与 N exp(−πN²x²) 的面积都为 1；宽度趋零、高度增加。", "Both N rect(Nx) and N exp(−πN²x²) have unit area; width shrinks and height rises."), pair("δ(x−x₀) 在积分中选出 x₀ 处的值；实际成像系统有有限分辨率。", "Under integration δ(x−x₀) selects the value at x₀; real imaging systems have finite resolution.")],
+    notes: [
+      formula(["先定义积分作用", "Start with its integral action"], ["把 δ 当成理想化的单位面积集中脉冲，而不是给每个 x 指定普通的有限数值。", "Treat δ as an ideal unit-area concentrated impulse, not a regular finite-valued function at each x."], String.raw`\int_{-\infty}^{\infty}\delta(x)\,dx=1,\qquad \int\delta(x-x_0)f(x)\,dx=f(x_0)`, ["第二式要求积分区间包含 x₀，且 f 在 x₀ 连续；本实验的 f(x)=1/(1+x²)。", "The integration interval contains x₀ and f is continuous there; this lab uses f(x)=1/(1+x²)."]),
+      formula(["用普通函数逼近", "Approximate with ordinary functions"], ["宽度 ~1/N、峰高 ~N，面积仍为 1；高斯族同样满足单位面积。", "Width ~1/N and height ~N preserve unit area; the Gaussian family does too."], String.raw`\delta(x)=\lim_{N\to\infty}N\operatorname{rect}(Nx)=\lim_{N\to\infty}N\exp(-\pi N^2x^2)`, ["等号表示分布意义的极限，不能拿 δ(0) 当作普通函数值。", "These are distributional limits, not numerical values of δ(0)."]),
+      formula(["二维点与位移", "Two-dimensional point and shift"], ["用二维积分读取 (x₀,y₀) 处连续函数 φ 的值；dxdy 是面积元。", "A two-dimensional integral reads continuous φ at (x₀,y₀); dxdy is an area element."], String.raw`\iint\delta(x-x_0,y-y_0)\phi(x,y)\,dx\,dy=\phi(x_0,y_0)`, ["二维 δ 具有 1/面积 的量纲。圆孔缩小且总权重归一也可形成近似脉冲。", "The two-dimensional delta has units of inverse area. A shrinking normalized disk is another approximation."]),
+      formula(["缩放与相乘", "Scaling and multiplication"], ["a、b 为非零常数；缩放改变坐标面积，必须补偿 1/|ab|。若 h 在采样点连续，δ 只留下它在那里的值。", "For nonzero a,b coordinate scaling changes area and requires 1/|ab|. If h is continuous at the sample point, only its value there remains."], String.raw`\delta(ax,by)=\frac1{|ab|}\delta(x,y),\quad h(x,y)\delta(x-x_0,y-y_0)=h(x_0,y_0)\delta(x-x_0,y-y_0)`, ["这些等式同样按积分作用理解；不要当作在每一点的普通代数。", "Interpret both identities by their integral action, not pointwise ordinary algebra."])
+    ],
+    questions: [
+      question("fo-1.2.1:q1", ["N rect(Nx) 当 N 增大时，面积如何变化？", "As N grows in N rect(Nx), what happens to area?"], [["保持 1", "Stays 1"], ["趋近 0", "Approaches 0"], ["趋于无穷", "Diverges"]], 0, [["对，宽度 1/N 乘高度 N。", "Yes: width 1/N times height N."], ["若没有前面的 N 才会趋于 0。", "Without the N prefactor it would tend to 0."], ["高度虽增加，宽度同时减小。", "Height rises, but width shrinks at the compensating rate."]]),
+      question("fo-1.2.1:q2", ["f 在 x₀ 连续时，∫δ(x−x₀)f(x)dx 等于什么？", "For f continuous at x₀, what is ∫δ(x−x₀)f(x)dx?"], [["f(0)", "f(0)"], ["f(x₀)", "f(x₀)"], ["δ(x₀)", "δ(x₀)"]], 1, [["位移后的中心在 x₀，不一定在 0。", "The shifted center is x₀, not necessarily 0."], ["对，积分把 f 在脉冲位置的值选出。", "Yes, integration selects f at the pulse location."], ["δ 不是普通的点值；结果是被采样函数的值。", "Delta is not an ordinary point value; the result is a value of f."]]),
+      question("fo-1.2.1:q3", ["二维 δ(2x,3y) 应等于多少倍 δ(x,y)？", "In two dimensions, what factor relates δ(2x,3y) to δ(x,y)?"], [["6", "6"], ["1/6", "1/6"], ["1", "1"]], 1, [["坐标面积被压缩 6 倍，脉冲权重需乘 1/6。", "The coordinate scaling requires the reciprocal factor 1/6."], ["对，1/|2·3|=1/6。", "Yes: 1/|2·3|=1/6."], ["漏掉了二维坐标变换的雅可比。", "This misses the two-dimensional Jacobian."]])
+    ]
+  },
+  {
+    id: "1.2.2", title: pair("梳状函数", "The comb distribution"), pages: "10", pdf: "12", firstPage: 12,
+    lead: pair("怎样表示一排等间隔的点孔？把单位脉冲按间距 τ 排列，再让一条连续曲线在每个脉冲位置被取样。", "How can we represent evenly spaced pinholes? Place unit impulses τ apart and sample a continuous curve at each location."),
+    challenge: pair("若把脉冲列间距 τ 增大，在固定观察范围内会发生什么？", "What happens in a fixed viewing range when impulse spacing τ increases?"),
+    choices: [pair("样点变稀疏", "Sample positions become sparser"), pair("样点变密集", "They become denser"), pair("每个脉冲变成有限宽柱子", "Each impulse becomes a finite bar")],
+    choiceFeedback: [pair("对。间距控制位置密度，不改变理想脉冲的零宽特性。", "Yes. Spacing controls position density, not the ideal impulses' zero width."), pair("增大间距会减少固定范围内的样点数。", "Increasing spacing gives fewer samples in a fixed range."), pair("箭头表示理想脉冲，不是绘成同样高度的有限柱子。", "The arrows denote ideal impulses, not equal-height finite bars.")],
+    transfer: { stem: pair("新情境：二维阵列间距 a=2、b=3，哪一个是阵列中的点？", "New case: a 2D lattice has spacings a=2, b=3. Which point belongs to it?"), choices: [pair("(4, −3)", "(4, −3)"), pair("(3, −4)", "(3, −4)"), pair("(1, 0)", "(1, 0)")], answer: 0, feedback: [pair("对。它对应 n=2、m=−1，即 (na,mb)=(4,−3)。", "Yes. It has n=2,m=−1, giving (na,mb)=(4,−3)."), pair("x 需为 2 的整数倍，y 需为 3 的整数倍。", "x must be an integer multiple of 2 and y of 3."), pair("x=1 不是间距 2 的整数倍。", "x=1 is not an integer multiple of spacing 2.")] },
+    labHint: pair("改变 τ，对照连续曲线和采样箭头；切二维格点，观察 x、y 间距分别控制哪一方向。", "Vary τ and compare the continuous curve with sample arrows; switch to a 2D lattice to see which direction each spacing controls."),
+    symbols: [
+      symbol("x,y", ["一维／二维的坐标", "1D / 2D coordinates"], ["长度", "length"], ["演示坐标无量纲", "Dimensionless in this demo"]),
+      symbol("\\tau", ["一维脉冲列的间距", "Spacing of the 1D impulse train"], ["与 x 相同", "same as x"], ["τ>0", "τ>0"], "tau"),
+      symbol("n,m", ["整数点列的索引", "Integer lattice indices"], ["无量纲", "dimensionless"], ["n,m∈ℤ", "n,m∈ℤ"]),
+      symbol("a,b", ["二维格点的 x、y 间距", "2D lattice spacing along x and y"], ["与 x、y 相同", "same as x and y"], ["图中 a=b=τ；一般可不同", "Diagram uses a=b=τ; generally independent"]),
+      symbol("f", ["在 nτ 处被抽样的连续函数", "Continuous function sampled at nτ"], ["依所选函数", "depends on f"], ["图中 f(x)=0.5+0.4cos(πx/2)", "Diagram: f(x)=0.5+0.4cos(πx/2)"]),
+      symbol("\\operatorname{comb}", ["整数位置单位脉冲的无穷列", "Infinite unit-impulse train at integer positions"], ["与 δ 相应的分布量纲", "distribution units as for δ"], ["箭头是位置与权重", "Arrows denote positions and weights"])
+    ],
+    recap: [pair("comb(x) 是整数位置的单位脉冲之和；图中的箭头不是有高度的普通峰。", "comb(x) sums unit impulses at integer locations; diagram arrows are not ordinary peaks of finite height."), pair("间隔 τ 的脉冲列是 (1/τ)comb(x/τ)，不是 comb(x/τ) 本身。", "The τ-spaced train is (1/τ)comb(x/τ), not comb(x/τ) alone."), pair("与连续 f 相乘得到 Σ f(nτ)δ(x−nτ)，因此可以表示等距抽样。", "Multiplication by continuous f gives Σ f(nτ)δ(x−nτ), representing uniform sampling.")],
+    notes: [
+      formula(["整数位置的冲激列", "Impulses at integers"], ["将单位面积的 δ 沿 x 轴平移到每一个整数 n，n 从负无穷到正无穷。", "Shift a unit-area delta to each integer n, in both directions without bound."], String.raw`\operatorname{comb}(x)=\sum_{n=-\infty}^{\infty}\delta(x-n)`, ["每支箭头代表一个脉冲位置及其权重 1，不能读成无限多个普通函数峰。", "Each arrow marks an impulse position and weight 1, not an ordinary finite-height peak."]),
+      formula(["间距为 τ 的列", "Train of spacing τ"], ["由二维 δ 的缩放规则的一维版本 δ(ax)=δ(x)/|a|，令 a=1/τ 且 τ>0。", "Use the one-dimensional scaling δ(ax)=δ(x)/|a|, with a=1/τ and τ>0."], String.raw`\sum_{n=-\infty}^{\infty}\delta(x-n\tau)=\frac1\tau\operatorname{comb}(x/\tau)`, ["所以 τ 控制脉冲间的距离；前面的 1/τ 保证每支脉冲权重仍为 1。", "Thus τ sets spacing; the 1/τ factor keeps each impulse's weight at 1."]),
+      formula(["等距离抽样", "Uniform sampling"], ["对上一脉冲列逐项乘连续函数 f，利用 f(x)δ(x−nτ)=f(nτ)δ(x−nτ)。", "Multiply the impulse train by continuous f term by term, using f(x)δ(x−nτ)=f(nτ)δ(x−nτ)."], String.raw`f(x)\sum_n\delta(x-n\tau)=\sum_n f(n\tau)\delta(x-n\tau)`, ["图中实线是连续 f，采样箭头的权重是对应 f(nτ)，不是箭头画出的像素高度。", "The solid line is continuous f; sample-arrow weights are f(nτ), not literal pixel heights."]),
+      formula(["二维方格点列", "Two-dimensional lattice"], ["分别在 x、y 方向以 a、b>0 排列脉冲；每个格点都承载单位权重。", "Space impulses by a,b>0 in x and y; each lattice point carries unit weight."], String.raw`\sum_{n,m\in\mathbb Z}\delta(x-na,y-mb)=\frac1{ab}\operatorname{comb}(x/a)\operatorname{comb}(y/b)`, ["这是理想点孔阵列的模型；真实孔径和探测器都有有限尺寸。", "This is an ideal pinhole-array model; real openings and detectors have finite extent."])
+    ],
+    questions: [
+      question("fo-1.2.2:q1", ["间距为 τ>0 的单位脉冲列是哪一个？", "Which is the unit-impulse train spaced by τ>0?"], [["comb(x/τ)", "comb(x/τ)"], ["(1/τ)comb(x/τ)", "(1/τ)comb(x/τ)"], ["τ comb(x/τ)", "τ comb(x/τ)"]], 1, [["缺少缩放补偿；每支脉冲权重会变成 τ。", "It lacks the scaling factor; impulse weights would be τ."], ["对，它等于 Σ δ(x−nτ)。", "Yes: it equals Σ δ(x−nτ)."], ["多乘一次 τ，权重不再是 1。", "An extra τ changes each impulse's weight."]]),
+      question("fo-1.2.2:q2", ["f(x)∑δ(x−nτ) 中第 n 支脉冲的权重是多少？", "What is the weight of impulse n in f(x)∑δ(x−nτ)?"], [["f(nτ)", "f(nτ)"], ["f(x) 在所有位置的总和", "The sum of f(x) everywhere"], ["恒为 1", "Always 1"]], 0, [["对，脉冲在积分意义下读取所在位置的函数值。", "Yes. The impulse samples the function at its location under integration."], ["每支脉冲只看自己的位置，不汇总整个连续轴。", "Each impulse samples only its own position."], ["只有 f(nτ)=1 时才为 1。", "Only if f(nτ)=1 is its weight 1."]]),
+      question("fo-1.2.2:q3", ["二维点列中 a、b 分别控制什么？", "What do a and b control in the 2D lattice?"], [["x、y 方向的间距", "Spacing along x and y"], ["脉冲的普通函数高度", "Ordinary peak heights"], ["光的波长和频率", "Wavelength and frequency"]], 0, [["对，位置为 (na,mb)。", "Yes. Positions are (na,mb)."], ["理想 δ 不用有限高度表示；a、b 定位格点。", "An ideal delta has no finite peak height; a,b locate lattice points."], ["它们是几何间距，不是光谱参数。", "They are geometric spacings, not spectral parameters."]])
+    ]
+  }
+];

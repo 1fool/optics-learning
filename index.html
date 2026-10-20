@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="双语物理光学交互课程：通过可视化实验、循序讲义与逐题测验学习光学。当前覆盖《物理光学》第 1 章的部分内容。">
+  <meta name="description" content="双语光学交互课程：选择物理光学或傅里叶光学，用可视化实验、循序讲义与逐题测验学习。">
   <meta name="theme-color" content="#07131e">
-  <title>光学可视课 · 让物理光学看得见</title>
+  <title>光学可视课 · 物理光学与傅里叶光学</title>
   <link rel="icon" href="favicon.svg?v=firefly-1" type="image/svg+xml">
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="firefly-hero.css">
@@ -14,7 +14,7 @@
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="./" aria-label="光学可视课，返回首页"><img class="brand-symbol" src="firefly-mark.svg" alt="" aria-hidden="true"><span>光学可视课<small>OPTICS LEARNING</small></span></a>
-      <nav aria-label="主导航"><a href="#approach">怎么学习</a><a href="#scope">课程范围</a><a class="nav-course" href="course/">进入课程 <span aria-hidden="true">↗</span></a></nav>
+      <nav aria-label="主导航"><a href="#approach">怎么学习</a><a href="#courses">选择课程</a><a class="nav-course" href="#courses">进入课程 <span aria-hidden="true">↗</span></a></nav>
     </div>
   </header>
 
@@ -32,12 +32,21 @@
         <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> A LITTLE LIGHT. A BIG DISCOVERY.</p>
         <h1 id="hero-title">把抽象的光学，<em>变成看得见的探索。</em></h1>
         <p class="hero-intro">跟随一只萤火虫，穿过光的四次奇遇。</p>
-        <div class="hero-actions"><a class="button-primary" href="course/">开始学习 <span aria-hidden="true">↗</span></a><a class="button-text" href="course/#lesson-1.3.1">体验球面波实验 <span aria-hidden="true">→</span></a></div>
+        <div class="hero-actions"><a class="button-primary" href="#courses">选择一本课程 <span aria-hidden="true">↗</span></a><a class="button-text" href="course/#lesson-1.3.1">体验球面波实验 <span aria-hidden="true">→</span></a></div>
       </div>
       <a class="hero-scroll" href="#approach" aria-label="向下了解课程"><span>向下探索</span><span aria-hidden="true">↓</span></a>
     </section>
 
-    <section class="facts" aria-label="课程概况"><div class="wrap facts-inner"><p><strong>20</strong><span>个学习单元</span></p><p><strong>66</strong><span>道逐题练习</span></p><p><strong>中 / EN</strong><span>双语阅读</span></p><p><strong>4</strong><span>种学习视图</span></p></div></section>
+    <section class="facts" aria-label="物理光学课程概况"><div class="wrap facts-inner"><p><strong>20</strong><span>物理光学学习单元</span></p><p><strong>66</strong><span>物理光学逐题练习</span></p><p><strong>中 / EN</strong><span>双语阅读</span></p><p><strong>4</strong><span>种学习视图</span></p></div></section>
+
+    <section id="courses" class="courses wrap" aria-labelledby="courses-title">
+      <p class="eyebrow">TWO TEXTBOOKS · TWO LEARNING PATHS</p>
+      <h2 id="courses-title">选一本书，从已完成的小节开始。</h2>
+      <div class="course-grid">
+        <a class="course-card" href="fourier/"><span class="course-tag">本学期先学 / FOURIER OPTICS</span><strong>傅里叶光学</strong><span>吕乃光 · 1.1–1.2 已完成：常用函数、δ 函数与梳状函数。先看传播、计算和全息的开场动画，再进入交互课程。</span><b>进入傅里叶光学 →</b></a>
+        <a class="course-card" href="course/"><span class="course-tag">PHYSICAL OPTICS</span><strong>物理光学</strong><span>第 5 版 · 1.1–1.6.5 已完成：20 个学习单元、66 道正式练习。原有课程入口和浏览器进度不变。</span><b>进入物理光学 →</b></a>
+      </div>
+    </section>
 
     <section id="approach" class="approach wrap" aria-labelledby="approach-title">
       <div class="section-lead"><p class="eyebrow">LEARNING PATH</p><h2 id="approach-title">不是先背公式，<br>而是看懂它的来处。</h2><p>一节内容里可以在实验、图解回顾、完整讲义和正式练习之间切换。想追推导时展开细节，想检验理解时立刻做题。</p></div>
@@ -50,12 +59,12 @@
     </section>
 
     <section id="scope" class="scope wrap" aria-labelledby="scope-title">
-      <div><p class="eyebrow">CURRENT SCOPE</p><h2 id="scope-title">从基础波动，到界面上的光。</h2><p>当前覆盖《物理光学（第5版）》第 1 章的 §1.1–§1.6.5，包含电磁波、波面与波函数、辐射及反射折射等内容。这是持续完善中的部分章节，<strong>不是整本教材</strong>。</p><p class="scope-small">讲解、练习和交互图示为重新组织的学习材料；网站不提供教材 PDF。图示是教学模型，不是实测数据。</p></div>
-      <a class="scope-link" href="course/">打开完整课程 <span aria-hidden="true">↗</span><small>从当前章节开始，按自己的节奏学习</small></a>
+      <div><p class="eyebrow">CURRENT SCOPE</p><h2 id="scope-title">两本书，各自成课。</h2><p>《傅里叶光学》目前覆盖 1.1–1.2；《物理光学（第5版）》目前覆盖 1.1–1.6.5。两者都在持续完善，<strong>不是整本教材</strong>。</p><p class="scope-small">讲解、练习和交互图示为重新组织的学习材料；网站不提供教材 PDF。图示是教学模型，不是实测数据。</p></div>
+      <a class="scope-link" href="#courses">选择课程 <span aria-hidden="true">↗</span><small>两本教材的目录与学习进度各自独立</small></a>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="wrap footer-inner"><span>光学可视课 · by 1fool</span><span>学习、观察、再提问。</span><a href="course/">进入课程 ↑</a></div></footer>
+  <footer class="site-footer"><div class="wrap footer-inner"><span>光学可视课 · by 1fool</span><span>学习、观察、再提问。</span><a href="#courses">选择课程 ↑</a></div></footer>
   <script src="firefly-hero.js"></script>
 </body>
 </html>
