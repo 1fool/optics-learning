@@ -97,7 +97,7 @@
 .lab-recap-card h4 { margin: 15px 0 7px; font-size: 15px; }
 .lab-recap-card p { font-size: 13px; line-height: 1.8; margin: 0; color: #56634b; }
 .lab-recap-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-.lab-mode-note { padding: 12px 15px; background: #eaf0df; border-radius: 8px; font-size: 13px; }
+.lab-mode-note { padding: 8px 0 8px 14px; border-left: 2px solid #aabda1; background: transparent; color: #4b6242; font-size: 14px; }
 @media (max-width: 1100px) {
   .sphere-sample.lab-map-open .layout { grid-template-columns: minmax(0, 1fr); }
   .sphere-sample.lab-map-open .rail { position: static; max-height: 360px; }

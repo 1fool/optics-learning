@@ -13,14 +13,14 @@ const sphereLab = window.OpticsSphereLab($("sphere-lab"), (mode) => {
   document.body.dataset.labMode = mode;
   $("lesson-reading").hidden = mode !== "notes";
   document.querySelector(".lesson-actions").hidden = mode !== "notes";
-  $("quiz").hidden = mode !== "notes" && mode !== "quiz";
+  $("quiz").hidden = mode !== "quiz";
   document.querySelector(".footer").hidden = mode !== "notes";
 });
 const deepLab = window.OpticsDeepLab($("deep-lab"), document.querySelector(".stage"), (mode) => {
   document.body.dataset.deepMode = mode;
   $("lesson-reading").hidden = mode !== "notes";
   document.querySelector(".lesson-actions").hidden = mode !== "notes";
-  $("quiz").hidden = mode !== "notes" && mode !== "quiz";
+  $("quiz").hidden = mode !== "quiz";
   document.querySelector(".footer").hidden = mode !== "notes";
 });
 $("visual-controls").addEventListener("input", event => deepLab.track(event.target));
@@ -28,11 +28,11 @@ const englishStatic = {
   brand: "Visual Optics Course", "brand-subtitle": "Physical Optics · Chapter course", "top-note": "Cross-check the book · Offline · Extendable source", sections: "sections",
   "hero-title": "From electromagnetic fields to optical interfaces", "hero-copy": "How do wavefronts spread, sources radiate, and interfaces split light? Explore §§1.1–1.6 with figures, step-by-step derivations, and immediate quizzes. This is not the entire book.",
   "pilot-entry": "Try the new pilot: spherical wave experiment →",
-  "rail-title": "Physical Optics · Contents", "rail-note": "First visit: ask a question → observe → build the equations → explain the idea yourself → practise. Open full derivations and symbol references when you need them; no formula memorization required upfront.", "rail-quiz": "Practice this section ↓",
+  "rail-title": "Physical Optics · Contents", "rail-note": "First visit: ask a question → observe → build the equations → practise in the separate quiz. Open full derivations and symbol references when you need them; no formula memorization required upfront.", "rail-quiz": "Practice this section ↓",
   "bridge-kicker": "WHAT CAME BEFORE · THIS SECTION · WHAT COMES NEXT", "bridge-title": "Where this fits: previous and next sections (reference)",
   "symbols-kicker": "LOOK UP WHEN NEEDED", "symbols-title": "Look up a symbol: full section reference", "symbols-note": "Values come from this section's examples or stated assumptions. A dash means no value was given, not a universal constant.",
   symbol: "Symbol", meaning: "Meaning", unit: "Usual unit", value: "Value / condition here", observe: "Observe and interact", reset: "Reset figure", "previous-lesson": "← Previous section",
-  "quiz-kicker": "CHECK · ONE SECTION AT A TIME", "quiz-title": "Answer, review, then continue", "quiz-intro": "Try the verbal concept check above before these section questions. For derivation questions, open the relevant detailed explanation first. Choose 'I don't know' if needed; explanations appear immediately after submission.", "quiz-number": "Section question",
+  "quiz-kicker": "FORMAL PRACTICE · THIS SECTION", "quiz-title": "Decide first, then follow the reasoning", "quiz-intro": "Each answer is saved separately. Choose 'I don't know' to see the reasoning; you can retry after submitting.", "quiz-number": "Current question",
   choose: "Choose one answer", submit: "Submit and see explanation", retry: "Try this question again", "previous-question": "← Previous question",
   footer: "Based on Chapter 1, §§1.1–1.6 of Physical Optics (5th ed.), book pp. 3–29 (PDF pp. 13–39). Explanations and questions are original reorganizations, not verbatim copies. Each section states its assumptions, distinguishing scalar approximations, radiation far fields, nonabsorbing media, and real sources. The next batch is §1.7, Total internal reflection, not developed here."
 };
@@ -249,16 +249,10 @@ function renderLearningPath(lesson) {
     });
     const item = element("li"); item.append(link); route.append(item);
   }
-  start.append(route);
+  start.append(element("p", "reading-route-label", localize("接下来阅读", "Read next")), route);
   const observation = $("observation-guide");
   observation.replaceChildren(element("strong", "", localize("先看图，只做这一件事：", "Start with the figure. Try this: ")), formulaParagraph(guidedText(guide.observe)));
-  const recap = $("learning-recap");
-  recap.replaceChildren(element("h3", "", localize("停一下：不用公式，你能解释了吗？", "Pause: can you explain it without an equation?")));
-  recap.querySelector("h3").id = "recap-title";
-  recap.append(formulaParagraph(guidedText(guide.check.question)));
-  const answer = element("details", "self-check");
-  answer.append(element("summary", "", localize("先自己说一遍，再展开参考解释", "Explain it yourself, then open the suggested answer")), formulaParagraph(guidedText(guide.check.answer)));
-  recap.append(answer, formulaParagraph(guidedText(guide.next), "next-connection"));
+  $("learning-transition").replaceChildren(formulaParagraph(guidedText(guide.next)));
 }
 // Eight different marginalia shapes, not eight copies of one framed animal card.
 const readingSurprises = ["expression", "dialogue", "pointer", "scene", "note", "progress", "teacher", "reflection"];
@@ -380,6 +374,7 @@ function renderBlocks(lesson) {
 function renderSymbolDialog(lesson) {
   document.querySelector(".quick-tools").setAttribute("aria-label", localize("学习快捷工具", "Learning shortcuts"));
   $("quick-symbols").querySelector(".quick-label").textContent = localize("本节符号", "Section symbols");
+  $("quick-symbols").setAttribute("aria-label", localize("本节符号", "Section symbols"));
   $("back-to-top").setAttribute("aria-label", localize("返回顶部", "Back to top"));
   $("back-to-top").title = localize("返回顶部", "Back to top");
   $("close-symbols").querySelector(".close-label").textContent = localize("关闭", "Close");
@@ -540,12 +535,12 @@ function showLesson(index, scroll = false, preserveVisual = false) {
   $("next-lesson").textContent = index === lessons.length - 1 ? localize("练本节的题 →", "Practice this section →") : localize("下一节 →", "Next section →");
   const isSample = lesson.code === "1.3.1";
   const quizIntro = document.querySelector('[data-i18n="quiz-intro"]');
-  quizIntro.textContent = isSample ? localize("实验里的预测不会替你填写这些题。这里还会检查源点处的模型边界和完整波函数；不熟悉时，可先切到“完整讲义”。每题可选“我不知道”。", "Experiment predictions do not fill these answers. These questions also cover the source-point model limit and full wave function; open Full notes if needed. You can choose 'I don't know'.") : language === "en" ? englishStatic["quiz-intro"] : originalStatic.get(quizIntro);
+  quizIntro.textContent = isSample ? localize("实验预测不会自动填写正式题；这里还会考察源点的模型边界与完整波函数。", "Experiment predictions do not fill these answers; these questions also cover the source-point model limit and full wave function.") : localize("每题独立记录；选“我不知道”也能直接看推理，提交后可重试。", englishStatic["quiz-intro"]);
   document.body.classList.toggle("sphere-sample", isSample);
   document.body.classList.toggle("deep-lab-open", !isSample);
   if (!isSample) {
     document.body.classList.remove("lab-map-open");
-    for (const node of [$("lesson-reading"), document.querySelector(".lesson-actions"), $("quiz"), document.querySelector(".footer")]) node.hidden = false;
+    for (const node of [$("lesson-reading"), document.querySelector(".lesson-actions"), document.querySelector(".footer")]) node.hidden = false;
   }
   sphereLab.show(isSample, language, preserveVisual);
   deepLab.show(isSample ? null : lesson, language, preserveVisual);
@@ -561,13 +556,19 @@ document.querySelector(".rail-exam").addEventListener("click", (event) => {
 });
 $("next-lesson").addEventListener("click", () => {
   if (currentLesson < lessons.length - 1) showLesson(currentLesson + 1, true);
-  else $("quiz").scrollIntoView({ behavior: "smooth" });
+  else {
+    if (lessons[currentLesson].code === "1.3.1") sphereLab.setMode("quiz");
+    else deepLab.setMode("quiz");
+    $("quiz").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  }
 });
 $("lesson-quiz").addEventListener("click", () => {
   currentQuestion = lessonQuestionIndices()[0];
   draft = null;
   renderQuestion();
-  $("quiz").scrollIntoView({ behavior: "smooth" });
+  if (lessons[currentLesson].code === "1.3.1") sphereLab.setMode("quiz");
+  else deepLab.setMode("quiz");
+  $("quiz").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
 });
 $("toggle-motion").addEventListener("click", () => { visual.toggle(); $("toggle-motion").textContent = visual.paused ? localize("播放动画", "Play animation") : localize("暂停动画", "Pause animation"); });
 $("reset-visual").addEventListener("click", () => { visual.reset(); });
@@ -592,8 +593,10 @@ function renderQuestion() {
   const position = indices.indexOf(currentQuestion);
   const question = questionBank[currentQuestion];
   const answer = answers[currentQuestion];
+  const completed = indices.filter((index) => answers[index]).length;
   $("quiz-position").textContent = `${position + 1} / ${indices.length}`;
-  $("quiz-progress-fill").style.width = `${indices.filter((index) => answers[index]).length / indices.length * 100}%`;
+  $("quiz-completed").textContent = localize(`已完成 ${completed} / ${indices.length} 题`, `${completed} / ${indices.length} completed`);
+  $("quiz-progress-fill").style.width = `${completed / indices.length * 100}%`;
   $("quiz-topic").textContent = localize(`第 ${lessons[question.lessonIndex].code} 节 · 书页 ${lessons[question.lessonIndex].pages}`, `§${lessons[question.lessonIndex].code} · book pp. ${lessons[question.lessonIndex].pages}`);
   $("quiz-state").textContent = answer ? localize("已解析", "Reviewed") : localize("待作答", "Not answered");
   $("quiz-question").replaceChildren();
@@ -659,15 +662,22 @@ $("retry-question").addEventListener("click", () => {
 $("previous-question").addEventListener("click", () => {
   const indices = lessonQuestionIndices();
   const position = indices.indexOf(currentQuestion);
-  if (position > 0) { currentQuestion = indices[position - 1]; draft = null; renderQuestion(); }
+  if (position > 0) { currentQuestion = indices[position - 1]; draft = null; renderQuestion(); animateQuestion(); }
 });
 $("next-question").addEventListener("click", () => {
   if (!answers[currentQuestion]) return;
   const indices = lessonQuestionIndices();
   const position = indices.indexOf(currentQuestion);
-  if (position < indices.length - 1) { currentQuestion = indices[position + 1]; draft = null; renderQuestion(); $("quiz-card").scrollIntoView({ block: "start" }); }
+  if (position < indices.length - 1) { currentQuestion = indices[position + 1]; draft = null; renderQuestion(); animateQuestion(); $("quiz-card").scrollIntoView({ block: "start" }); }
   else showSummary();
 });
+function animateQuestion() {
+  const card = $("quiz-card");
+  card.getAnimations().forEach((animation) => animation.cancel());
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    card.animate([{ opacity: .65, transform: "translateY(8px)" }, { opacity: 1, transform: "translateY(0)" }], { duration: 240, easing: "ease-out" });
+  }
+}
 function showSummary() {
   const indices = lessonQuestionIndices();
   const correct = indices.filter((i) => answers[i]?.choice === questionBank[i].answer).length;

@@ -29,7 +29,7 @@
       <aside class="rail" aria-label="章节导航">
         <p class="rail-title" data-i18n="rail-title">物理光学 · 课程目录</p>
         <nav id="lesson-nav" class="lesson-nav" aria-label="学习小节"></nav>
-        <p class="rail-note" data-i18n="rail-note">第一次学：带着问题看图 → 顺着讲解建立公式 → 用自己的话检查理解 → 做题。完整推导和符号速查可按需展开，不必先背公式。</p>
+        <p class="rail-note" data-i18n="rail-note">第一次学：带着问题看图 → 顺着讲解建立公式 → 去独立练习答题。完整推导和符号速查可按需展开，不必先背公式。</p>
         <a class="rail-exam" href="#quiz" data-i18n="rail-quiz">练当前小节的题 ↓</a>
       </aside>
       <main class="content">
@@ -65,11 +65,12 @@
           <div class="table-scroll"><table><thead><tr><th scope="col" data-i18n="symbol">符号</th><th scope="col" data-i18n="meaning">含义</th><th scope="col" data-i18n="unit">常用单位</th><th scope="col" data-i18n="value">本节数值／条件</th></tr></thead><tbody id="symbol-rows"></tbody></table></div>
         </details>
         <div id="lesson-content" class="lesson-content" aria-label="本节讲解"></div>
-        <section id="learning-recap" class="learning-recap" aria-labelledby="recap-title"></section>
+        <div id="learning-transition" class="learning-transition"></div>
         </div>
         <div class="lesson-actions"><button id="previous-lesson" class="outline" type="button" data-i18n="previous-lesson">← 上一节</button><button id="lesson-quiz" class="outline" type="button">练本节的 3 道题 ↓</button><button id="next-lesson" class="solid" type="button">下一节 →</button></div>
-        <section class="quiz" id="quiz" aria-labelledby="quiz-title">
-          <div class="quiz-heading"><div><div class="eyebrow" data-i18n="quiz-kicker">CHECK · 本节逐题检验</div><h2 id="quiz-title" data-i18n="quiz-title">答完一题，再看下一题</h2><p data-i18n="quiz-intro">先完成上面的口头理解检查，再练本节题目；涉及数学推导的题可展开相应讲解后再答。每题可选“我不知道”，提交后立即显示解析。</p></div><div class="quiz-counter"><strong id="quiz-position">1 / 3</strong><span data-i18n="quiz-number">本节题号</span></div></div>
+        <section class="quiz" id="quiz" aria-labelledby="quiz-title" hidden>
+          <div class="quiz-heading"><div><div class="eyebrow" data-i18n="quiz-kicker">正式练习 · 本节</div><h2 id="quiz-title" data-i18n="quiz-title">先判断，再看推理</h2><p data-i18n="quiz-intro">每题独立记录；选“我不知道”也能直接看推理，提交后可重试。</p></div><div class="quiz-counter"><span data-i18n="quiz-number">当前题目</span><strong id="quiz-position">1 / 3</strong></div></div>
+          <div id="quiz-completed" class="quiz-completed" role="status"></div>
           <div class="quiz-progress" aria-hidden="true"><span id="quiz-progress-fill"></span></div>
           <article class="quiz-card" id="quiz-card" aria-live="polite">
             <div class="quiz-card-meta"><span id="quiz-topic"></span><span id="quiz-state"></span></div>
