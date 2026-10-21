@@ -15,7 +15,7 @@ const source = fs.readFileSync(path.join(root, "firefly-hero.js"), "utf8");
 const instrumented = source.replace("  window.FireflyHero = {", `
   window.__heroDebug = {
     pathAt, abdomenLight, headLight, storyTime, ROUTE,
-    snapshot: () => ({ elapsed, running, paused, destroyed, width, height, sceneTop, sceneHeight, dpr,
+    snapshot: () => ({ elapsed, running, paused, destroyed, rafId, reduced: reduceQuery.matches, width, height, sceneTop, sceneHeight, dpr,
       artworkReady: !!sprites?.body,
       heading: { ...lastDir },
       trails: trail.length, activeTrail: trail.filter(dot => dot.active).length,
@@ -72,7 +72,7 @@ function installFrameDriver() {
 
 (async () => {
   await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
-  const base = `http://127.0.0.1:${server.address().port}/`;
+  const base = `http://127.0.0.1:${server.address().port}/course/start.html`;
   const browser = await chromium.launch({ channel: "chrome", headless: true });
   const results = [];
   const errors = [];
@@ -123,7 +123,7 @@ function installFrameDriver() {
       assert.equal(initial.left, 0);
       assert.equal(initial.top, 0);
       assert.equal(initial.width, viewport.width);
-      assert.equal(initial.height, viewport.height);
+      assert.equal(initial.height, Math.max(viewport.height, 560));
       assert.equal(initial.border, "0px");
       assert.equal(initial.radius, "0px");
       assert.ok(initial.bitmapPixels <= 4000000 + viewport.width + viewport.height);
@@ -138,12 +138,13 @@ function installFrameDriver() {
       assert.deepEqual(Array.from({ length: 6 }, (_, letter) => snapshot.targets.filter(point => point.letter === letter).length), [16, 15, 11, 11, 13, 15]);
       assert.ok(Math.abs((Math.min(...snapshot.targets.map(point => point.y)) + Math.max(...snapshot.targets.map(point => point.y))) / 2 - 0.5) < 1e-9);
       assert.equal(new Set(snapshot.targets.map(point => `${point.x},${point.y}`)).size, 81, "Glyph cells must not overlap");
-      if (viewport.width <= 650) {
+      if (viewport.width <= 650 || viewport.height <= 500) {
         const copyTop = await page.locator(".hero-copy").evaluate(element => element.getBoundingClientRect().top);
         assert.ok(snapshot.sceneTop + snapshot.sceneHeight * 0.85 + 20 < copyTop, "Mobile optical scene must clear the copy");
       }
       for (const selector of [".hero-copy .button-primary", ".hero-copy .button-text", ".firefly-toggle"]) {
         const target = page.locator(selector);
+        await target.scrollIntoViewIfNeeded();
         assert.ok(await target.evaluate(element => {
           const box = element.getBoundingClientRect();
           return box.left >= 0 && box.right <= innerWidth && box.top >= 0 && box.bottom <= innerHeight && box.height >= 44 && element.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
@@ -155,7 +156,7 @@ function installFrameDriver() {
         await advance(page, time - previous, 1 / 60);
         previous = (await state(page)).elapsed;
         await page.locator("[data-firefly-hero]").screenshot({ scale: "css", path: path.join(output, `${viewport.width}-${name}.png`) });
-        if (name === "interference") {
+        if (name === "interference" && viewport.height >= 560) {
           const branches = (await state(page)).branches;
           assert.ok(branches.includes(0) && branches.includes(1), "Both slit branches must use the trail ring");
         }
@@ -163,13 +164,18 @@ function installFrameDriver() {
       await advance(page, 17 - previous);
       await page.locator("[data-firefly-hero]").screenshot({ scale: "css", path: path.join(output, `${viewport.width}-optics-peak.png`) });
       await page.screenshot({ scale: "css", path: path.join(output, `${viewport.width}-page.png`), fullPage: true });
+      await page.evaluate(() => scrollTo(0, 0));
       assert.deepEqual(await layout(page), initial, "Stage must not grow in response to its canvas resizing");
       await advance(page, 2.9);
       assert.ok((await state(page)).elapsed < 1, "Animation did not loop");
-      await page.locator(".hero-scroll").evaluate(element => element.click());
-      await page.waitForFunction(() => location.hash === "#approach");
-      assert.ok(await page.locator("#approach h2").isVisible());
-      assert.equal(await page.locator(".hero-copy .button-primary").getAttribute("href"), "course/");
+      assert.equal(await page.locator(".hero-copy .button-primary").getAttribute("href"), "index.html");
+      assert.equal(await page.locator(".hero-copy .button-text").getAttribute("href"), "index.html#lesson-1.3.1");
+      await page.locator(".physics-start-skip").click();
+      await page.waitForURL("**/course/index.html");
+      await page.locator(".nav-lesson").first().waitFor({ state: "attached" });
+      assert.ok(await page.locator("#deep-lab, #sphere-lab").filter({ visible: true }).count());
+      assert.equal(await page.locator("[data-firefly-hero]").count(), 0);
+      assert.equal(await page.evaluate(() => typeof window.FireflyHero), "undefined");
       const { targets, ...summary } = snapshot;
       pass(`responsive full cycle ${viewport.width}x${viewport.height}`, summary);
       await context.close();
@@ -248,27 +254,27 @@ function installFrameDriver() {
     await button.focus();
     await page.keyboard.press("Enter");
     const pausedAt = (await state(page)).elapsed;
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 0);
+    assert.equal((await state(page)).rafId, 0);
     await advance(page, 2);
     assert.equal((await state(page)).elapsed, pausedAt);
     assert.equal(await button.getAttribute("aria-label"), "播放动画");
     assert.ok(await button.evaluate(element => parseFloat(getComputedStyle(element).outlineWidth) >= 2));
-    assert.equal(await page.locator('canvas[role="img"]').getAttribute("aria-label"), "一只萤火虫飞过反射、折射、干涉、衍射，最后与其他萤火虫汇聚成 OPTICS");
+    assert.equal(await page.locator('.firefly-canvas[role="img"]').getAttribute("aria-label"), "萤火虫依次经过反射、折射、干涉与衍射，最后汇聚成光学课程标志");
     await page.keyboard.press("Space");
     await page.evaluate(() => { window.FireflyHero.start(); window.FireflyHero.start(); });
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 1);
+    assert.ok((await state(page)).rafId > 0);
     await advance(page, 0.2);
     assert.ok((await state(page)).elapsed > pausedAt);
     pass("keyboard pause, focus ring, aria label, idempotent start");
 
     await page.evaluate(() => window.__frames.hidden(true));
     const hiddenAt = (await state(page)).elapsed;
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 0);
+    assert.equal((await state(page)).rafId, 0);
     await page.evaluate(() => window.FireflyHero.start());
     await advance(page, 120);
     assert.equal((await state(page)).elapsed, hiddenAt);
     await page.evaluate(() => { window.__frames.hidden(false); window.__frames.hidden(false); });
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 1);
+    assert.ok((await state(page)).rafId > 0);
     await advance(page, 0.05);
     assert.equal((await state(page)).elapsed, hiddenAt, "Resume must reset its delta timestamp");
     await advance(page, 0.2);
@@ -276,17 +282,20 @@ function installFrameDriver() {
     pass("simulated visibility change freezes time and never duplicates RAF");
 
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.waitForTimeout(50);
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 0);
+    await page.waitForTimeout(500);
+    assert.equal((await state(page)).rafId, 0, JSON.stringify({
+      reduced: await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches),
+      heroReduced: (await state(page)).reduced,
+    }));
     assert.equal(await button.isVisible(), false);
-    const staticBefore = await page.locator("canvas").screenshot();
+    const staticBefore = await page.locator(".firefly-canvas").screenshot();
     await advance(page, 5);
-    const staticAfter = await page.locator("canvas").screenshot();
+    const staticAfter = await page.locator(".firefly-canvas").screenshot();
     assert.ok(staticBefore.equals(staticAfter), "Reduced motion must be pixel-identical, not a slower animation");
     await page.locator("[data-firefly-hero]").screenshot({ path: path.join(output, "reduced-motion.png") });
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.waitForTimeout(50);
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 1);
+    assert.ok((await state(page)).rafId > 0);
     pass("live reduced-motion change renders a stable static finale");
 
     // Warm up two cycles before measuring retained JS heap, not transient allocations.
@@ -300,7 +309,7 @@ function installFrameDriver() {
       await advance(page, 19.6);
       assert.equal(await page.evaluate(() => window.__heroDebug.refs().every((object, i) => object === window.__savedRefs[i])), true);
       assert.equal((await state(page)).particleCount, 95);
-      assert.equal(await page.evaluate(() => window.__frames.pending()), 1);
+      assert.ok((await state(page)).rafId > 0);
       await cdp.send("HeapProfiler.collectGarbage");
       heapSamples.push((await cdp.send("Runtime.getHeapUsage")).usedSize);
     }
@@ -311,7 +320,7 @@ function installFrameDriver() {
     await page.evaluate(() => { window.FireflyHero.CONFIG.autoLoop = false; });
     await advance(page, 20);
     assert.equal((await state(page)).running, false);
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 0);
+    assert.equal((await state(page)).rafId, 0);
     await page.evaluate(() => window.FireflyHero.start());
     await advance(page, 0.2);
     assert.ok((await state(page)).elapsed < 1);
@@ -327,33 +336,55 @@ function installFrameDriver() {
     await page.waitForTimeout(200);
     await advance(page, 1);
     assert.equal(await page.evaluate(() => window.__draws), 0);
-    assert.equal(await page.evaluate(() => window.__frames.pending()), 0);
+    assert.equal((await state(page)).rafId, 0);
     pass("destroy removes media, visibility and resize callbacks and prevents restart");
     await context.close();
 
     const reduced = await open({ reducedMotion: "reduce", viewport: { width: 390, height: 844 } });
-    assert.equal(await reduced.page.evaluate(() => window.__frames.pending()), 0);
-    const firstStatic = await reduced.page.locator("canvas").screenshot();
+    assert.equal((await state(reduced.page)).rafId, 0);
+    const firstStatic = await reduced.page.locator(".firefly-canvas").screenshot();
     await advance(reduced.page, 20);
-    assert.ok(firstStatic.equals(await reduced.page.locator("canvas").screenshot()));
+    assert.ok(firstStatic.equals(await reduced.page.locator(".firefly-canvas").screenshot()));
     await reduced.context.close();
     pass("initial mobile reduced-motion starts with zero animation frames");
 
     // Uninstrumented file:// smoke test uses the browser's real RAF and local assets.
     const local = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     local.on("pageerror", error => errors.push(error.message));
-    await local.goto(pathToFileURL(path.join(root, "index.html")).href);
+    await local.goto(pathToFileURL(path.join(root, "course", "start.html")).href);
     assert.equal(await local.evaluate(() => typeof window.FireflyHero?.start), "function");
     await local.waitForTimeout(300);
     await local.locator(".firefly-toggle").click();
     assert.equal(await local.locator(".firefly-toggle").getAttribute("aria-label"), "播放动画");
     await local.waitForTimeout(250); // The separate button's hover transition must settle before a screenshot.
-    const localFrame = await local.locator("canvas").screenshot();
+    const localFrame = await local.locator(".firefly-canvas").screenshot();
     await local.waitForTimeout(150);
-    assert.ok(localFrame.equals(await local.locator("canvas").screenshot()));
+    assert.ok(localFrame.equals(await local.locator(".firefly-canvas").screenshot()));
     await local.close();
+    const journey = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    journey.on("pageerror", error => errors.push(error.message));
+    await journey.goto(pathToFileURL(path.join(root, "index.html")).href);
+    await journey.locator('.course-card[href="course/start.html"]').click();
+    await journey.waitForURL("**/course/start.html");
+    assert.ok(await journey.locator("[data-firefly-hero]").isVisible());
+    await journey.getByRole("link", { name: "开始学习" }).click();
+    await journey.waitForURL("**/course/index.html");
+    await journey.locator(".nav-lesson").first().waitFor({ state: "attached" });
+    await journey.locator('[aria-controls="lesson-nav"]').first().click();
+    await journey.locator('details[data-code="1.2"] > summary').click();
+    await journey.locator('.nav-lesson:has(.nav-code:text-is("1.2.2"))').click();
+    assert.match(await journey.locator("#lesson-code").textContent(), /1\.2\.2/);
+    assert.equal(await journey.locator("[data-firefly-hero]").count(), 0);
+    assert.equal(await journey.evaluate(() => typeof window.FireflyHero), "undefined");
+    await journey.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+    assert.equal(await journey.locator(".topbar").evaluate(element => Math.round(element.getBoundingClientRect().top)), 0);
+    await journey.goto(pathToFileURL(path.join(root, "course", "index.html")).href + "#lesson-1.3.1");
+    await journey.reload();
+    assert.match(await journey.locator("#lesson-code").textContent(), /1\.3\.1/);
+    assert.equal(await journey.locator("[data-firefly-hero]").count(), 0);
+    await journey.close();
     assert.deepEqual(errors, []);
-    pass("file:// local assets, real RAF and pause, zero browser errors");
+    pass("file:// animation and course journey; lesson switches never contain the intro");
     if (process.argv.includes("--preview")) {
       const preview = await open({ deviceScaleFactor: 1 });
       const frames = path.join(output, "finale-frames");

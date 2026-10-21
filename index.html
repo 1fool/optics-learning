@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="双语光学交互课程：选择物理光学或傅里叶光学，用可视化实验、循序讲义与逐题测验学习。">
-  <meta name="theme-color" content="#07131e">
+  <meta name="theme-color" content="#180b20">
   <title>光学可视课 · 物理光学与傅里叶光学</title>
-  <link rel="icon" href="favicon.svg?v=firefly-1" type="image/svg+xml">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site.css">
-  <link rel="stylesheet" href="firefly-hero.css">
+  <link rel="stylesheet" href="scientist-home.css">
 </head>
-<body class="immersive-home">
+<body class="scientist-home">
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="./" aria-label="光学可视课，返回首页"><img class="brand-symbol" src="firefly-mark.svg" alt="" aria-hidden="true"><span>光学可视课<small>OPTICS LEARNING</small></span></a>
@@ -19,22 +19,61 @@
   </header>
 
   <main>
-    <section class="hero hero-immersive" aria-labelledby="hero-title">
-      <div class="firefly-stage" data-firefly-hero>
-        <canvas class="firefly-canvas" role="img" aria-label="一只萤火虫飞过反射、折射、干涉、衍射，最后与其他萤火虫汇聚成 OPTICS"></canvas>
-        <noscript><p class="firefly-noscript">首页动画需要 JavaScript。课程内容仍可直接进入。</p></noscript>
-        <button class="firefly-toggle" type="button" aria-label="暂停动画" aria-pressed="false">
-          <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="3.5" width="2.4" height="9" rx="1"></rect><rect x="9.1" y="3.5" width="2.4" height="9" rx="1"></rect></svg>
-          <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.2 3.5 12 8l-6.8 4.5z"></path></svg>
-        </button>
+    <section class="hero scientist-hero" aria-labelledby="hero-title">
+      <div class="manga-backdrop" aria-hidden="true"></div>
+      <div class="speed-lines" aria-hidden="true"></div>
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="scientist-layout">
+        <div class="scientist-copy">
+          <p class="scientist-kicker"><span class="status-dot" aria-hidden="true"></span> SCIENTIST DOSSIER <span class="kicker-rule"></span> NO. 01</p>
+          <p class="scientist-nameplate">[ SCIENTIST NAME ]</p>
+          <p class="scientist-japanese" id="scientist-japanese" lang="ja">アルベルト・アインシュタイン</p>
+          <h1 id="hero-title">Albert Einstein</h1>
+          <p class="scientist-field" id="scientist-field">THEORETICAL PHYSICS <span aria-hidden="true">/</span> 1879—1955</p>
+          <p class="scientist-quote" id="scientist-quote">“Imagination is more important than knowledge.”</p>
+          <div class="hero-actions">
+            <a class="button-primary" href="#courses">进入光学课程 <span aria-hidden="true">↗</span></a>
+            <a class="button-text" href="course/#lesson-1.3.1">体验球面波实验 <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="scientist-controls">
+            <button class="scientist-step" type="button" data-scientist-step="-1" aria-label="上一位科学家"><span aria-hidden="true">←</span> PREV</button>
+            <span class="scientist-index" id="scientist-index">01 / 04</span>
+            <button class="scientist-step" type="button" data-scientist-step="1" aria-label="下一位科学家">NEXT <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+
+        <div class="radar-panel" aria-label="科学家六维能力雷达图">
+          <div class="panel-heading"><span>能力参数</span><span class="panel-code">主观示意 / 01—05</span></div>
+          <svg class="radar-chart" viewBox="0 0 520 440" role="img" aria-labelledby="radar-title radar-desc">
+            <title id="radar-title">爱因斯坦六维能力雷达图</title>
+            <desc id="radar-desc">悬停或聚焦六个维度可查看说明。</desc>
+            <g class="radar-rings" aria-hidden="true"></g>
+            <g class="radar-axes" aria-hidden="true"></g>
+            <polygon class="radar-area" points=""></polygon>
+            <polygon class="radar-focus-area" points=""></polygon>
+            <g class="radar-points"></g>
+            <g class="radar-labels"></g>
+          </svg>
+          <div class="radar-readout" aria-live="polite">
+            <span class="readout-grade" id="radar-grade">A</span>
+            <span class="readout-copy"><strong id="radar-dimension">理论颠覆力</strong><small id="radar-description">重写经典物理的边界。</small></span>
+            <span class="readout-coordinates" id="radar-value">05 / 05</span>
+          </div>
+        </div>
+
+        <div class="portrait-stage" id="portrait-stage">
+          <span class="portrait-stamp">SUBSTITUTE<br>ARCHIVE / <span id="portrait-index">01</span></span>
+          <img class="scientist-portrait" id="scientist-portrait" src="assets/scientist-einstein-cutout.png" alt="爱因斯坦卡通立绘">
+          <span class="portrait-caption" id="portrait-caption">THEORY / RELATIVITY</span>
+        </div>
       </div>
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> A LITTLE LIGHT. A BIG DISCOVERY.</p>
-        <h1 id="hero-title">把抽象的光学，<em>变成看得见的探索。</em></h1>
-        <p class="hero-intro">跟随一只萤火虫，穿过光的四次奇遇。</p>
-        <div class="hero-actions"><a class="button-primary" href="#courses">选择一本课程 <span aria-hidden="true">↗</span></a><a class="button-text" href="course/#lesson-1.3.1">体验球面波实验 <span aria-hidden="true">→</span></a></div>
-      </div>
-      <a class="hero-scroll" href="#approach" aria-label="向下了解课程"><span>向下探索</span><span aria-hidden="true">↓</span></a>
+      <div class="gogogo gogogo-one" aria-hidden="true">ゴゴゴゴ</div>
+      <div class="gogogo gogogo-two" aria-hidden="true">ゴゴゴゴ</div>
+      <div class="hero-index-mark" aria-hidden="true">OL / SCIENCE FILES</div>
+      <button class="sound-toggle" type="button" aria-label="开启音效" aria-pressed="false" title="开启或关闭合成音效">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z"></path><path class="sound-wave" d="M16 9a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"></path><path class="sound-slash" d="m16 9 5 6m0-6-5 6"></path></svg>
+      </button>
+      <a class="hero-scroll" href="#courses" aria-label="向下选择课程"><span>SCROLL TO EXPLORE</span><span aria-hidden="true">↓</span></a>
     </section>
 
     <section class="facts" aria-label="物理光学课程概况"><div class="wrap facts-inner"><p><strong>20</strong><span>物理光学学习单元</span></p><p><strong>66</strong><span>物理光学逐题练习</span></p><p><strong>中 / EN</strong><span>双语阅读</span></p><p><strong>4</strong><span>种学习视图</span></p></div></section>
@@ -44,7 +83,7 @@
       <h2 id="courses-title">选一本书，从已完成的小节开始。</h2>
       <div class="course-grid">
         <a class="course-card" href="fourier/"><span class="course-tag">本学期先学 / FOURIER OPTICS</span><strong>傅里叶光学</strong><span>吕乃光 · 1.1–1.2 已完成：常用函数、δ 函数与梳状函数。先看传播、计算和全息的开场动画，再进入交互课程。</span><b>进入傅里叶光学 →</b></a>
-        <a class="course-card" href="course/"><span class="course-tag">PHYSICAL OPTICS</span><strong>物理光学</strong><span>第 5 版 · 1.1–1.6.5 已完成：20 个学习单元、66 道正式练习。原有课程入口和浏览器进度不变。</span><b>进入物理光学 →</b></a>
+        <a class="course-card" href="course/start.html"><span class="course-tag">PHYSICAL OPTICS</span><strong>物理光学</strong><span>第 5 版 · 1.1–1.6.5 已完成：20 个学习单元、66 道正式练习。课程进度保留。</span><b>进入物理光学 →</b></a>
       </div>
     </section>
 
@@ -65,6 +104,6 @@
   </main>
 
   <footer class="site-footer"><div class="wrap footer-inner"><span>光学可视课 · by 1fool</span><span>学习、观察、再提问。</span><a href="#courses">选择课程 ↑</a></div></footer>
-  <script src="firefly-hero.js"></script>
+  <script src="scientist-home.js"></script>
 </body>
 </html>

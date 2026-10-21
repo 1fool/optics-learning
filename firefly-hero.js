@@ -58,7 +58,7 @@
     if (reduceQuery.matches) drawStaticFrame();
     else drawFrame(storyTime(elapsed));
   };
-  flyArtwork.src = "firefly-mark.svg";
+  flyArtwork.src = new URL("firefly-mark.svg", document.currentScript.src).href;
 
   let width = 1;
   let height = 1;
@@ -1069,7 +1069,7 @@
     height = Math.max(1, stage.clientHeight);
     sceneTop = 0;
     sceneHeight = height;
-    if (window.innerWidth <= 650) {
+    if (window.innerWidth <= 650 || window.innerHeight <= 500) {
       // Reframe the scene above the copy, without squashing the fly or its glow.
       const copy = document.querySelector(".hero-copy");
       sceneTop = 76;

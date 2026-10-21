@@ -22,13 +22,17 @@ const root = path.resolve(__dirname, "..");
         let previous = 0;
         window.__frameSamples = samples;
         window.requestAnimationFrame = callback => raf(now => {
+          if (callback.name !== "tick") {
+            callback(now);
+            return;
+          }
           const start = performance.now();
           callback(now);
           samples.push({ interval: previous ? now - previous : 0, duration: performance.now() - start });
           previous = now;
         });
       });
-      await page.goto(pathToFileURL(path.join(root, "index.html")).href);
+      await page.goto(pathToFileURL(path.join(root, "course", "start.html")).href);
       await page.waitForTimeout(600); // Exclude initialization and the debounced resize.
       await page.evaluate(() => { window.__frameSamples.length = 0; });
       await page.waitForTimeout(21000); // Includes every phase and one loop boundary.
