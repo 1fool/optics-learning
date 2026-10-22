@@ -43,21 +43,22 @@ const portraits = [
       const portrait = page.locator("#scientist-portrait");
       const next = page.getByRole("button", { name: "下一位科学家" });
       await next.click();
-      assert.equal(await page.locator("#scientist-index").textContent(), "01 / 04");
-      assert.equal(await page.locator("#portrait-stage").getAttribute("aria-busy"), "true");
+      assert.equal(await page.locator("#scientist-index").textContent(), "02 / 04");
+      assert.match(await portrait.evaluate(element => element.getAttribute("src")), /scientist-newton\.png$/);
       releaseNewton();
-      await page.waitForFunction(() => document.querySelector("#scientist-index").textContent === "02 / 04");
+      await page.waitForFunction(() => document.querySelector("#scientist-portrait").naturalWidth === 514);
       assert.match(await portrait.evaluate(element => element.currentSrc), /scientist-newton\.png$/);
-      assert.equal(await portrait.evaluate(element => element.naturalWidth), 514);
-      assert.equal(await page.locator("#portrait-stage").getAttribute("aria-busy"), null);
 
       for (let i = 2; i <= portraits.length; i++) {
         await next.click();
-        await page.waitForFunction(expected => document.querySelector("#scientist-index").textContent === expected,
+        assert.equal(await page.locator("#scientist-index").textContent(),
           `${String(i % portraits.length + 1).padStart(2, "0")} / 04`);
         const [name, file] = portraits[i % portraits.length];
         assert.equal(await page.locator("#hero-title").getAttribute("aria-label"), name);
-        assert.match(await portrait.evaluate(element => element.currentSrc), new RegExp(`${file}$`));
+        await page.waitForFunction(expected => {
+          const image = document.querySelector("#scientist-portrait");
+          return image.currentSrc.endsWith(expected) && image.naturalWidth > 0;
+        }, file);
       }
       assert.deepEqual(errors, []);
       await page.close();
@@ -72,15 +73,48 @@ const portraits = [
     });
     await page.goto(url, { waitUntil: "domcontentloaded" });
     await page.getByRole("button", { name: "下一位科学家" }).click({ clickCount: 2 });
-    await page.waitForFunction(() => document.querySelector("#scientist-index").textContent === "03 / 04");
+    assert.equal(await page.locator("#scientist-index").textContent(), "03 / 04");
     assert.match(await page.locator("#scientist-portrait").evaluate(element => element.currentSrc), /scientist-planck\.png$/);
-    const newtonResponse = page.waitForResponse(response => response.url().endsWith("scientist-newton.png"));
     releaseNewton();
-    await newtonResponse;
-    await page.waitForTimeout(100);
+    await page.waitForTimeout(200);
     assert.equal(await page.locator("#scientist-index").textContent(), "03 / 04");
     await page.close();
     console.log("PASS rapid taps keep the latest portrait");
+
+    const mobile = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      deviceScaleFactor: 3,
+      isMobile: true,
+      hasTouch: true,
+    });
+    const touchPage = await mobile.newPage();
+    let releasePortrait;
+    const holdPortrait = new Promise(resolve => { releasePortrait = resolve; });
+    await touchPage.route("**/scientist-newton.png", async route => {
+      await holdPortrait;
+      await route.continue();
+    });
+    await touchPage.goto(url, { waitUntil: "domcontentloaded" });
+    const tap = async (name) => {
+      const button = touchPage.getByRole("button", { name });
+      await button.scrollIntoViewIfNeeded();
+      const box = await button.boundingBox();
+      const x = box.x + box.width / 2;
+      const y = box.y + box.height / 2;
+      assert.equal(await touchPage.evaluate(([x, y]) =>
+        document.elementFromPoint(x, y)?.closest("[data-scientist-step]")?.getAttribute("aria-label"), [x, y]), name);
+      await touchPage.touchscreen.tap(x, y);
+    };
+    await tap("下一位科学家");
+    assert.equal(await touchPage.locator("#scientist-index").textContent(), "02 / 04");
+    assert.match(await touchPage.locator("#scientist-portrait").getAttribute("src"), /scientist-newton\.png$/);
+    releasePortrait();
+    await touchPage.waitForFunction(() => document.querySelector("#scientist-portrait").naturalWidth === 514);
+    await tap("上一位科学家");
+    assert.equal(await touchPage.locator("#scientist-index").textContent(), "01 / 04");
+    assert.match(await touchPage.locator("#scientist-portrait").getAttribute("src"), /scientist-einstein-cutout\.png$/);
+    await mobile.close();
+    console.log("PASS mobile touch next/prev and immediate response during image loading");
   } finally {
     await browser.close();
     server.close();
