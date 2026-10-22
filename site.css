@@ -9,7 +9,7 @@ a:focus-visible { outline: 3px solid #bd793b; outline-offset: 4px; border-radius
 .header-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 82px; }
 .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 800; text-decoration: none; white-space: nowrap; }
 .brand small { display: block; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .17em; line-height: 1.25; }
-.brand-symbol { display: block; width: 80px; height: 62px; object-fit: contain; }
+.brand-symbol { display: block; width: 62px; height: 62px; border-radius: 6px; object-fit: contain; }
 .header-inner nav { display: flex; align-items: center; gap: clamp(12px, 2.8vw, 36px); }
 .header-inner nav a { font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; }
 .header-inner nav a:hover, .button-text:hover, .footer-inner a:hover { color: var(--teal); text-decoration: underline; }

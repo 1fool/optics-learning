@@ -78,8 +78,18 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const hero = $(".scientist-hero");
   let current = 0;
+  let requested = 0;
   let activeDimension = 0;
   let typeTimer = 0;
+  const portraitLoads = scientists.map(({ portrait: src }) => new Promise((resolve) => {
+    const image = new Image();
+    image.onload = async () => {
+      if (image.decode) await image.decode().catch(() => {});
+      resolve(true);
+    };
+    image.onerror = () => resolve(false);
+    image.src = src;
+  }));
 
   function pointAt(position, scale) {
     const angle = startAngle + position * Math.PI / 3;
@@ -194,9 +204,20 @@
   }
 
   document.querySelectorAll("[data-scientist-step]").forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       const direction = Number(button.dataset.scientistStep);
-      current = (current + direction + scientists.length) % scientists.length;
+      requested = (requested + direction + scientists.length) % scientists.length;
+      const target = requested;
+      const stage = $("#portrait-stage");
+      stage.setAttribute("aria-busy", "true");
+      const loaded = await portraitLoads[target];
+      if (target !== requested) return;
+      stage.removeAttribute("aria-busy");
+      if (!loaded) {
+        requested = current;
+        return;
+      }
+      current = target;
       renderScientist();
       playCue();
     });

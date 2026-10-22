@@ -536,7 +536,7 @@
 @media (max-width: 560px) {
   .scientist-home .header-inner { width: calc(100% - 32px); min-height: 74px; justify-content: center; padding-top: 9px; }
   .scientist-home .header-inner nav { display: none; }
-  .scientist-home .brand-symbol { width: 64px; height: 52px; }
+  .scientist-home .brand-symbol { width: 52px; height: 52px; }
   .scientist-hero { min-height: 0; padding: 97px 18px 65px; }
   .scientist-layout { display: flex; flex-direction: column; align-items: stretch; gap: 13px; }
   .scientist-copy { padding: 4px 0 0; }

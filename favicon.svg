@@ -1,15 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <defs>
-    <radialGradient id="glow"><stop stop-color="#faffc1"/><stop offset=".45" stop-color="#c7f87a" stop-opacity=".75"/><stop offset="1" stop-color="#c7f87a" stop-opacity="0"/></radialGradient>
-    <linearGradient id="shell" x1="14" y1="19" x2="36" y2="43" gradientUnits="userSpaceOnUse"><stop stop-color="#789b6b"/><stop offset=".6" stop-color="#2d594a"/><stop offset="1" stop-color="#183835"/></linearGradient>
-  </defs>
-  <circle cx="16" cy="38" r="18" fill="url(#glow)"/>
-  <path d="M12 30q7-7 20-4l9 9q-5 13-20 14-12 0-13-10Z" fill="#315a48" stroke="#a5bd80" stroke-width="1.4"/>
-  <path d="M10 35q6-4 12 1 4 5 1 11-11-1-13-8Z" fill="#efffac" stroke="#9dc967" stroke-width="1.4"/>
-  <path d="M18 28q6-12 19-10 9 1 11 13-3 8-10 10-16-2-24-7Z" fill="url(#shell)" stroke="#c2d698" stroke-width="1.4"/>
-  <path d="M20 29q13-3 25 9m-17-15q7-3 12 1" stroke="#bfd49b" stroke-linecap="round" stroke-width="1.2" opacity=".7"/>
-  <path d="M39 27q1-8 8-8 9 3 10 12-4 9-13 9-7-4-7-10Z" fill="#b8804f" stroke="#f1d590" stroke-width="1.2"/>
-  <ellipse cx="54" cy="32" rx="6" ry="7" fill="#29473d" stroke="#d0cf9b" stroke-width="1.1"/>
-  <circle cx="57" cy="31" r="1.7" fill="#111f22"/><circle cx="57.5" cy="30.4" r=".65" fill="#fff8d3"/>
-  <path d="M51 25Q47 16 40 12m13 13q2-10 9-13M36 39l-5 13m15-13 2 12m6-13 6 11" stroke="#3c5948" stroke-width="2" stroke-linecap="round"/>
+  <rect width="64" height="64" rx="8" fill="#fff"/>
+  <path d="M26 44 11 59" stroke="#17283b" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="36" cy="34" r="12" fill="#e7f0f2" fill-opacity=".55"/>
+  <circle cx="36" cy="34" r="12" stroke="#17283b" stroke-width="3"/>
+  <path d="M29 27q2-3 5-4" stroke="#b1ced5" stroke-width="1.5" stroke-linecap="round"/>
+  <g stroke="#e8ac2f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 22 41 45 54 54M22 20 44.5 42.5 54 54M24 16 47 39 54 54"/>
+  </g>
+  <circle cx="18" cy="18" r="8" fill="#e8ac2f"/>
+  <g stroke="#e8ac2f" stroke-width="1.5" stroke-linecap="round">
+    <path d="M18 3v4M14 29l-1 3M3 18h4M29 18h4"/>
+    <path d="M8 8l3 3M28 8l-3 3M8 28l3-3"/>
+  </g>
+  <path d="m54 49 1.2 3.8L59 54l-3.8 1.2L54 59l-1.2-3.8L49 54l3.8-1.2L54 49Z" fill="#e8ac2f"/>
 </svg>
