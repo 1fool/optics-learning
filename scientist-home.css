@@ -389,6 +389,22 @@
   mask-image: linear-gradient(#000 85%, transparent 100%);
 }
 
+.portrait-stage.is-loading .scientist-portrait { visibility: hidden; }
+.portrait-status {
+  position: absolute;
+  z-index: 3;
+  align-self: center;
+  padding: 9px 13px;
+  background: #180b20df;
+  color: #ffdf77;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+}
+.portrait-stage.is-loading .portrait-status,
+.portrait-stage.is-error .portrait-status { opacity: 1; }
+
 .portrait-stamp,
 .portrait-caption {
   position: absolute;

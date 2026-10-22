@@ -8,7 +8,7 @@
       field: "THEORETICAL PHYSICS / 1879—1955",
       quote: "相对论与光电效应，改写时空观。",
       caption: "THEORY / RELATIVITY",
-      portrait: "assets/scientist-einstein-cutout.png",
+      portrait: "assets/scientist-einstein-cutout.webp",
       scores: [5, 4, 5, 5, 3, 5]
     },
     {
@@ -17,7 +17,7 @@
       field: "MATHEMATICS & PHYSICS / 1643—1727",
       quote: "经典力学、万有引力与光学的奠基者。",
       caption: "MECHANICS / OPTICS",
-      portrait: "assets/scientist-newton.png",
+      portrait: "assets/scientist-newton.webp",
       scores: [5, 4, 5, 5, 4, 5]
     },
     {
@@ -26,7 +26,7 @@
       field: "THEORETICAL PHYSICS / 1858—1947",
       quote: "以量子假说开启微观物理的新章。",
       caption: "QUANTUM / THERMODYNAMICS",
-      portrait: "assets/scientist-planck.png",
+      portrait: "assets/scientist-planck.webp",
       scores: [5, 4, 4, 5, 3, 5]
     },
     {
@@ -35,7 +35,7 @@
       field: "MATHEMATICAL PHYSICS / 1831—1879",
       quote: "用统一方程揭示电、磁与光的联系。",
       caption: "ELECTROMAGNETISM / OPTICS",
-      portrait: "assets/scientist-maxwell.png",
+      portrait: "assets/scientist-maxwell.webp",
       scores: [5, 4, 5, 4, 4, 5]
     }
   ];
@@ -77,9 +77,32 @@
   const value = $("#radar-value");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const hero = $(".scientist-hero");
+  const stage = $("#portrait-stage");
+  const portraitStatus = $("#portrait-status");
   let current = 0;
+  let requested = 0;
   let activeDimension = 0;
   let typeTimer = 0;
+  const portraitLoads = [];
+
+  function loadPortrait(position) {
+    if (!portraitLoads[position]) {
+      portraitLoads[position] = new Promise((resolve) => {
+        const image = new Image();
+        image.onload = async () => {
+          if (image.decode) await image.decode().catch(() => {});
+          resolve(true);
+        };
+        image.onerror = () => resolve(false);
+        image.src = scientists[position].portrait;
+      });
+    }
+    return portraitLoads[position];
+  }
+
+  window.addEventListener("load", () => {
+    scientists.forEach((_, position) => { if (position !== 0) loadPortrait(position); });
+  });
 
   function pointAt(position, scale) {
     const angle = startAngle + position * Math.PI / 3;
@@ -187,17 +210,36 @@
     svg.querySelector("title").textContent = `${scientist.name}六维能力雷达图`;
     svg.querySelector("desc").textContent = "悬停或聚焦六个维度可查看说明。";
     setActiveDimension(activeDimension);
-    const stage = $("#portrait-stage");
     stage.classList.remove("is-changing");
     void stage.offsetWidth;
     stage.classList.add("is-changing");
   }
 
   document.querySelectorAll("[data-scientist-step]").forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       const direction = Number(button.dataset.scientistStep);
-      current = (current + direction + scientists.length) % scientists.length;
+      requested = (requested + direction + scientists.length) % scientists.length;
+      if (requested === current) {
+        stage.classList.remove("is-loading", "is-error");
+        return;
+      }
+      stage.classList.add("is-loading");
+      stage.classList.remove("is-error");
+      portraitStatus.textContent = `正在切换到 ${scientists[requested].name}…`;
+      const target = requested;
+      const loaded = await loadPortrait(target);
+      if (target !== requested) return;
+      if (!loaded) {
+        portraitLoads[target] = null;
+        requested = current;
+        portraitStatus.textContent = "图片加载失败，请重试";
+        stage.classList.remove("is-loading");
+        stage.classList.add("is-error");
+        return;
+      }
+      current = target;
       renderScientist();
+      stage.classList.remove("is-loading", "is-error");
       playCue();
     });
   });
