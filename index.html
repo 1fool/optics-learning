@@ -7,13 +7,14 @@
   <meta name="theme-color" content="#180b20">
   <title>光学可视课 · 物理光学与傅里叶光学</title>
   <link rel="icon" href="favicon.svg?v=sun-focus-7" type="image/svg+xml">
-  <link rel="stylesheet" href="site.css">
-  <link rel="stylesheet" href="scientist-home.css?v=portrait-ready-3">
+  <link rel="stylesheet" href="site.css?v=manga-2">
+  <link rel="stylesheet" href="scientist-home.css?v=manga-2">
 </head>
 <body class="scientist-home">
+  <a class="skip-link" href="#courses">跳到课程选择</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="./" aria-label="光学可视课，返回首页"><img class="brand-symbol" src="sun-focus-mark.svg" alt="" aria-hidden="true"><span>光学可视课<small>OPTICS LEARNING</small></span></a>
+      <a class="brand" href="./" aria-label="光学可视课，返回首页"><img class="brand-symbol" src="assets/sun-focus-manga.svg" alt="" aria-hidden="true"><span>光学可视课<small>OPTICS LEARNING</small></span></a>
       <nav aria-label="主导航"><a href="#approach">怎么学习</a><a href="#courses">选择课程</a><a class="nav-course" href="#courses">进入课程 <span aria-hidden="true">↗</span></a></nav>
     </div>
   </header>
@@ -26,7 +27,7 @@
       <div class="scientist-layout">
         <div class="scientist-copy">
           <p class="scientist-kicker"><span class="status-dot" aria-hidden="true"></span> SCIENTIST DOSSIER <span class="kicker-rule"></span> NO. 01</p>
-          <p class="scientist-nameplate">[ SCIENTIST NAME ]</p>
+          <p class="scientist-nameplate"><span class="joestar-star" aria-hidden="true"></span> 科学家档案 / SCIENCE FILE</p>
           <p class="scientist-japanese" id="scientist-japanese" lang="ja">アルベルト・アインシュタイン</p>
           <h1 id="hero-title">Albert Einstein</h1>
           <p class="scientist-field" id="scientist-field">THEORETICAL PHYSICS <span aria-hidden="true">/</span> 1879—1955</p>
@@ -77,34 +78,60 @@
       <a class="hero-scroll" href="#courses" aria-label="向下选择课程"><span>SCROLL TO EXPLORE</span><span aria-hidden="true">↓</span></a>
     </section>
 
-    <section class="facts" aria-label="物理光学课程概况"><div class="wrap facts-inner"><p><strong>20</strong><span>物理光学学习单元</span></p><p><strong>66</strong><span>物理光学逐题练习</span></p><p><strong>中 / EN</strong><span>双语阅读</span></p><p><strong>4</strong><span>种学习视图</span></p></div></section>
+    <section class="facts" aria-label="课程概况"><div class="wrap facts-inner"><p><strong>09 <i>/ 31</i></strong><span>傅里叶光学 · 小节 / 练习</span></p><p><strong>20 <i>/ 66</i></strong><span>物理光学 · 单元 / 练习</span></p><p><strong>中 / EN</strong><span>双语阅读 · 随时切换</span></p><p><strong>04</strong><span>探索 · 图解 · 讲义 · 练习</span></p></div></section>
 
     <section id="courses" class="courses wrap" aria-labelledby="courses-title">
-      <p class="eyebrow">TWO TEXTBOOKS · TWO LEARNING PATHS</p>
-      <h2 id="courses-title">选一本书，从已完成的小节开始。</h2>
-      <div class="course-grid">
-        <a class="course-card" href="fourier/"><span class="course-tag">本学期先学 / FOURIER OPTICS</span><strong>傅里叶光学</strong><span>吕乃光 · 已完成 1.1–1.4 的 9 个小节、31 道正式题：从常用函数与脉冲，到卷积和相关。先看传播、计算和全息的开场动画，再进入交互课程。</span><b>进入傅里叶光学 →</b></a>
-        <a class="course-card" href="course/start.html"><span class="course-tag">PHYSICAL OPTICS</span><strong>物理光学</strong><span>第 5 版 · 1.1–1.6.5 已完成：20 个学习单元、66 道正式练习。课程进度保留。</span><b>进入物理光学 →</b></a>
+      <div class="section-heading">
+        <div><p class="eyebrow"><span class="joestar-star" aria-hidden="true"></span> CHOOSE YOUR CHAPTER / 选择课程</p>
+        <h2 id="courses-title">你的光学冒险，<br><em>从这一页开始。</em></h2></div>
+        <p class="section-note">两本教材，两条独立路线。<br>选好起点，带着好奇心出发。</p>
       </div>
+      <div class="course-grid">
+        <a class="course-card course-fourier" href="fourier/">
+          <div class="course-art" aria-hidden="true"><img src="assets/jojo/golden-key-visual.webp" alt="" loading="lazy" decoding="async" width="460" height="650"></div>
+          <div class="course-copy"><span class="course-tag">ROUTE 01 / FOURIER OPTICS</span><span class="course-status">本学期先学</span><strong>傅里叶<br>光学</strong><span class="course-description">从常用函数与脉冲出发，<br>看懂卷积与相关的运作。</span><span class="course-meta">吕乃光 · §1.1–1.4<br><b>9 小节</b><b>31 道练习</b></span><span class="course-enter">进入傅里叶光学 <span aria-hidden="true">↗</span></span></div>
+        </a>
+        <a class="course-card course-physical" href="course/start.html">
+          <div class="course-art" aria-hidden="true"><img src="assets/jojo/diamond-key-visual.webp" alt="" loading="lazy" decoding="async" width="460" height="643"></div>
+          <div class="course-copy"><span class="course-tag">ROUTE 02 / PHYSICAL OPTICS</span><span class="course-status">已有进度保留</span><strong>物理<br>光学</strong><span class="course-description">从光波与传播开始，<br>让图像、实验和公式接上。</span><span class="course-meta">第 5 版 · §1.1–1.6.5<br><b>20 个单元</b><b>66 道练习</b></span><span class="course-enter">进入物理光学 <span aria-hidden="true">↗</span></span></div>
+        </a>
+      </div>
+      <p class="course-footnote">从已完成的小节开始学习 · 两本教材的目录与进度各自独立</p>
+    </section>
+
+    <section class="character-interlude" aria-labelledby="interlude-title">
+      <div class="wrap interlude-heading"><p class="eyebrow">JOESTAR ARCHIVE / 冒险者集结</p><h2 id="interlude-title">好奇心，<em>就是你的超能力。</em></h2><span class="menacing" aria-hidden="true" lang="ja">ゴゴゴゴ</span></div>
+      <div class="character-strip">
+        <figure><img src="assets/jojo/jonathan-joestar.webp" alt="乔纳森·乔斯达" loading="lazy" decoding="async" width="512" height="410"><figcaption><span>01</span> 乔纳森</figcaption></figure>
+        <figure><img src="assets/jojo/joseph-joestar.webp" alt="乔瑟夫·乔斯达" loading="lazy" decoding="async" width="512" height="512"><figcaption><span>02</span> 乔瑟夫</figcaption></figure>
+        <figure><img src="assets/jojo/jotaro-kujo.webp" alt="空条承太郎" loading="lazy" decoding="async" width="512" height="537"><figcaption><span>03</span> 承太郎</figcaption></figure>
+        <figure><img src="assets/jojo/josuke-higashikata.webp" alt="东方仗助" loading="lazy" decoding="async" width="512" height="512"><figcaption><span>04</span> 仗助</figcaption></figure>
+        <figure><img src="assets/jojo/giorno-giovanna.webp" alt="乔鲁诺·乔巴拿" loading="lazy" decoding="async" width="512" height="512"><figcaption><span>05</span> 乔鲁诺</figcaption></figure>
+        <figure><img src="assets/jojo/jolyne-cujoh.webp" alt="空条徐伦" loading="lazy" decoding="async" width="512" height="512"><figcaption><span>06</span> 徐伦</figcaption></figure>
+      </div>
+      <div class="interlude-caption wrap"><span>观察。质疑。再向前一步。</span><a href="https://jojosdle.net/zh/characters" target="_blank" rel="noopener noreferrer">角色图鉴 · Jojosdle ↗</a></div>
     </section>
 
     <section id="approach" class="approach wrap" aria-labelledby="approach-title">
-      <div class="section-lead"><p class="eyebrow">LEARNING PATH</p><h2 id="approach-title">不是先背公式，<br>而是看懂它的来处。</h2><p>一节内容里可以在实验、图解回顾、完整讲义和正式练习之间切换。想追推导时展开细节，想检验理解时立刻做题。</p></div>
+      <div class="section-lead"><p class="eyebrow"><span class="joestar-star" aria-hidden="true"></span> FOUR ACTS / 学习四幕</p><h2 id="approach-title">看见现象。<br>亲手改变。<br><em>解开原理。</em></h2><p>每节内容都能切换实验、图解回顾、完整讲义和正式练习。沿着四个动作，把一个问题真正弄明白。</p><a class="button-text" href="course/#lesson-1.3.1">从球面波实验试一试 <span aria-hidden="true">↗</span></a><div class="approach-orbit" aria-hidden="true"><span class="joestar-star"></span><i></i><b>光</b></div></div>
       <ol class="path-list">
-        <li><span class="path-number">01</span><div><h3>先预测</h3><p>带着一个具体问题进入场景，不要求提前记住结论。</p></div></li>
-        <li><span class="path-number">02</span><div><h3>再操作</h3><p>改变图示中的条件，对照现象与模型边界。</p></div></li>
-        <li><span class="path-number">03</span><div><h3>说清原因</h3><p>讲义从概念、条件走向公式；详细验算可按需展开。</p></div></li>
-        <li><span class="path-number">04</span><div><h3>换情境检验</h3><p>逐题反馈不止给对错，还解释推理和常见误解。</p></div></li>
+        <li><span class="path-number">01</span><div><span class="act-label">PREDICT / 动手探索</span><h3>先大胆猜想</h3><p>带着一个具体问题进入场景，先做预测，再看现象。</p></div><span class="panel-sfx" aria-hidden="true" lang="ja">ド</span></li>
+        <li><span class="path-number">02</span><div><span class="act-label">EXPLORE / 参数操作</span><h3>让条件发生变化</h3><p>亲手改变图示中的条件，比较结果，也看清模型的边界。</p></div><span class="panel-sfx" aria-hidden="true" lang="ja">ド</span></li>
+        <li><span class="path-number">03</span><div><span class="act-label">UNDERSTAND / 完整讲义</span><h3>把原因讲清楚</h3><p>从概念和条件走向公式；想追推导时，展开详细验算。</p></div><span class="panel-sfx" aria-hidden="true" lang="ja">ド</span></li>
+        <li><span class="path-number">04</span><div><span class="act-label">CHALLENGE / 正式练习</span><h3>换个情境，再试一次</h3><p>用新问题检验理解；逐题反馈解释推理，也指出常见误解。</p></div><span class="panel-sfx" aria-hidden="true" lang="ja">ド</span></li>
       </ol>
     </section>
 
     <section id="scope" class="scope wrap" aria-labelledby="scope-title">
-      <div><p class="eyebrow">CURRENT SCOPE</p><h2 id="scope-title">两本书，各自成课。</h2><p>《傅里叶光学》目前覆盖 1.1–1.4（9 小节、31 题）；《物理光学（第5版）》目前覆盖 1.1–1.6.5。两者都在持续完善，<strong>不是整本教材</strong>。</p><p class="scope-small">讲解、练习和交互图示为重新组织的学习材料；网站不提供教材 PDF。图示是教学模型，不是实测数据。</p></div>
-      <a class="scope-link" href="#courses">选择课程 <span aria-hidden="true">↗</span><small>两本教材的目录与学习进度各自独立</small></a>
+      <div class="scope-copy"><p class="eyebrow">THE NEXT CHAPTER / 下一幕</p><h2 id="scope-title">奇妙的旅程，<br><em>始于一个问题。</em></h2><p>《傅里叶光学》已覆盖 §1.1–1.4；<br>《物理光学》已覆盖 §1.1–1.6.5。<br>从这一小步开始，继续探索光的世界。</p><a class="scope-link" href="#courses"><span class="continued-label">TO BE CONTINUED</span><span>选择课程，继续冒险 <span aria-hidden="true">→</span></span></a><p class="scope-small">两门课均在持续完善，尚未覆盖整本教材。<br>网站不提供教材 PDF；交互图示为教学模型。</p></div>
+      <div class="scope-art"><span class="scope-burst" aria-hidden="true"></span><img src="assets/jojo/stardust-key-visual.webp" alt="《星尘斗士》官方主视觉：空条承太郎与白金之星" loading="lazy" decoding="async" width="460" height="645"></div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="wrap footer-inner"><span>光学可视课 · by 1fool</span><span>学习、观察、再提问。</span><a href="#courses">选择课程 ↑</a></div></footer>
-  <script src="scientist-home.js?v=portrait-ready-3"></script>
+  <footer class="site-footer"><div class="wrap footer-inner"><a class="brand" href="./"><span class="joestar-star" aria-hidden="true"></span><span>光学可视课<small>观察，让理解发生。</small></span></a><p>by 1fool · 学习、观察、再提问。</p><a href="#courses">回到课程 ↑</a></div><div class="wrap footer-credits"><span>JoJo 风格致敬 · 非官方联名。角色版权归原权利人。</span><span>视觉素材：<a href="https://jojosdle.net/zh/characters" target="_blank" rel="noopener noreferrer">Jojosdle 角色图鉴 ↗</a> / <a href="https://jojo-portal.com/anime/" target="_blank" rel="noopener noreferrer">JoJo 官方动画站 ↗</a></span></div></footer>
+  <script src="scientist-home.js?v=manga-2"></script>
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="manga-home.js?v=manga-2"></script>
 </body>
 </html>

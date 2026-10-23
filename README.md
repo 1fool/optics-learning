@@ -13,3 +13,5 @@
 教材 PDF 未随网站发布。课程显示原书页码供合法持有教材的学习者核对；不要将教材 PDF、临时文件或凭据上传到公开仓库。网站中的学习记录保存在访问者当前浏览器，不跨设备同步；换域名也不会自动迁移原有本地记录。
 
 网站包含第三方 KaTeX 资源，其许可文本保存在 `course/optics-course/vendor/katex/LICENSE`。本仓库没有为原创课程内容或其余代码声明开源许可。
+
+首页采用 JoJo 风格漫画分镜，保留科学家切换、雷达图与两个独立课程入口。角色图与主视觉的来源记录见 `assets/jojo/SOURCES.md`，首页本地动效库的版本及许可来源见 `assets/vendor/SOURCES.md`。布局与交互回归可运行 `node tests/check-manga-home.cjs` 和 `node tests/check-scientist-home.cjs`（需要本机 Playwright 与 Chrome）。

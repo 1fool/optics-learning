@@ -306,8 +306,7 @@
 .radar-points circle.is-active { fill: #ffcf59; stroke: #fff3a4; stroke-width: 3; }
 .radar-labels text {
   fill: #f6d6e2;
-  font: 700 11px "Microsoft YaHei UI", sans-serif;
-  text-anchor: middle;
+  font: 700 14px "Microsoft YaHei UI", sans-serif;
   dominant-baseline: middle;
 }
 .radar-labels text.is-active { fill: #ffcf59; }
@@ -469,11 +468,11 @@
 .scientist-home .hero-scroll span:last-child { color: #ffcf59; font-size: 16px; }
 .scientist-home .hero-scroll:hover { color: #ffcf59; }
 
-.scientist-home .facts { border-color: #efb8cc; background: #f5e8e9; }
-.scientist-home .facts-inner p + p { border-color: #e2c9cf; }
-.scientist-home .facts strong { color: #672145; }
-.scientist-home .facts span { color: #66515d; }
-.scientist-home .course-card:first-child { background: #fff6e8; }
+.scientist-nameplate { display: flex; align-items: center; gap: 8px; }
+.scientist-nameplate .joestar-star { width: 16px; height: 16px; }
+.scientist-step { min-height: 44px; }
+.scientist-hero .scientist-copy h1 { font-size: clamp(38px, 3.7vw, 60px); }
+.scientist-home .nav-course { border-radius: 0; border: 1px solid #ffda62; color: #ffda62; }
 
 @keyframes speed-converge {
   from { opacity: 0; transform: scale(2.1) rotate(-4deg); }
@@ -523,7 +522,7 @@
 
 @media (max-width: 1120px) {
   .scientist-hero { padding-inline: 28px; }
-  .scientist-layout { grid-template-columns: minmax(260px, .85fr) minmax(340px, 1fr) minmax(205px, .7fr); gap: 15px; }
+  .scientist-layout { grid-template-columns: minmax(0, .85fr) minmax(0, 1fr) minmax(0, .7fr); gap: 15px; }
   .scientist-portrait { width: 145%; }
   .scientist-copy h1 { font-size: clamp(32px, 3vw, 40px); }
   .scientist-kicker { margin-bottom: 28px; }
@@ -560,13 +559,14 @@
   .scientist-nameplate { margin-bottom: 8px; }
   .scientist-japanese { font-size: 14px; }
   .scientist-copy h1 { max-width: 100%; margin-bottom: 9px; font-size: clamp(35px, 10vw, 48px); }
+  .scientist-hero .scientist-copy h1 { font-size: clamp(35px, 10vw, 48px); }
   .scientist-field { margin-bottom: 9px; font-size: 9px; }
   .scientist-quote { min-height: 0; margin-bottom: 14px; font-size: 13px; }
   .scientist-controls { width: 100%; margin-top: 12px; padding-top: 5px; }
   .radar-panel { z-index: 5; max-width: none; margin-top: 1px; padding: 10px 7px 7px; }
   .panel-heading { font-size: 12px; }
   .radar-chart { max-height: 355px; }
-  .radar-labels text { font-size: 10px; }
+  .radar-labels text { font-size: 17px; }
   .radar-readout { min-height: 47px; }
   .readout-grade { width: 32px; font-size: 17px; }
   .readout-copy strong { font-size: 11px; }

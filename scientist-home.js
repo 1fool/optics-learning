@@ -134,7 +134,8 @@
     const endpoint = pointAt(i, 1);
     make("line", { x1: center.x, y1: center.y, x2: endpoint.x, y2: endpoint.y }, axes);
     const labelPoint = pointAt(i, 1.25);
-    const text = make("text", { x: labelPoint.x, y: labelPoint.y }, labels);
+    const anchor = i === 1 || i === 2 ? "start" : i === 4 || i === 5 ? "end" : "middle";
+    const text = make("text", { x: labelPoint.x, y: labelPoint.y, "text-anchor": anchor }, labels);
     text.textContent = item.label;
     labelNodes.push(text);
     const point = make("circle", { cx: endpoint.x, cy: endpoint.y, r: 17, class: "radar-point-hit", tabindex: "0", role: "button", "aria-label": item.label }, points);
