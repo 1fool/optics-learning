@@ -49,7 +49,7 @@ window.OpticsVisuals = function createVisuals(canvas, controls, caption) {
   let yaw = .63;
   let pitch = .42;
   let dragging = null;
-  const colors = { red: "#ff7b83", blue: "#70b8ff", green: "#86deb1", grid: "#46637b", text: "#e2eef5", muted: "#a8c0d0" };
+  const colors = { red: "#ff7b83", blue: "#70b8ff", green: "#86deb1", grid: "#658266", text: "#f6f0dc", muted: "#bdcdb1" };
 
   function setMode(next, savedValues = {}) {
     mode = next;
@@ -125,8 +125,8 @@ window.OpticsVisuals = function createVisuals(canvas, controls, caption) {
     ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); ctx.globalAlpha = 1;
   }
   function panel(x, y, width, height, title) {
-    ctx.fillStyle = "#17334a"; ctx.fillRect(x, y, width, height);
-    ctx.strokeStyle = "#31556e"; ctx.strokeRect(x + .5, y + .5, width - 1, height - 1);
+    ctx.fillStyle = "#2a4536"; ctx.fillRect(x, y, width, height);
+    ctx.strokeStyle = "#67805f"; ctx.strokeRect(x + .5, y + .5, width - 1, height - 1);
     text(title, x + 16, y + 26, colors.text, 14);
   }
   function maxwell(w, h) {
@@ -287,7 +287,7 @@ window.OpticsVisuals = function createVisuals(canvas, controls, caption) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, h);
     const gradient = ctx.createLinearGradient(0, 0, w, h);
-    const background = extra[mode]?.background || ["#0b2035", "#162e45"];
+    const background = ["#243d32", "#345142"];
     gradient.addColorStop(0, background[0]); gradient.addColorStop(1, background[1]);
     ctx.fillStyle = gradient; ctx.fillRect(0, 0, w, h);
     ctx.save(); ctx.beginPath(); ctx.rect(0, 0, w, h); ctx.clip();

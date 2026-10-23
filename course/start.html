@@ -3,34 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>物理光学 · 开始学习</title>
-  <link rel="icon" href="../favicon.svg?v=sun-focus-7" type="image/svg+xml">
-  <link rel="stylesheet" href="../firefly-hero.css">
-  <link rel="stylesheet" href="course-start.css">
+  <title>物理光学 · 和三熊开始学习</title>
+  <link rel="icon" href="optics-course/assets/we-bare-bears/bear-stack.webp" type="image/webp">
+  <link rel="stylesheet" href="optics-course/bears-start.css">
 </head>
 <body>
   <main>
     <section id="physics-start" class="physics-start" aria-labelledby="physics-start-title">
-      <div class="firefly-stage" data-firefly-hero>
-        <canvas class="firefly-canvas" role="img" aria-label="萤火虫依次经过反射、折射、干涉与衍射，最后汇聚成光学课程标志"></canvas>
-        <noscript><p class="firefly-noscript">动画需要 JavaScript；你仍可直接开始课程。</p></noscript>
-        <button class="firefly-toggle" type="button" aria-label="暂停动画" aria-pressed="false">
-          <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="3.5" width="2.4" height="9" rx="1"></rect><rect x="9.1" y="3.5" width="2.4" height="9" rx="1"></rect></svg>
-          <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.2 3.5 12 8l-6.8 4.5z"></path></svg>
-        </button>
+      <div class="bears-opening" data-bears-opening data-state="playing">
+        <div class="bears-forest" aria-hidden="true"></div>
+        <div class="bears-sun" aria-hidden="true"></div>
+        <div class="bears-stack" role="img" aria-label="棕熊、熊猫和白熊一起叠叠乐，在林间准备开始学习">
+          <img class="opening-bear-stack" src="optics-course/assets/we-bare-bears/bear-stack.webp" alt="" draggable="false">
+        </div>
+        <div class="bears-opening-snap" aria-hidden="true">
+          <img src="optics-course/assets/we-bare-bears/s01e01-cover.webp" alt="">
+          <span>OUR FIRST LITTLE ADVENTURE / 01</span>
+        </div>
+        <button id="bears-motion-toggle" type="button" aria-label="暂停动画" aria-pressed="false">暂停动画</button>
       </div>
       <div class="physics-start-copy hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> PHYSICAL OPTICS / CHAPTER 01</p>
-        <h1 id="physics-start-title">从一束光，开始物理光学。</h1>
-        <p>跟随萤火虫穿过反射、折射、干涉与衍射，再进入课程探索光与物质的规律。</p>
+        <p class="eyebrow">PHYSICAL OPTICS / CHAPTER 01</p>
+        <h1 id="physics-start-title">和三熊一起，<br>发现光的小秘密。</h1>
+        <p>从一束光开始，动手观察波的传播、反射与折射。带着好奇心出发，公式慢慢来。</p>
         <div class="physics-start-actions">
           <a class="button-primary" href="index.html">开始学习 <span aria-hidden="true">→</span></a>
-          <a class="button-text" href="index.html#lesson-1.3.1">直接体验球面波实验 <span aria-hidden="true">→</span></a>
+          <a class="button-text" href="index.html#lesson-1.3.1">体验球面波实验 <span aria-hidden="true">→</span></a>
         </div>
       </div>
-      <a class="physics-start-skip" href="index.html">跳过动画，直接进入课程 <span aria-hidden="true">→</span></a>
+      <a class="physics-start-skip" href="index.html">跳过动画，进入课程 →</a>
     </section>
   </main>
-  <script src="../firefly-hero.js"></script>
+  <script src="optics-course/bears-start.js"></script>
 </body>
 </html>

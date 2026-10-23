@@ -1,0 +1,746 @@
+{
+  "collected": "2026-10-23",
+  "series": "We Bare Bears",
+  "mapping": "Course leaf order to S01E01鈥揝01E20; not dotted section numbers interpreted as episode numbers.",
+  "rights": "Third-party Cartoon Network / series artwork. Sources identify provenance, not a verified redistribution license. User requested personal-study use.",
+  "lessons": [
+    {
+      "code": "1.1",
+      "season": 1,
+      "episode": 1,
+      "title": "Our Stuff",
+      "sources": [
+        {
+          "file": "s01e01-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/201135/we-bare-bears-1x01-our-stuff",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827378.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e01-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Our%20Stuff/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/7/7f/OS_43.png/revision/latest/scale-to-width-down/800?cb=20160628233334",
+          "originalFile": "OS_43.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e01-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Our%20Stuff/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/e/e2/Our_Stuff_094.jpg/revision/latest/scale-to-width-down/800?cb=20150729145122",
+          "originalFile": "Our_Stuff_094.jpg",
+          "role": "recap"
+        },
+        {
+          "file": "s01e01-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Our%20Stuff/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/1/10/Our_Stuff_149.jpg/revision/latest/scale-to-width-down/800?cb=20150729150328",
+          "originalFile": "Our_Stuff_149.jpg",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.2.1",
+      "season": 1,
+      "episode": 2,
+      "title": "Viral Video",
+      "sources": [
+        {
+          "file": "s01e02-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/201136/we-bare-bears-1x02-viral-video",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827379.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e02-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Viral%20Video/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/6/6b/VV41.png/revision/latest/scale-to-width-down/800?cb=20170501124530",
+          "originalFile": "VV41.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e02-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Viral%20Video/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/8/84/VV90.png/revision/latest/scale-to-width-down/800?cb=20170503051816",
+          "originalFile": "VV90.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e02-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Viral%20Video/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/5/59/VV137.png/revision/latest/scale-to-width-down/800?cb=20170503084812",
+          "originalFile": "VV137.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.2.2",
+      "season": 1,
+      "episode": 3,
+      "title": "Food Truck",
+      "sources": [
+        {
+          "file": "s01e03-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/201137/we-bare-bears-1x03-food-truck",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827380.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e03-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Food%20Truck/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/f/f6/Food_Truck_055.jpg/revision/latest/scale-to-width-down/800?cb=20150801030349",
+          "originalFile": "Food_Truck_055.jpg",
+          "role": "explore"
+        },
+        {
+          "file": "s01e03-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Food%20Truck/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/b/bf/Food_Truck_120.jpg/revision/latest/scale-to-width-down/800?cb=20150801032158",
+          "originalFile": "Food_Truck_120.jpg",
+          "role": "recap"
+        },
+        {
+          "file": "s01e03-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Food%20Truck/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/3/36/Food_Truck_180.jpg/revision/latest/scale-to-width-down/800?cb=20150801033943",
+          "originalFile": "Food_Truck_180.jpg",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.2.3",
+      "season": 1,
+      "episode": 4,
+      "title": "Chloe",
+      "sources": [
+        {
+          "file": "s01e04-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/201138/we-bare-bears-1x04-chloe",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827381.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e04-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Chloe%20%28episode%29/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/0/09/Chloe_052.jpg/revision/latest/scale-to-width-down/800?cb=20150731073615",
+          "originalFile": "Chloe_052.jpg",
+          "role": "explore"
+        },
+        {
+          "file": "s01e04-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Chloe%20%28episode%29/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/c/c4/Chloe_125.jpg/revision/latest/scale-to-width-down/800?cb=20150731075512",
+          "originalFile": "Chloe_125.jpg",
+          "role": "recap"
+        },
+        {
+          "file": "s01e04-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Chloe%20%28episode%29/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/c/ca/Chloe_130.jpg/revision/latest?cb=20150731075552",
+          "originalFile": "Chloe_130.jpg",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.2.4",
+      "season": 1,
+      "episode": 5,
+      "title": "Panda's Date",
+      "sources": [
+        {
+          "file": "s01e05-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/201139/we-bare-bears-1x05-pandas-date",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827382.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e05-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Panda%27s%20Date/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/7/7e/Panda%27s_Date_046.jpg/revision/latest/scale-to-width-down/800?cb=20150802075305",
+          "originalFile": "Panda's_Date_046.jpg",
+          "role": "explore"
+        },
+        {
+          "file": "s01e05-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Panda%27s%20Date/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/c/cb/Panda%27s_Date_076.jpg/revision/latest/scale-to-width-down/800?cb=20150802075701",
+          "originalFile": "Panda's_Date_076.jpg",
+          "role": "recap"
+        },
+        {
+          "file": "s01e05-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Panda%27s%20Date/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/5/5d/Panda%27s_Date_139.jpg/revision/latest/scale-to-width-down/800?cb=20150802080628",
+          "originalFile": "Panda's_Date_139.jpg",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.2.5",
+      "season": 1,
+      "episode": 6,
+      "title": "Everyday Bears",
+      "sources": [
+        {
+          "file": "s01e06-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/201140/we-bare-bears-1x06-everyday-bears",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827383.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e06-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Everyday%20Bears/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/d/dc/Everyday20.png/revision/latest/scale-to-width-down/800?cb=20150812165745",
+          "originalFile": "Everyday20.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e06-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Everyday%20Bears/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/0/0d/Everyday48.png/revision/latest/scale-to-width-down/800?cb=20150812171030",
+          "originalFile": "Everyday48.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e06-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Everyday%20Bears/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/9/96/Everyday72.png/revision/latest/scale-to-width-down/800?cb=20150812174123",
+          "originalFile": "Everyday72.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.2.6",
+      "season": 1,
+      "episode": 7,
+      "title": "Burrito",
+      "sources": [
+        {
+          "file": "s01e07-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/202088/we-bare-bears-1x07-burrito",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827384.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e07-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Burrito/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/7/71/Burrito_047.jpg/revision/latest/scale-to-width-down/800?cb=20150807062349",
+          "originalFile": "Burrito_047.jpg",
+          "role": "explore"
+        },
+        {
+          "file": "s01e07-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Burrito/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/f/ff/Burrito_102.jpg/revision/latest/scale-to-width-down/800?cb=20150807063520",
+          "originalFile": "Burrito_102.jpg",
+          "role": "recap"
+        },
+        {
+          "file": "s01e07-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Burrito/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/8/8e/Burrito_155.jpg/revision/latest/scale-to-width-down/800?cb=20150807071458",
+          "originalFile": "Burrito_155.jpg",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.3.1",
+      "season": 1,
+      "episode": 8,
+      "title": "Primal",
+      "sources": [
+        {
+          "file": "s01e08-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/202089/we-bare-bears-1x08-primal",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827385.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e08-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Primal/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/3/3c/Primal31.png/revision/latest/scale-to-width-down/800?cb=20150814010424",
+          "originalFile": "Primal31.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e08-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Primal/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/b/bc/Primal71.png/revision/latest/scale-to-width-down/800?cb=20150814015100",
+          "originalFile": "Primal71.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e08-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Primal/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/6/63/Primal104.png/revision/latest/scale-to-width-down/800?cb=20150814030313",
+          "originalFile": "Primal104.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.3.2",
+      "season": 1,
+      "episode": 9,
+      "title": "Jean Jacket",
+      "sources": [
+        {
+          "file": "s01e09-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/202888/we-bare-bears-1x09-jean-jacket",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827386.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e09-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Jean%20Jacket/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/3/35/Jj61.png/revision/latest/scale-to-width-down/800?cb=20150820234729",
+          "originalFile": "Jj61.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e09-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Jean%20Jacket/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/3/35/Jj115.png/revision/latest/scale-to-width-down/800?cb=20150821003046",
+          "originalFile": "Jj115.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e09-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Jean%20Jacket/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/3/3e/Jj167.png/revision/latest/scale-to-width-down/800?cb=20150821005807",
+          "originalFile": "Jj167.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.3.3",
+      "season": 1,
+      "episode": 10,
+      "title": "Nom Nom",
+      "sources": [
+        {
+          "file": "s01e10-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/202889/we-bare-bears-1x10-nom-nom",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827387.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e10-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Nom%20Nom/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/4/45/Nom107.png/revision/latest/scale-to-width-down/800?cb=20150828003532",
+          "originalFile": "Nom107.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e10-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Nom%20Nom/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/d/dd/NNE_153.png/revision/latest/scale-to-width-down/800?cb=20160318015631",
+          "originalFile": "NNE_153.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e10-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Nom%20Nom/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/e/e4/NNE_292.png/revision/latest/scale-to-width-down/800?cb=20160318032532",
+          "originalFile": "NNE_292.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.4.1",
+      "season": 1,
+      "episode": 11,
+      "title": "Shush Ninjas",
+      "sources": [
+        {
+          "file": "s01e11-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/202890/we-bare-bears-1x11-shush-ninjas",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827388.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e11-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Shush%20Ninjas/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/c/c2/Sn36.png/revision/latest/scale-to-width-down/800?cb=20150903234134",
+          "originalFile": "Sn36.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e11-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Shush%20Ninjas/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/d/d5/Sn89.png/revision/latest/scale-to-width-down/800?cb=20150904001824",
+          "originalFile": "Sn89.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e11-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Shush%20Ninjas/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/0/0d/Sn141.png/revision/latest/scale-to-width-down/800?cb=20150904010316",
+          "originalFile": "Sn141.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.4.2",
+      "season": 1,
+      "episode": 12,
+      "title": "My Clique",
+      "sources": [
+        {
+          "file": "s01e12-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/212074/we-bare-bears-1x12-my-clique",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827389.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e12-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/My%20Clique/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/2/26/Mc39.png/revision/latest/scale-to-width-down/800?cb=20150910234359",
+          "originalFile": "Mc39.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e12-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/My%20Clique/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/4/46/Mc88.png/revision/latest/scale-to-width-down/800?cb=20150911004341",
+          "originalFile": "Mc88.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e12-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/My%20Clique/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/6/60/Mc136.png/revision/latest/scale-to-width-down/800?cb=20150911011711",
+          "originalFile": "Mc136.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.4.3",
+      "season": 1,
+      "episode": 13,
+      "title": "Charlie",
+      "sources": [
+        {
+          "file": "s01e13-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/212075/we-bare-bears-1x13-charlie",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827390.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e13-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Charlie%20%28episode%29/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/0/0b/Charlie_episode_51.png/revision/latest/scale-to-width-down/800?cb=20150920200123",
+          "originalFile": "Charlie_episode_51.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e13-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Charlie%20%28episode%29/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/d/de/Charlie_episode_4.png/revision/latest/scale-to-width-down/800?cb=20150918052436",
+          "originalFile": "Charlie_episode_4.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e13-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Charlie%20%28episode%29/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/2/2d/Charlie_episode_25.png/revision/latest/scale-to-width-down/800?cb=20150918195130",
+          "originalFile": "Charlie_episode_25.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.4.4",
+      "season": 1,
+      "episode": 14,
+      "title": "Brother Up",
+      "sources": [
+        {
+          "file": "s01e14-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/345083/we-bare-bears-1x14-brother-up",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827391.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e14-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Brother%20Up/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/3/35/Bro_32.png/revision/latest/scale-to-width-down/800?cb=20160827032242",
+          "originalFile": "Bro_32.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e14-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Brother%20Up/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/5/55/Buprev.png/revision/latest/scale-to-width-down/800?cb=20160827222707",
+          "originalFile": "Buprev.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e14-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Brother%20Up/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/d/db/Bro_100.png/revision/latest/scale-to-width-down/800?cb=20160829184810",
+          "originalFile": "Bro_100.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.5",
+      "season": 1,
+      "episode": 15,
+      "title": "Occupy Bears",
+      "sources": [
+        {
+          "file": "s01e15-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/345086/we-bare-bears-1x15-occupy-bears",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827392.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e15-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Occupy%20Bears/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/1/14/OB_33.png/revision/latest/scale-to-width-down/800?cb=20151013232623",
+          "originalFile": "OB_33.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e15-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Occupy%20Bears/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/a/a4/OB_74.png/revision/latest/scale-to-width-down/800?cb=20151013235936",
+          "originalFile": "OB_74.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e15-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Occupy%20Bears/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/e/ef/OB_113.png/revision/latest/scale-to-width-down/800?cb=20151014002059",
+          "originalFile": "OB_113.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.6.1",
+      "season": 1,
+      "episode": 16,
+      "title": "Panda's Sneeze",
+      "sources": [
+        {
+          "file": "s01e16-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/349303/we-bare-bears-1x16-pandas-sneeze",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827393.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e16-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Panda%27s%20Sneeze/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/5/56/Sneeze_44.png/revision/latest/scale-to-width-down/800?cb=20151014233153",
+          "originalFile": "Sneeze_44.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e16-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Panda%27s%20Sneeze/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/0/0a/Sneeze_98.png/revision/latest/scale-to-width-down/800?cb=20151015001147",
+          "originalFile": "Sneeze_98.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e16-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Panda%27s%20Sneeze/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/b/b7/Sneeze_150.png/revision/latest/scale-to-width-down/800?cb=20151015010034",
+          "originalFile": "Sneeze_150.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.6.2",
+      "season": 1,
+      "episode": 17,
+      "title": "The Road",
+      "sources": [
+        {
+          "file": "s01e17-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/349304/we-bare-bears-1x17-the-road",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827394.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e17-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/The%20Road/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/d/d3/Da_Road_40.png/revision/latest/scale-to-width-down/800?cb=20151016010013",
+          "originalFile": "Da_Road_40.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e17-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/The%20Road/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/7/7b/Da_Road_88.png/revision/latest/scale-to-width-down/800?cb=20151016081043",
+          "originalFile": "Da_Road_88.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e17-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/The%20Road/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/2/2e/Da_Road_135.png/revision/latest/scale-to-width-down/800?cb=20151016083602",
+          "originalFile": "Da_Road_135.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.6.3",
+      "season": 1,
+      "episode": 18,
+      "title": "Emergency",
+      "sources": [
+        {
+          "file": "s01e18-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/349306/we-bare-bears-1x18-emergency",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827395.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e18-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Emergency/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/0/0c/Emer_25.png/revision/latest/scale-to-width-down/800?cb=20151010004737",
+          "originalFile": "Emer_25.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e18-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Emergency/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/9/92/Emer_91.png/revision/latest/scale-to-width-down/800?cb=20151017000012",
+          "originalFile": "Emer_91.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e18-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Emergency/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/4/48/Emer_139.png/revision/latest/scale-to-width-down/800?cb=20151017002651",
+          "originalFile": "Emer_139.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.6.4",
+      "season": 1,
+      "episode": 19,
+      "title": "Tote Life",
+      "sources": [
+        {
+          "file": "s01e19-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/418469/we-bare-bears-1x19-tote-life",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827396.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e19-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Tote%20Life/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/9/96/TL_42.png/revision/latest/scale-to-width-down/800?cb=20151103004032",
+          "originalFile": "TL_42.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e19-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Tote%20Life/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/4/4a/TL_93.png/revision/latest/scale-to-width-down/800?cb=20151103012327",
+          "originalFile": "TL_93.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e19-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Tote%20Life/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/5/54/TL_142.png/revision/latest/scale-to-width-down/800?cb=20151103015818",
+          "originalFile": "TL_142.png",
+          "role": "notes"
+        }
+      ]
+    },
+    {
+      "code": "1.6.5",
+      "season": 1,
+      "episode": 20,
+      "title": "Charlie & the Snake",
+      "sources": [
+        {
+          "file": "s01e20-cover.webp",
+          "page": "https://www.tvmaze.com/episodes/418470/we-bare-bears-1x20-charlie-the-snake",
+          "image": "https://static.tvmaze.com/uploads/images/original_untouched/330/827397.jpg",
+          "role": "cover"
+        },
+        {
+          "file": "s01e20-scene-1.webp",
+          "page": "https://webarebears.fandom.com/wiki/Charlie%20%26%20The%20Snake/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/2/21/CS_42.png/revision/latest/scale-to-width-down/800?cb=20151104010358",
+          "originalFile": "CS_42.png",
+          "role": "explore"
+        },
+        {
+          "file": "s01e20-scene-2.webp",
+          "page": "https://webarebears.fandom.com/wiki/Charlie%20%26%20The%20Snake/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/f/f5/CS_93.png/revision/latest/scale-to-width-down/800?cb=20151104014409",
+          "originalFile": "CS_93.png",
+          "role": "recap"
+        },
+        {
+          "file": "s01e20-scene-3.webp",
+          "page": "https://webarebears.fandom.com/wiki/Charlie%20%26%20The%20Snake/Gallery",
+          "image": "https://static.wikia.nocookie.net/webarebears/images/6/6b/CS_143.png/revision/latest/scale-to-width-down/800?cb=20151104021838",
+          "originalFile": "CS_143.png",
+          "role": "notes"
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "file": "grizz.webp",
+      "page": "https://webarebears.fandom.com/wiki/File:GRIZZLY_GOD.png",
+      "image": "https://static.wikia.nocookie.net/webarebears/images/7/7a/GRIZZLY_GOD.png/revision/latest/scale-to-width-down/640?cb=20200722140123",
+      "role": "brand-character"
+    },
+    {
+      "file": "panda.webp",
+      "page": "https://webarebears.fandom.com/wiki/File:Panda_png.png",
+      "image": "https://static.wikia.nocookie.net/webarebears/images/f/fa/Panda_png.png/revision/latest/scale-to-width-down/640?cb=20200722135913",
+      "role": "brand-character"
+    },
+    {
+      "file": "ice-bear.webp",
+      "page": "https://webarebears.fandom.com/wiki/File:Ice_bear.png",
+      "image": "https://static.wikia.nocookie.net/webarebears/images/3/37/Ice_bear.png/revision/latest/scale-to-width-down/640?cb=20230406005102",
+      "role": "brand-character"
+    },
+    {
+      "file": "bear-stack.webp",
+      "page": "https://webarebears.fandom.com/wiki/File:Bearstack.png",
+      "image": "https://static.wikia.nocookie.net/webarebears/images/b/b8/Bearstack.png/revision/latest?cb=20160613205130",
+      "role": "brand-opening"
+    },
+    {
+      "file": "bear-friends.webp",
+      "page": "https://webarebears.fandom.com/wiki/File:Bearspng.png",
+      "image": "https://static.wikia.nocookie.net/webarebears/images/1/17/Bearspng.png/revision/latest?cb=20160802171355",
+      "role": "brand-opening"
+    },
+    {
+      "file": "bear-trio.webp",
+      "page": "https://webarebears.fandom.com/wiki/File:The_Three_Bears.png",
+      "image": "https://static.wikia.nocookie.net/webarebears/images/8/88/The_Three_Bears.png/revision/latest?cb=20220817225758",
+      "role": "brand-opening"
+    }
+  ]
+}

@@ -544,6 +544,7 @@ function showLesson(index, scroll = false, preserveVisual = false) {
   }
   sphereLab.show(isSample, language, preserveVisual);
   deepLab.show(isSample ? null : lesson, language, preserveVisual);
+  window.OpticsBearsTheme.apply(lesson.code);
   if (scroll) (isSample ? $("sphere-lab") : $("deep-lab")).scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
 }
 $("previous-lesson").addEventListener("click", () => { if (currentLesson > 0) showLesson(currentLesson - 1, true); });
