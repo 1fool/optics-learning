@@ -1,4 +1,4 @@
-// One continuous, seekable application preview; panels come from the same sampled F-shaped field.
+// Portal-themed, seekable preview; panels still use the same sampled F-shaped field.
 (() => {
   const cover = document.getElementById("cover");
   const canvas = document.getElementById("cover-canvas");
@@ -20,8 +20,8 @@
     }
   ];
   const labels = {
-    zh: { preview: "应用预览", skip: "跳过开场 →", enter: "进入 1.1 课程", play: "播放", pause: "暂停", replay: "从头重播", timeline: "完整动画 · 拖动回看", names: ["传播", "计算", "全息"], canvas: ["F 形物光、空间频谱与随传播距离变化的强度", "同一 F 形物光的 FFT、相位传播与逆 FFT", "同一 F 形物光的离轴全息记录与重建"] },
-    en: { preview: "APPLICATION PREVIEW", skip: "Skip intro →", enter: "Enter lesson 1.1", play: "Play", pause: "Pause", replay: "Replay from start", timeline: "FULL ANIMATION · DRAG TO SEEK", names: ["PROPAGATE", "COMPUTE", "HOLOGRAPHY"], canvas: ["F-shaped object, spatial spectrum and propagated intensity", "FFT, transfer phase and inverse FFT of the same object", "Off-axis hologram and reconstruction of the same object"] }
+    zh: { preview: "传送门光学实验室", skip: "跳过开场 →", enter: "进入 1.1 课程", play: "播放", pause: "暂停", replay: "从头重播", timeline: "跨维度光学之旅 · 拖动回看", names: ["传播", "计算", "全息"], canvas: ["F 形物光、空间频谱与随传播距离变化的强度", "同一 F 形物光的 FFT、相位传播与逆 FFT", "同一 F 形物光的离轴全息记录与重建"] },
+    en: { preview: "PORTAL OPTICS LAB", skip: "Skip intro →", enter: "Enter lesson 1.1", play: "Play", pause: "Pause", replay: "Replay from start", timeline: "A TRIP THROUGH OPTICAL DIMENSIONS · DRAG TO SEEK", names: ["PROPAGATE", "COMPUTE", "HOLOGRAPHY"], canvas: ["F-shaped object, spatial spectrum and propagated intensity", "FFT, transfer phase and inverse FFT of the same object", "Off-axis hologram and reconstruction of the same object"] }
   };
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   let elapsed = 0, act = -1, playing = false, frame = 0, last = 0;
@@ -49,6 +49,7 @@
     canvas.setAttribute("aria-label", ui.canvas[act]);
     $("cover-chapters").innerHTML = ui.names.map((name, i) => `<button type="button" data-cover-scene="${i}" ${i === act ? 'aria-current="step"' : ""}>0${i + 1} &nbsp; ${name}</button>`).join("");
     $("cover-play").textContent = playing ? ui.pause : ui.play;
+    $("cover-play").setAttribute("aria-pressed", String(playing));
   }
   function draw() {
     const compact = innerWidth < 650, width = compact ? 480 : 960, height = compact ? 780 : 540;
@@ -76,6 +77,7 @@
   }
   function stop() {
     playing = false; cancelAnimationFrame(frame); frame = 0; last = 0;
+    cover.dataset.playing = "false";
     $("cover-play").textContent = labels[lang()].play;
     $("cover-play").setAttribute("aria-pressed", "false");
   }
@@ -90,6 +92,7 @@
     if (playing) { stop(); return; }
     if (elapsed >= duration) seek(0);
     playing = true; last = 0;
+    cover.dataset.playing = "true";
     $("cover-play").textContent = labels[lang()].pause;
     $("cover-play").setAttribute("aria-pressed", "true");
     frame = requestAnimationFrame(tick);
@@ -123,6 +126,7 @@
   cover.addEventListener("close", enter);
   addEventListener("resize", () => { if (cover.open) draw(); });
   document.addEventListener("visibilitychange", () => { if (document.hidden && playing) stop(); });
+  reduced.addEventListener("change", () => { if (reduced.matches) stop(); });
   seek(0);
   let seen = false;
   try { seen = sessionStorage.getItem("fourier-intro-seen") === "1"; } catch { /* storage may be disabled */ }

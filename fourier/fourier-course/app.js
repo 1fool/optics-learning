@@ -83,6 +83,7 @@
     $("prev").disabled = !pos;
     $("next").textContent = pos < lessons.length - 1 ? L().next : L().finished;
     $("next").disabled = pos === lessons.length - 1;
+    window.FourierPortalTheme.apply(lessonId, language);
   }
 
   function render() {

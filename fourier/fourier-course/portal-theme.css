@@ -1,0 +1,204 @@
+/* Fourier only: the teaching layout and optical chart colors stay intact. */
+:root {
+  --paper: #e5e9de;
+  --sheet: #fffef4;
+  --ink: #142e30;
+  --muted: #4c625b;
+  --rule: #8fa59a;
+  --hairline: #c6d3be;
+  --red: #27643c;
+  --red-dark: #205334;
+  --focus: #367447;
+  --space: #102c30;
+  --portal: #c3f35e;
+  --cyan: #91dae0;
+  --orange: #f4ba70;
+}
+body {
+  background-color: var(--paper);
+  background-image: linear-gradient(115deg, #b9c4b31a 25%, transparent 25%), linear-gradient(295deg, #fff9d31a 25%, transparent 25%);
+  background-size: 160px 160px;
+}
+html { scroll-padding-bottom: 100px; }
+.layout { padding-right: 94px; }
+.topbar { background: #182f35; border-bottom: 5px solid var(--portal); color: #f2f8e5; box-shadow: 0 4px 0 #122b34; }
+.brand { letter-spacing: -.025em; }
+.brand-symbol, .cover-brand-mark {
+  display: block; flex: none; width: 56px; height: 56px; object-fit: contain;
+  border: 0; border-radius: 0; background: none; transform: none;
+  filter: drop-shadow(0 0 5px #b3f45630);
+}
+.brand small, .scope { color: #b9d2cf; opacity: 1; }
+.scope { border-color: #5b8075; }
+.top-actions { gap: 14px; }
+.top-actions button { border: 2px solid #102c30; border-radius: 6px; box-shadow: 2px 3px 0 #061d1f; color: #173d32; background: #d4f295; }
+.top-actions button:hover { background: #e7ffb5; }
+.site-home-link { color: #d4f295; font-size: 13px; }
+.sidebar { background: #203a3d; border: 3px solid #142a30; border-left: 5px solid #a9d959; border-radius: 7px 19px 8px 12px; box-shadow: 5px 6px 0 #15372b30; scrollbar-color: #729d69 var(--space); }
+.side-label { color: #c3f35e; border-color: #3d5b53; }
+.sidebar details details { border-color: #48665a; }
+.sidebar summary::before { color: #b3e874; }
+.sidebar .lesson-link { position: relative; color: #dfebdc; padding-left: 43px; }
+.sidebar .lesson-link::before { content: ""; position: absolute; left: 5px; top: 50%; width: 29px; height: 31px; transform: translateY(-50%) rotate(-5deg); border: 1px solid #91a895; border-radius: 6px 10px 5px 8px; background: var(--nav-cast) center / cover; }
+.sidebar summary:hover, .sidebar .lesson-link:hover { background: #294b40; }
+.sidebar .lesson-link.active { background: #c3f35e; color: #16382c; border-left-color: #fff4b2; border-radius: 3px 9px 9px 3px; box-shadow: 2px 3px 0 #061c20; }
+.episode-side { margin: 22px 0 0; padding: 15px 0 0; border-top: 2px dashed #658272; }
+.episode-cast-title { color: #d9f3a8; font-size: 14px; }
+.episode-cast { display: flex; align-items: center; gap: 6px; padding: 16px 0 6px; }
+.episode-cast img { display: block; min-width: 0; width: calc((100% - 12px) / 3); height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 2px solid #142b2f; outline: 1px solid #c6dc93; border-radius: 7px 12px 8px 5px; transform: rotate(-5deg); }
+.episode-cast img:nth-child(2) { transform: translateY(-5px) rotate(4deg); }
+.episode-cast img:nth-child(3) { transform: rotate(-2deg); }
+.episode-side figcaption { margin-top: 10px; color: #e3ebd9; font: 700 12px/1.6 Consolas, monospace; overflow-wrap: anywhere; }
+.episode-side a { color: #bdd6aa; font-size: 12px; }
+.eyebrow { color: #3e674a; border-color: #5e8c45; }
+.lesson-head {
+  position: relative; isolation: isolate; overflow: hidden; padding: 30px;
+  display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: center; gap: 25px;
+  border: 3px solid #142a30; border-radius: 11px 25px 9px 14px;
+  color: #f7fbe9; background: #203a3d; box-shadow: 5px 6px 0 #173e2c26;
+}
+.lesson-head::after {
+  content: ""; position: absolute; left: 28px; top: -2px; width: 108px; height: 9px;
+  background: #c3f35e; clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
+}
+.episode-label { color: #d0f58d; font: 800 12px/1.7 Consolas, "Microsoft YaHei", monospace; margin-bottom: 14px; overflow-wrap: anywhere; }
+.lesson-head .kicker { color: #d1dfd2; font-size: 11px; }
+.lesson-head h1, .convolution-sample-active .lesson-head h1 { font-family: "Arial Black", "Microsoft YaHei", sans-serif; font-size: clamp(32px, 3.5vw, 49px); line-height: 1.24; font-weight: 900; letter-spacing: -.025em; text-shadow: 3px 4px 0 #071d22; margin: 12px 0 20px; text-wrap: balance; }
+.lesson-head p, .convolution-sample-active .lesson-head p { color: #e7eddf; max-width: 42ch; font-size: 16px; }
+.convolution-sample-active .lesson-head { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 25px; padding-bottom: 30px; }
+.episode-hero-art { position: relative; min-width: 0; padding: 24px 5px 28px 0; transform: rotate(3deg); }
+.episode-hero-art::before { content: ""; position: absolute; inset: -35% -15%; z-index: -1; background: url("assets/rick-and-morty/portal-vortex.webp") center / contain no-repeat; opacity: .9; transform: rotate(-18deg); }
+.episode-hero-still { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border: 5px solid #112b31; outline: 2px solid #9dbd68; border-radius: 13% 10% 12% 8% / 10% 13% 11% 12%; box-shadow: 7px 8px 0 #061f2599; }
+.episode-channel { position: absolute; z-index: 1; top: 11px; left: 12px; padding: 3px 8px; color: #18352e; background: #d9ef9f; font: 800 11px/1.5 Consolas, "Microsoft YaHei", monospace; border: 2px solid #142b2f; border-radius: 5px; }
+.episode-hero-cast { position: absolute; width: 29%; height: auto; aspect-ratio: 1; right: -8px; bottom: 4px; object-fit: cover; border: 4px solid #f5df9e; outline: 3px solid #183a35; border-radius: 42% 55% 40% 47%; transform: rotate(-13deg); box-shadow: 3px 3px 0 #102e30; }
+.episode-hero-token { position: absolute; width: 19%; height: auto; aspect-ratio: 1; right: -1px; top: 0; object-fit: cover; border: 3px solid #b4dbb6; outline: 2px solid #173b37; border-radius: 8px 13px 5px 10px; transform: rotate(-12deg); }
+.page-stamp, .convolution-sample-active .page-stamp { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; width: 100%; padding: 14px 3px 12px; border: 0; background: transparent; color: #435c54; font-size: 12px; }
+.page-stamp a { color: #345b45; font-size: 13px; }
+.page-stamp a[href] { border: 1px solid #8ba089; border-radius: 5px 9px 5px 6px; padding: 6px 11px; background: #f5f6e7; text-decoration: none; }
+.page-stamp a[href]:hover { background: #dcf3b3; }
+.view-tabs { border: 3px solid #1b3739; border-radius: 10px 15px 6px 9px; margin: 4px 0 28px; overflow: hidden; background: #c9d7cd; box-shadow: 3px 4px 0 #173e2c22; }
+.view-tabs button { position: relative; color: #304b43; border-right: 2px solid #7d998b; border-radius: 0; gap: 9px; min-height: 76px; }
+.view-tabs button::before { content: none; }
+.view-tabs button img { flex: none; width: 43px; height: 43px; filter: drop-shadow(1px 2px 0 #132d252b); transform: rotate(-5deg); transition: transform 150ms ease; }
+.view-tabs button.selected, .view-tabs button[aria-pressed="true"] { color: #f1ffc9; background: #25453f; box-shadow: inset 0 -5px #b6ec57; }
+.view-tabs button.selected img { transform: rotate(5deg) translateY(-2px); }
+.view-tabs button:hover:not(.selected) { background: #e1e8cd; }
+h2, h3 { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+.il-shell { --il-ink: #286544; }
+.conv-sample { --conv-accent: #286544; --conv-light: #e3efd4; }
+.il-route button { border: 1px solid #91a590; border-bottom-width: 3px; border-radius: 5px 9px 4px 7px; background: #f5f5e9; color: #334c3b; }
+.il-route [aria-current="step"] { color: #eaffcb; background: var(--space); border-color: var(--space); box-shadow: inset 0 -3px #b4e85a; }
+.il-stage header small, .il-note > small { color: #4e7135; }
+.il-intro, .il-progress, .il-boundary { color: #52634c; }
+.il-bench, .il-recap-grid figure, .conv-scene, .conv-storyboard figure, .quiz, .workbench, .recap-card {
+  background: var(--sheet); border: 3px solid #345650; border-radius: 9px 18px 7px 13px;
+  box-shadow: 5px 5px 0 #193e2d22;
+}
+.il-bench::before, .conv-scene::before, .workbench::before { content: ""; display: block; height: 9px; margin-bottom: 17px; border-radius: 3px; background: linear-gradient(90deg, #dff09e 0 12px, #719985 12px 17px, #afd2c8 17px 29px, #719985 29px 34px, #edc487 34px 46px, #294c45 46px); }
+.il-stage > header, .conv-stage > header, .il-notes-intro { border-left: 5px solid #42695d; padding-left: 17px; }
+.il-decision > h3, .conv-lab-task > h3, .quiz h2 { position: relative; min-height: 62px; padding: 6px 72px 8px 0; }
+.il-decision > h3::after, .conv-lab-task > h3::after, .quiz h2::after, .il-note:nth-child(3n + 1) > h2::after { content: ""; position: absolute; top: -3px; right: 3px; width: 51px; height: 54px; background: var(--cast-2) center / cover; border: 2px solid #31574b; outline: 2px solid #d8e1bc; border-radius: 9px 15px 7px 11px; transform: rotate(5deg); box-shadow: 2px 3px 0 #244a3630; }
+.il-decision > h3, .conv-lab-task > h3 { border-bottom: 2px solid #8aa585; }
+.il-controls, .conv-controls { border-top: 1px dashed #91a38c; padding-top: 14px; }
+.il-controls input[type="range"], .conv-controls input[type="range"] { accent-color: #477960; }
+.il-controls select, .conv-controls select { border: 2px solid #6b8878; border-radius: 4px 8px 4px 6px; background: #f4f8ec; }
+.il-note:nth-child(3n + 1) > h2 { position: relative; min-height: 62px; padding-right: 72px; }
+.il-note:nth-child(3n + 1) > h2::after { background-image: var(--cast-3); transform: rotate(-6deg); }
+.il-note:nth-child(3n + 2) { border-bottom: 2px dashed #8ca78c; }
+.il-note:nth-child(3n + 3) > small { display: inline-block; padding: 3px 12px; border: 2px solid #375b51; color: #26473b; background: #dce6ad; border-radius: 4px 9px 4px 6px; transform: rotate(-3deg); }
+.il-chart-title { color: #2d5245; border-bottom: 3px solid #66876e; padding: 10px 0; }
+body[data-episode="S01E05"] .il-graph text { font-size: 21px; }
+.il-recap-grid figcaption b { color: #345c47; }
+.il-recap-grid figure:nth-child(2n) { border-radius: 16px 7px 12px 6px; }
+.il-choices button, .prediction-options button, .quiz-options button { background: #fcfdf5; border: 1px solid #a2b393; border-radius: 5px; color: var(--ink); }
+.il-choices button:hover, .prediction-options button:hover, .quiz-options button:hover:not(:disabled) { background: #e8f2d7; border-color: #477447; }
+.il-choices [aria-pressed="true"] { background: #e2efcd; border: 2px solid #34704a; }
+.il-insight, .il-flow, .conv-sample .conv-math, .equation, .bridge-row p { background: #e6edda; border-color: #6e9359; }
+.il-insight { border-radius: 2px 11px 5px 3px; }
+.il-sources, .source-details { background: #e2e8d7; }
+.il-reset, .il-step-actions button, .il-mobile-jump, .il-note > button, .il-recap > button, .il-reading > button, .conv-controls button, .next-row button, .quiz-footer button {
+  color: #264d36; background: #f4f8e9; border: 1px solid #91a382; border-radius: 5px;
+}
+.primary { color: #173d2b; background: #c3f35e; border: 2px solid #244735; border-radius: 5px; box-shadow: 3px 3px 0 #1d452b30; }
+.primary:hover { background: #d2ff83; }
+.il-hidden { background: repeating-linear-gradient(135deg, #dae6ca 0 2px, #f2f6e9 2px 15px); color: #3b543c; }
+.il-next-reason { color: #4a6843; border-color: #bac9ac; }
+.quiz-feedback { background: #f4e7d4; }
+.quiz-feedback.right { background: #e3efcf; }
+/* One viewport-level toolbar for every lesson and all four views. */
+.quick-tools { flex-direction: column; width: 58px; border: 2px solid #b5df72; border-radius: 10px; background: var(--space); box-shadow: 3px 4px 0 #0b27264a; }
+.quick-tools button { width: 44px; padding: 0; flex: none; color: #e4f5c6; background: #25483c; border-color: #66885a; border-radius: 5px; }
+#quick-symbols-label { display: none; }
+.quick-tools button:hover { color: #193e2c; background: #c3f35e; }
+#symbol-dialog { background: #fbfcf3; border: 3px solid #2c6748; border-radius: 9px 18px 8px 13px; box-shadow: 0 14px 42px #0e302c38; }
+.symbol-heading { padding-bottom: 12px; border-bottom: 3px solid #9fc765; }
+button { transition: background-color 140ms ease, box-shadow 140ms ease; }
+button:active:not(:disabled) { box-shadow: inset 0 2px 0 #153d2925; }
+:focus-visible { outline-color: #518e2e; }
+.sidebar :focus-visible, .topbar :focus-visible, .cover :focus-visible, .quick-tools :focus-visible { outline-color: #f0ffac; }
+/* Intro: a portal laboratory; FFT/propagation/holography remain real computations. */
+.cover, #cover-canvas { background: #0d242c; color: #f2f7dd; }
+.cover-shell { overflow: hidden; background: radial-gradient(ellipse at 75% 30%, #304d38, #0d242c 65%); }
+.cover-portal { position: absolute; width: min(68vw, 870px); aspect-ratio: 950 / 1190; top: -15%; right: -8%; background: url("assets/rick-and-morty/portal-vortex.webp") center / contain no-repeat; opacity: .86; filter: drop-shadow(0 0 18px #9ae63835); animation: portal-drift 9s ease-in-out infinite; animation-play-state: paused; }
+.cover-crew { position: absolute; z-index: 1; right: 5%; top: 17%; display: flex; align-items: center; gap: 10px; }
+.cover-crew img { width: 66px; height: 66px; border: 3px solid #b1e459; border-radius: 45% 55% 49% 51%; object-fit: cover; box-shadow: 3px 4px #061e25; }
+.cover-crew img:first-child { transform: rotate(-12deg); }
+.cover-crew img:nth-child(2) { transform: rotate(9deg); margin-left: -18px; }
+.cover-crew span { color: #d1ef9d; font: 800 11px/1.5 Consolas, monospace; letter-spacing: .1em; }
+#cover-canvas { background: transparent; }
+.cover-bar { background: linear-gradient(#0d242c 65%, transparent); }
+.cover-brand-mark { width: 48px; height: 48px; }
+.cover-brand small { color: #bedc9c; border-color: #58794a; }
+.cover button { color: #eff8d9; border: 1px solid #7c9c62; border-radius: 6px; background: #234438; }
+.cover button:hover { background: #365b42; }
+.cover-visual-top { color: #dcf6ba; background: #173d33; border: 1px solid #769b57; border-radius: 5px; }
+.cover-visual-top span { color: #c3f35e; }
+.cover-bottom { background: linear-gradient(transparent, #0d242cf5 28%, #0d242c 90%); }
+.cover-controls #cover-enter { color: #173b27; background: #c3f35e; border: 2px solid #dafb9b; font-weight: 900; }
+.cover-controls #cover-enter:hover { background: #dcff95; }
+.cover-chapters { border-color: #557246; }
+.cover-chapters button { border-color: #557246; }
+.cover-chapters button[aria-current="step"] { color: #dcff9f; background: #274d36; }
+.cover-sliders output { color: #d7f9aa; }
+#cover-timeline { accent-color: #b9ed5b; }
+.cover-progress { background: #314c35; }
+.cover-progress span { background: #c3f35e; }
+.cover[data-playing="true"] .cover-portal { animation-play-state: running; }
+.cover[data-playing="true"] .cover-crew img:first-child { animation: crew-tilt 4s ease-in-out infinite; }
+@keyframes crew-tilt { 50% { transform: rotate(-5deg) translateY(-4px); } }
+@keyframes portal-drift {
+  0%, 100% { transform: rotate(-3deg) scale(.985); }
+  50% { transform: rotate(3deg) scale(1.025); }
+}
+@media (max-width: 700px) {
+  .layout { padding-right: 79px; }
+  .topbar { gap: 10px; }
+  .brand { gap: 9px; min-width: 0; }
+  .brand small { letter-spacing: .08em; font-size: 9px; }
+  .top-actions { gap: 7px; }
+  .top-actions button { white-space: nowrap; font-size: 14px; }
+  .lesson-head, .convolution-sample-active .lesson-head { padding: 23px 18px; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .lesson-head h1, .convolution-sample-active .lesson-head h1 { font-size: 35px; line-height: 1.25; margin: 12px 0 16px; }
+  .episode-label { font-size: 11px; }
+  .episode-hero-art { width: 90%; max-width: 330px; justify-self: center; padding: 17px 5px 18px 0; transform: rotate(2deg); }
+  .episode-hero-art::before { inset: -20% -12%; }
+  .episode-hero-still { aspect-ratio: 2 / 1; border-width: 4px; }
+  .episode-hero-cast { width: 24%; }
+  .episode-hero-token { width: 17%; }
+  .page-stamp, .convolution-sample-active .page-stamp { padding: 14px 2px 10px; gap: 10px; }
+  .view-tabs, .convolution-sample-active .view-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: hidden; }
+  .view-tabs button, .convolution-sample-active .view-tabs button { font-size: 13px; padding: 10px 6px; gap: 7px; min-width: 0; min-height: 62px; white-space: normal; border-bottom: 1px solid #7d998b; }
+  .view-tabs button:nth-child(2n) { border-right: 0; }
+  .view-tabs button img { width: 33px; height: 33px; }
+  .il-route button { text-wrap: balance; }
+  .episode-side { display: none; }
+  .cover-crew { top: 16%; right: 16px; gap: 6px; }
+  .cover-crew img { width: 40px; height: 40px; border-width: 2px; }
+  .cover-crew span { display: none; }
+  .cover-portal { width: 105vw; top: 12%; right: -35%; }
+  .cover-brand-mark { width: 36px; height: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cover-portal, .cover[data-playing="true"] .cover-crew img:first-child { animation: none; }
+  .view-tabs button img { transition: none; }
+}

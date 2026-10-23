@@ -225,7 +225,7 @@ main { width: 100%; margin: 0; padding: 7px 0 90px; min-width: 0; outline: none;
 .next-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 32px; }
 .next-row button:not(:disabled):hover, .quiz-footer button:not(:disabled):hover { border-color: var(--red); color: var(--red-dark); }
 
-.quick-tools { position: fixed; z-index: 10; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: flex; gap: 6px; padding: 5px; border: 1px solid var(--hairline); background: #fffaf0f2; box-shadow: 0 7px 24px #24252026; }
+.quick-tools { position: fixed; z-index: 10; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); width: max-content; margin: 0; display: flex; gap: 6px; padding: 5px; border: 1px solid var(--hairline); background: #fffaf0f2; box-shadow: 0 7px 24px #24252026; }
 .quick-tools button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; border: 1px solid var(--hairline); padding: 0 13px; background: var(--sheet); color: var(--red-dark); font-weight: 800; }
 .quick-tools button:hover { background: #f0dcc9; }
 .quick-tools svg { width: 20px; height: 20px; }

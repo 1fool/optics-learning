@@ -1,0 +1,391 @@
+[
+  {
+    "lesson": "1.1",
+    "episode": "S01E01",
+    "title": "Pilot",
+    "file": "s01e01.webp",
+    "source": "https://www.tvmaze.com/episodes/14308/rick-and-morty-1x01-pilot",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/292/730352.jpg"
+  },
+  {
+    "lesson": "1.2.1",
+    "episode": "S01E02",
+    "title": "Lawnmower Dog",
+    "file": "s01e02.webp",
+    "source": "https://www.tvmaze.com/episodes/14309/rick-and-morty-1x02-lawnmower-dog",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/292/730780.jpg"
+  },
+  {
+    "lesson": "1.2.2",
+    "episode": "S01E03",
+    "title": "Anatomy Park",
+    "file": "s01e03.webp",
+    "source": "https://www.tvmaze.com/episodes/14310/rick-and-morty-1x03-anatomy-park",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/15/37914.jpg"
+  },
+  {
+    "lesson": "1.3.1",
+    "episode": "S01E04",
+    "title": "M. Night Shaym-Aliens!",
+    "file": "s01e04.webp",
+    "source": "https://www.tvmaze.com/episodes/14311/rick-and-morty-1x04-m-night-shaym-aliens",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/15/37915.jpg"
+  },
+  {
+    "lesson": "1.3.2",
+    "episode": "S01E05",
+    "title": "Meeseeks and Destroy",
+    "file": "s01e05.webp",
+    "source": "https://www.tvmaze.com/episodes/14312/rick-and-morty-1x05-meeseeks-and-destroy",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/15/37916.jpg"
+  },
+  {
+    "lesson": "1.3.3",
+    "episode": "S01E06",
+    "title": "Rick Potion #9",
+    "file": "s01e06.webp",
+    "source": "https://www.tvmaze.com/episodes/14313/rick-and-morty-1x06-rick-potion-9",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/15/37917.jpg"
+  },
+  {
+    "lesson": "1.4.1",
+    "episode": "S01E07",
+    "title": "Raising Gazorpazorp",
+    "file": "s01e07.webp",
+    "source": "https://www.tvmaze.com/episodes/14314/rick-and-morty-1x07-raising-gazorpazorp",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/579/1448989.jpg"
+  },
+  {
+    "lesson": "1.4.2",
+    "episode": "S01E08",
+    "title": "Rixty Minutes",
+    "file": "s01e08.webp",
+    "source": "https://www.tvmaze.com/episodes/14315/rick-and-morty-1x08-rixty-minutes",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/579/1448990.jpg"
+  },
+  {
+    "lesson": "1.4.3",
+    "episode": "S01E09",
+    "title": "Something Ricked This Way Comes",
+    "file": "s01e09.webp",
+    "source": "https://www.tvmaze.com/episodes/14316/rick-and-morty-1x09-something-ricked-this-way-comes",
+    "image": "https://static.tvmaze.com/uploads/images/original_untouched/15/37920.jpg"
+  },
+  {
+    "character": "rick",
+    "file": "rick.webp",
+    "source": "https://rickandmortyapi.com/api/character/1",
+    "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+  },
+  {
+    "character": "morty",
+    "file": "morty.webp",
+    "source": "https://rickandmortyapi.com/api/character/2",
+    "image": "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
+  },
+  {
+    "file": "portal-crew.webp",
+    "source": "User attachment: codex-clipboard-38b33820-93cb-4f0c-a074-5c8fdad174ad.png",
+    "processing": "Portal-and-characters crop from reference 4; external black background removed; original character drawing preserved."
+  },
+  {
+    "file": "portal-favicon.png",
+    "source": "portal-crew.webp",
+    "processing": "64x64 browser-icon derivative."
+  },
+  {
+    "file": "portal-vortex.webp",
+    "source": "User attachment: codex-clipboard-f4de2d0b-613c-48d1-ab1f-68a5233cf7fa.png",
+    "processing": "Organic portal crop from reference 3; surrounding photograph removed using an alpha mask; lightness adjusted. No concentric-circle reconstruction or AI generation."
+  },
+  {
+    "lesson": "1.1",
+    "episode": "S01E01",
+    "character": "Bepisian",
+    "file": "cast-35.webp",
+    "source": "https://rickandmortyapi.com/api/character/35",
+    "image": "https://rickandmortyapi.com/api/character/avatar/35.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/1",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.1",
+    "episode": "S01E01",
+    "character": "Frank Palicky",
+    "file": "cast-127.webp",
+    "source": "https://rickandmortyapi.com/api/character/127",
+    "image": "https://rickandmortyapi.com/api/character/avatar/127.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/1",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.1",
+    "episode": "S01E01",
+    "character": "Hookah Alien",
+    "file": "cast-158.webp",
+    "source": "https://rickandmortyapi.com/api/character/158",
+    "image": "https://rickandmortyapi.com/api/character/avatar/158.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/1",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.2.1",
+    "episode": "S01E02",
+    "character": "Snuffles (Snowball)",
+    "file": "cast-329.webp",
+    "source": "https://rickandmortyapi.com/api/character/329",
+    "image": "https://rickandmortyapi.com/api/character/avatar/329.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/2",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.2.1",
+    "episode": "S01E02",
+    "character": "Scary Terry",
+    "file": "cast-306.webp",
+    "source": "https://rickandmortyapi.com/api/character/306",
+    "image": "https://rickandmortyapi.com/api/character/avatar/306.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/2",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.2.1",
+    "episode": "S01E02",
+    "character": "Fido",
+    "file": "cast-397.webp",
+    "source": "https://rickandmortyapi.com/api/character/397",
+    "image": "https://rickandmortyapi.com/api/character/avatar/397.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/2",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.2.2",
+    "episode": "S01E03",
+    "character": "Dr. Xenon Bloom",
+    "file": "cast-108.webp",
+    "source": "https://rickandmortyapi.com/api/character/108",
+    "image": "https://rickandmortyapi.com/api/character/avatar/108.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/3",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.2.2",
+    "episode": "S01E03",
+    "character": "Annie",
+    "file": "cast-17.webp",
+    "source": "https://rickandmortyapi.com/api/character/17",
+    "image": "https://rickandmortyapi.com/api/character/avatar/17.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/3",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.2.2",
+    "episode": "S01E03",
+    "character": "Poncho",
+    "file": "cast-268.webp",
+    "source": "https://rickandmortyapi.com/api/character/268",
+    "image": "https://rickandmortyapi.com/api/character/avatar/268.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/3",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.1",
+    "episode": "S01E04",
+    "character": "Prince Nebulon",
+    "file": "cast-270.webp",
+    "source": "https://rickandmortyapi.com/api/character/270",
+    "image": "https://rickandmortyapi.com/api/character/avatar/270.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/4",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.1",
+    "episode": "S01E04",
+    "character": "Kevin",
+    "file": "cast-191.webp",
+    "source": "https://rickandmortyapi.com/api/character/191",
+    "image": "https://rickandmortyapi.com/api/character/avatar/191.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/4",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.1",
+    "episode": "S01E04",
+    "character": "Cynthia",
+    "file": "cast-87.webp",
+    "source": "https://rickandmortyapi.com/api/character/87",
+    "image": "https://rickandmortyapi.com/api/character/avatar/87.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/4",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.2",
+    "episode": "S01E05",
+    "character": "Mr. Meeseeks",
+    "file": "cast-242.webp",
+    "source": "https://rickandmortyapi.com/api/character/242",
+    "image": "https://rickandmortyapi.com/api/character/avatar/242.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/5",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.2",
+    "episode": "S01E05",
+    "character": "Stair Goblin",
+    "file": "cast-333.webp",
+    "source": "https://rickandmortyapi.com/api/character/333",
+    "image": "https://rickandmortyapi.com/api/character/avatar/333.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/5",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.2",
+    "episode": "S01E05",
+    "character": "Giant Judge",
+    "file": "cast-400.webp",
+    "source": "https://rickandmortyapi.com/api/character/400",
+    "image": "https://rickandmortyapi.com/api/character/avatar/400.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/5",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.3",
+    "episode": "S01E06",
+    "character": "Cronenberg Rick",
+    "file": "cast-82.webp",
+    "source": "https://rickandmortyapi.com/api/character/82",
+    "image": "https://rickandmortyapi.com/api/character/avatar/82.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/6",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.3",
+    "episode": "S01E06",
+    "character": "Cronenberg Morty",
+    "file": "cast-83.webp",
+    "source": "https://rickandmortyapi.com/api/character/83",
+    "image": "https://rickandmortyapi.com/api/character/avatar/83.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/6",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.3.3",
+    "episode": "S01E06",
+    "character": "Brad",
+    "file": "cast-58.webp",
+    "source": "https://rickandmortyapi.com/api/character/58",
+    "image": "https://rickandmortyapi.com/api/character/avatar/58.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/6",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.1",
+    "episode": "S01E07",
+    "character": "Morty Jr.",
+    "file": "cast-230.webp",
+    "source": "https://rickandmortyapi.com/api/character/230",
+    "image": "https://rickandmortyapi.com/api/character/avatar/230.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/7",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.1",
+    "episode": "S01E07",
+    "character": "Ma-Sha",
+    "file": "cast-211.webp",
+    "source": "https://rickandmortyapi.com/api/character/211",
+    "image": "https://rickandmortyapi.com/api/character/avatar/211.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/7",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.1",
+    "episode": "S01E07",
+    "character": "Gwendolyn",
+    "file": "cast-151.webp",
+    "source": "https://rickandmortyapi.com/api/character/151",
+    "image": "https://rickandmortyapi.com/api/character/avatar/151.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/7",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.2",
+    "episode": "S01E08",
+    "character": "Ants in my Eyes Johnson",
+    "file": "cast-20.webp",
+    "source": "https://rickandmortyapi.com/api/character/20",
+    "image": "https://rickandmortyapi.com/api/character/avatar/20.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/8",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.2",
+    "episode": "S01E08",
+    "character": "Gazorpazorpfield",
+    "file": "cast-136.webp",
+    "source": "https://rickandmortyapi.com/api/character/136",
+    "image": "https://rickandmortyapi.com/api/character/avatar/136.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/8",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.2",
+    "episode": "S01E08",
+    "character": "Real Fake Doors Salesman",
+    "file": "cast-277.webp",
+    "source": "https://rickandmortyapi.com/api/character/277",
+    "image": "https://rickandmortyapi.com/api/character/avatar/277.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/8",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.3",
+    "episode": "S01E09",
+    "character": "Mr. Needful",
+    "file": "cast-243.webp",
+    "source": "https://rickandmortyapi.com/api/character/243",
+    "image": "https://rickandmortyapi.com/api/character/avatar/243.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/9",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.3",
+    "episode": "S01E09",
+    "character": "Butter Robot",
+    "file": "cast-826.webp",
+    "source": "https://rickandmortyapi.com/api/character/826",
+    "image": "https://rickandmortyapi.com/api/character/avatar/826.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/9",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "lesson": "1.4.3",
+    "episode": "S01E09",
+    "character": "King Flippy Nips",
+    "file": "cast-192.webp",
+    "source": "https://rickandmortyapi.com/api/character/192",
+    "image": "https://rickandmortyapi.com/api/character/avatar/192.jpeg",
+    "episodeSource": "https://rickandmortyapi.com/api/episode/9",
+    "processing": "Resized/encoded as WebP; decorative portrait, not optical evidence."
+  },
+  {
+    "file": "portal-gun.svg",
+    "source": "Locally drawn SVG interface illustration, 2026-10-23",
+    "processing": "Code-drawn equipment icon inspired by the requested cartoon theme; not downloaded show art."
+  },
+  {
+    "file": "dimension-tv.svg",
+    "source": "Locally drawn SVG interface illustration, 2026-10-23",
+    "processing": "Code-drawn equipment icon inspired by the requested cartoon theme; not downloaded show art."
+  },
+  {
+    "file": "field-notes.svg",
+    "source": "Locally drawn SVG interface illustration, 2026-10-23",
+    "processing": "Code-drawn equipment icon inspired by the requested cartoon theme; not downloaded show art."
+  },
+  {
+    "file": "meeseeks-box.svg",
+    "source": "Locally drawn SVG interface illustration, 2026-10-23",
+    "processing": "Code-drawn equipment icon inspired by the requested cartoon theme; not downloaded show art."
+  }
+]

@@ -1,5 +1,4 @@
 .il-shell { --il-ink: #245b66; max-width: 1260px; margin: 0 auto; }
-.independent-labs-active .quick-tools { position: static; width: max-content; margin: 0 16px 16px auto; }
 .il-shell h2 { font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.4; }
 .il-shell h3 { font-size: 1.05rem; }
 .il-shell p { line-height: 1.8; }

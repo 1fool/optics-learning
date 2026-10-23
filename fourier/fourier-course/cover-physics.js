@@ -118,9 +118,9 @@
     const data = offscreen.getContext("2d").createImageData(N, N);
     for (let id = 0; id < size; id++) {
       const v = Math.max(0, Math.min(1, values[id] / max)) ** (mode === "intensity" ? .55 : .8);
-      data.data[4 * id] = 25 + Math.round(210 * v);
-      data.data[4 * id + 1] = 33 + Math.round(168 * v);
-      data.data[4 * id + 2] = 38 + Math.round(105 * v);
+      data.data[4 * id] = 16 + Math.round(182 * v);
+      data.data[4 * id + 1] = 44 + Math.round(200 * v);
+      data.data[4 * id + 2] = 48 + Math.round(75 * v);
       data.data[4 * id + 3] = 255;
     }
     offscreen.getContext("2d").putImageData(data, 0, 0);
@@ -154,13 +154,14 @@
     return offscreen;
   }
   function pane(ctx, img, x, y, width, height, label, number) {
-    ctx.fillStyle = "#28312f"; ctx.fillRect(x - 2, y - 2, width + 4, height + 4);
+    ctx.fillStyle = "#8cac62"; ctx.fillRect(x - 2, y - 2, width + 4, height + 4);
     ctx.imageSmoothingEnabled = true; ctx.drawImage(img, x, y, width, height);
-    ctx.fillStyle = "#262b29"; ctx.font = "bold 15px Consolas, sans-serif";
+    ctx.fillStyle = "#e4f5c6"; ctx.font = "bold 15px Consolas, sans-serif";
     ctx.fillText(`${number}  ${label}`, x, y + height + 29);
   }
   function compactPaint(ctx, act, mm, carrier, stage, zh) {
-    ctx.fillStyle = "#faf5e9"; ctx.fillRect(0, 0, 480, ctx.canvas.height);
+    if (ctx.globalAlpha === 1) ctx.clearRect(0, 0, 480, ctx.canvas.height);
+    ctx.fillStyle = "#0d242c88"; ctx.fillRect(0, 0, 480, ctx.canvas.height);
     const holo = act === 2 ? hologramImages(carrier) : null;
     const pictures = act === 2 ? [letterImage, holo.recordingImage, holo.backImage] :
       act === 1 ? [inputImage, spectrumImage, transferImage(mm), propagatedImage(mm)] :
@@ -171,17 +172,17 @@
     const rowHeight = act === 1 ? 169 : 214, size = act === 1 ? 136 : 177;
     pictures.forEach((picture, i) => {
       const y = 64 + i * rowHeight;
-      ctx.fillStyle = "#28312f"; ctx.fillRect(25, y, size, size);
+      ctx.fillStyle = "#8cac62"; ctx.fillRect(25, y, size, size);
       ctx.drawImage(picture, 27, y + 2, size - 4, size - 4);
-      ctx.fillStyle = "#873c2d"; ctx.font = "bold 22px Consolas, sans-serif";
+      ctx.fillStyle = "#c3f35e"; ctx.font = "bold 22px Consolas, sans-serif";
       ctx.fillText(`0${i + 1}`, 224, y + 44);
-      ctx.fillStyle = "#262b29"; ctx.font = 'bold 22px "Microsoft YaHei", sans-serif';
+      ctx.fillStyle = "#e4f5c6"; ctx.font = 'bold 22px "Microsoft YaHei", sans-serif';
       ctx.fillText(names[i], 224, y + 83);
       if (i === stage && act !== 0) {
-        ctx.strokeStyle = "#b53e2a"; ctx.lineWidth = 4; ctx.strokeRect(21, y - 4, size + 8, size + 8);
+        ctx.strokeStyle = "#c3f35e"; ctx.lineWidth = 4; ctx.strokeRect(21, y - 4, size + 8, size + 8);
       }
       if (i < pictures.length - 1) {
-        ctx.fillStyle = "#873c2d"; ctx.font = "bold 18px Consolas, sans-serif";
+        ctx.fillStyle = "#b2de83"; ctx.font = "bold 18px Consolas, sans-serif";
         ctx.fillText(act === 2 ? (i === 0 ? "O + R ↓" : "FFT / IFFT ↓") : (i === 0 ? "FFT ↓" : "H · IFFT ↓"), 224, y + 125);
       }
     });
@@ -189,8 +190,9 @@
   function paint(ctx, act, mm, carrier, stage, lang) {
     const zh = lang === "zh";
     if (ctx.canvas.width === 480) { compactPaint(ctx, act, mm, carrier, stage, zh); return; }
-    ctx.fillStyle = "#faf5e9"; ctx.fillRect(0, 0, 960, 540);
-    ctx.strokeStyle = "#e5dfd1"; ctx.lineWidth = 1;
+    if (ctx.globalAlpha === 1) ctx.clearRect(0, 0, 960, 540);
+    ctx.fillStyle = "#0d242c88"; ctx.fillRect(0, 0, 960, 540);
+    ctx.strokeStyle = "#91b76822"; ctx.lineWidth = 1;
     for (let x = 0; x <= 960; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 540); ctx.stroke(); }
     for (let y = 0; y <= 540; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(960, y); ctx.stroke(); }
     if (act === 0) {
@@ -203,7 +205,7 @@
       for (let i = 0; i < 4; i++) {
         const x = 38 + i * 232, width = 194;
         pane(ctx, panes[i], x, 129, width, 255, names[i], `0${i + 1}`);
-        if (i === stage) { ctx.strokeStyle = "#b53e2a"; ctx.lineWidth = 6; ctx.strokeRect(x - 7, 122, width + 14, 269); }
+        if (i === stage) { ctx.strokeStyle = "#c3f35e"; ctx.lineWidth = 6; ctx.strokeRect(x - 7, 122, width + 14, 269); }
       }
     } else {
       const result = hologramImages(carrier);
@@ -211,7 +213,7 @@
       pane(ctx, result.recordingImage, 349, 111, 262, 262, zh ? "离轴干涉记录" : "HOLOGRAM", "02");
       pane(ctx, result.backImage, 660, 111, 262, 262, zh ? "滤波与反传重建" : "RECONSTRUCTION", "03");
       const x = [38, 349, 660][Math.min(2, stage)];
-      ctx.strokeStyle = "#b53e2a"; ctx.lineWidth = 6; ctx.strokeRect(x - 7, 104, 276, 276);
+      ctx.strokeStyle = "#c3f35e"; ctx.lineWidth = 6; ctx.strokeRect(x - 7, 104, 276, 276);
     }
   }
   function energy(field) { let sum = 0; for (let i = 0; i < size; i++) sum += field.re[i] ** 2 + field.im[i] ** 2; return sum; }
