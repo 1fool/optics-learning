@@ -9,8 +9,8 @@
   const html = (value) => String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const math = (tex, display = false) => katex.renderToString(tex, { displayMode: display, throwOnError: true, output: "html" });
   const ui = {
-    zh: { scope: "教材样章 · 1.1–1.2", chapter: "第 1 章 · 傅里叶分析", section: "1.2 · 脉冲函数", side: "两本教材分开成课 · 本页只包含《傅里叶光学》第 1 章的已做部分。", book: "吕乃光《傅里叶光学》第 3 版", source: "打开教材对应页 ↗", pages: "书页", view: ["动手探索", "图解回顾", "完整讲义", "正式练习"], predict: "先预测，再动手", transfer: "换个条件试一试 · 答前不显示结果", observe: "观察任务", chart: "交互图示 · 模型计算，非实测", compare: "虚线：a=1 参照 / 实线：当前值", func: "函数", scale: "尺度 a", family: "近似脉冲", width: "收缩倍数 N", center: "位置 x₀", spacing: "间距 τ", grid: "二维格点", rect: "矩形族", gauss: "高斯族", false: "一维抽样", true: "二维阵列", area: "脉冲面积", target: "目标值 f(x₀)", integral: "加权积分（有限宽近似）", sample: "采样位置 nτ；箭头长度编码权重 f(nτ)，不是 δ 的高度。", boundary: "模型边界", labBoundary: ["a>0；本图仅演示一维函数截面与理想二维圆孔，图上的不连续边界依教材定义。", "图中是有限 N 的近似脉冲；δ 本身不具有通常意义的曲线高度。积分示例用连续的 f(x)=1/(1+x²)。", "箭头表示理想单位脉冲及其权重；有限图窗只画出其中一些，二维格点图不代表真实小孔尺寸。"], recap: "带走这三点", notes: "从现象到公式", practice: "本节正式练习", unknown: "我不知道", retry: "再试一次", correct: "答对了", wrong: "再想想", nextQ: "下一题", prev: "← 上一节", next: "下一节 →", finished: "已到样章末尾", start: "这是第一节", answer: "解析", reset: "重做本题", saved: "作答保存在这本书的独立进度中", plot: "纵轴单位见图示说明" },
-    en: { scope: "Sample · §§1.1–1.2", chapter: "Chapter 1 · Fourier Analysis", section: "1.2 · Impulse Functions", side: "A separate course for this textbook. Only the completed part of Chapter 1 appears here.", book: "Lü Naiguang, Fourier Optics, 3rd ed.", source: "Open source page ↗", pages: "Book pp.", view: ["Explore", "Visual recap", "Full notes", "Practice"], predict: "Predict, then investigate", transfer: "Try a new condition · answer hidden until submitted", observe: "Observation task", chart: "Interactive model · not measured data", compare: "Dashed: a=1 reference / solid: current", func: "Function", scale: "Scale a", family: "Approximation", width: "Concentration N", center: "Center x₀", spacing: "Spacing τ", grid: "2D lattice", rect: "Rectangular", gauss: "Gaussian", false: "1D sampling", true: "2D lattice", area: "Pulse area", target: "Target f(x₀)", integral: "Weighted integral (finite pulse)", sample: "Samples at nτ; arrow length encodes weight f(nτ), not the height of δ.", boundary: "Model boundary", labBoundary: ["a>0. These are 1D profiles and an ideal 2D circular pupil; discontinuous boundary values follow the book.", "The plot shows finite-N approximations; delta itself has no ordinary graph height. The integral example uses continuous f(x)=1/(1+x²).", "Arrows represent ideal unit impulses and weights. Only a finite window is drawn; 2D dots are not real pinhole sizes."], recap: "Three takeaways", notes: "From observation to formula", practice: "Practice for this section", unknown: "I don't know", retry: "Try again", correct: "Correct", wrong: "Not quite", nextQ: "Next question", prev: "← Previous", next: "Next →", finished: "End of sample", start: "First section", answer: "Explanation", reset: "Retry question", saved: "Answers use a separate progress key for this book", plot: "See diagram note for vertical scales" }
+    zh: { scope: "教材样章 · 1.1–1.4", chapter: "第 1 章 · 傅里叶分析", section: "1.2 · 脉冲函数", side: "两本教材分开成课 · 本页只包含《傅里叶光学》第 1 章的已做部分。", book: "吕乃光《傅里叶光学》第 3 版", source: "打开教材对应页 ↗", pages: "书页", view: ["动手探索", "图解回顾", "完整讲义", "正式练习"], predict: "先预测，再动手", transfer: "换个条件试一试 · 答前不显示结果", observe: "观察任务", chart: "交互图示 · 模型计算，非实测", compare: "虚线：a=1 参照 / 实线：当前值", func: "函数", scale: "尺度 a", family: "近似脉冲", width: "收缩倍数 N", center: "位置 x₀", spacing: "间距 τ", grid: "二维格点", rect: "矩形族", gauss: "高斯族", false: "一维抽样", true: "二维阵列", area: "脉冲面积", target: "目标值 f(x₀)", integral: "加权积分（有限宽近似）", sample: "采样位置 nτ；箭头长度编码权重 f(nτ)，不是 δ 的高度。", boundary: "模型边界", labBoundary: ["a>0；本图仅演示一维函数截面与理想二维圆孔，图上的不连续边界依教材定义。", "图中是有限 N 的近似脉冲；δ 本身不具有通常意义的曲线高度。积分示例用连续的 f(x)=1/(1+x²)。", "箭头表示理想单位脉冲及其权重；有限图窗只画出其中一些，二维格点图不代表真实小孔尺寸。"], recap: "带走这三点", notes: "从现象到公式", practice: "本节正式练习", unknown: "我不知道", retry: "再试一次", correct: "答对了", wrong: "再想想", nextQ: "下一题", prev: "← 上一节", next: "下一节 →", finished: "已到样章末尾", start: "这是第一节", answer: "解析", reset: "重做本题", saved: "作答保存在这本书的独立进度中", plot: "纵轴单位见图示说明" },
+    en: { scope: "Sample · §§1.1–1.4", chapter: "Chapter 1 · Fourier Analysis", section: "1.2 · Impulse Functions", side: "A separate course for this textbook. Only the completed part of Chapter 1 appears here.", book: "Lü Naiguang, Fourier Optics, 3rd ed.", source: "Open source page ↗", pages: "Book pp.", view: ["Explore", "Visual recap", "Full notes", "Practice"], predict: "Predict, then investigate", transfer: "Try a new condition · answer hidden until submitted", observe: "Observation task", chart: "Interactive model · not measured data", compare: "Dashed: a=1 reference / solid: current", func: "Function", scale: "Scale a", family: "Approximation", width: "Concentration N", center: "Center x₀", spacing: "Spacing τ", grid: "2D lattice", rect: "Rectangular", gauss: "Gaussian", false: "1D sampling", true: "2D lattice", area: "Pulse area", target: "Target f(x₀)", integral: "Weighted integral (finite pulse)", sample: "Samples at nτ; arrow length encodes weight f(nτ), not the height of δ.", boundary: "Model boundary", labBoundary: ["a>0. These are 1D profiles and an ideal 2D circular pupil; discontinuous boundary values follow the book.", "The plot shows finite-N approximations; delta itself has no ordinary graph height. The integral example uses continuous f(x)=1/(1+x²).", "Arrows represent ideal unit impulses and weights. Only a finite window is drawn; 2D dots are not real pinhole sizes."], recap: "Three takeaways", notes: "From observation to formula", practice: "Practice for this section", unknown: "I don't know", retry: "Try again", correct: "Correct", wrong: "Not quite", nextQ: "Next question", prev: "← Previous", next: "Next →", finished: "End of sample", start: "First section", answer: "Explanation", reset: "Retry question", saved: "Answers use a separate progress key for this book", plot: "See diagram note for vertical scales" }
   };
   let language = read(storage.language, "zh") === "en" ? "en" : "zh";
   let lessonId = byId[decodeURIComponent(location.hash.replace(/^#lesson-/, ""))] ? decodeURIComponent(location.hash.slice(8)) : "1.1";
@@ -19,7 +19,7 @@
   let quizIndex = 0;
   const answers = read(storage.answers, {});
   const labs = read(storage.labs, {});
-  const defaultLab = id => id === "1.1" ? { func: "rect", a: 1.5 } : id === "1.2.1" ? { family: "rect", n: 2, x0: 0 } : { tau: 1.5, grid: false };
+  const defaultLab = id => id === "1.1" ? { func: "rect", a: 1.5 } : id === "1.2.1" ? { family: "rect", n: 2, x0: 0 } : id === "1.2.2" ? { tau: 1.5, grid: false } : { a: 1, x0: 0, family: "rect", lag: 0, window: 4 };
   const lab = () => labs[lessonId] ||= defaultLab(lessonId);
   const lesson = () => byId[lessonId];
   const guide = () => guides[lessonId];
@@ -38,12 +38,20 @@
   const G = () => learningUi[language];
 
   function renderShell() {
+    document.body.classList.toggle("convolution-sample-active", lessonId === "1.3.1");
+    document.body.classList.toggle("independent-labs-active", window.FourierIndependentLabs.has(lessonId));
+    if (lessonId === "1.3.1") {
+      $("chapter-label").parentElement.open = true;
+      $("convolution-label").parentElement.open = true;
+    }
     document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
     document.title = `${text(lesson().title)} · ${language === "zh" ? "傅里叶光学" : "Fourier Optics"}`;
     $("language").textContent = language === "zh" ? "EN" : "中文";
-    $("scope-label").textContent = L().scope;
+    $("scope-label").textContent = lessonId === "1.3.1" ? (language === "zh" ? "独立学习 · 1.3.1" : "Independent learning · 1.3.1") : L().scope;
     $("chapter-label").textContent = L().chapter;
     $("section-label").textContent = L().section;
+    $("convolution-label").textContent = language === "zh" ? "1.3 · 卷积" : "1.3 · Convolution";
+    $("correlation-label").textContent = language === "zh" ? "1.4 · 相关" : "1.4 · Correlation";
     $("side-foot").textContent = L().side;
     document.querySelector(".sidebar").setAttribute("aria-label", language === "zh" ? "课程目录" : "Course contents");
     document.querySelectorAll(".lesson-link").forEach(button => {
@@ -51,8 +59,9 @@
       button.classList.toggle("active", button.dataset.lesson === lessonId);
       if (button.dataset.lesson === lessonId) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
     });
-    $("breadcrumb").textContent = `${L().chapter}  /  ${lessonId.startsWith("1.2") ? `${L().section}  /  ` : ""}${lessonId}`;
-    $("lesson-kicker").textContent = `${lessonId}  /  ${L().book}`;
+    const section = lessonId.startsWith("1.2") ? L().section : lessonId.startsWith("1.3") ? $("convolution-label").textContent : lessonId.startsWith("1.4") ? $("correlation-label").textContent : "";
+    $("breadcrumb").textContent = `${L().chapter}  /  ${section ? `${section}  /  ` : ""}${lessonId}`;
+    $("lesson-kicker").textContent = lessonId === "1.3.1" ? (language === "zh" ? "1.3.1 / 卷积实验室" : "1.3.1 / CONVOLUTION LAB") : `${lessonId}  /  ${L().book}`;
     $("lesson-title").textContent = text(lesson().title);
     $("lesson-lead").textContent = text(lesson().lead);
     $("page-label").textContent = `${L().pages} ${lesson().pages}  ·  PDF ${lesson().pdf}`;
@@ -78,9 +87,19 @@
 
   function render() {
     renderShell();
+    if (lessonId === "1.3.1" && mode !== "quiz") {
+      window.FourierConvolutionSample.render($("content"), { mode, language, math, html });
+      renderSymbols();
+      return;
+    }
+    if (window.FourierIndependentLabs.has(lessonId) && mode !== "quiz") {
+      window.FourierIndependentLabs.render($("content"), { id: lessonId, mode, language, math, html });
+      renderSymbols();
+      return;
+    }
     if (mode === "explore") renderExplore();
     if (mode === "recap") {
-      const image = lessonId === "1.1" ? functionPlot({ func: "rect", a: 2 }) : lessonId === "1.2.1" ? deltaPlot({ family: "rect", n: 8, x0: 0 }) : combPlot({ grid: false, tau: 2 });
+    const image = lessonId === "1.1" ? functionPlot({ func: "rect", a: 2 }) : lessonId === "1.2.1" ? deltaPlot({ family: "rect", n: 8, x0: 0 }) : lessonId === "1.2.2" ? combPlot({ grid: false, tau: 2 }) : window.FourierNewPlot(lessonId, lab(), language, false);
       $("content").innerHTML = `<div class="section-caption">${html(L().recap)}</div><figure class="recap-figure"><div class="plot">${image}</div><figcaption>${html(text(guide().observe))} · ${html(L().chart)}</figcaption></figure><div class="recap-grid">${lesson().recap.map((item, i) => `<article class="recap-card"><span>0${i + 1}</span><p>${html(text(item))}</p></article>`).join("")}</div><button type="button" class="primary inline-next" data-view="notes">${html(L().view[2])} →</button>`;
     }
     if (mode === "notes") renderNotes();
@@ -93,13 +112,22 @@
     const intro = `<div class="learning-intro"><div class="section-caption">${html(G().start)}</div><h2>${html(text(g.question))}</h2><p>${html(text(g.setup))}</p><div class="bridge-row">${g.bridge.map((item, i) => `<p><strong>${html(G().bridge[i])}</strong>${html(text(item))}</p>`).join("")}</div><div class="section-caption">${html(G().known)}</div><ul class="first-terms">${g.terms.map(item => `<li>${html(text(item))}</li>`).join("")}</ul><p class="observation-guide"><strong>${html(G().see)}：</strong>${html(text(g.observe))}</p><div class="section-caption">${html(G().route)}</div><ol class="reading-route">${lesson().notes.map((note, i) => `<li><button type="button" data-reading="${i}">${html(text(note.title))}</button></li>`).join("")}</ol></div>`;
     const blocks = lesson().notes.map((item, i) => {
       const step = g.steps[i];
-      return `<article class="note" id="reading-${i}" tabindex="-1"><div class="note-num">${String(i + 1).padStart(2, "0")}</div><div class="note-body"><h2>${html(text(item.title))}</h2><p class="build">${html(text(step.build))}</p><button type="button" class="compare-button" data-compare="${i}">${html(G().compare)} ↗</button><div class="equation" role="group" aria-label="${html(text(item.title))}">${math(item.tex, true)}</div><p class="read-formula">${html(text(item.after))}</p><p class="worked"><strong>${html(G().example)} · </strong>${html(text(step.example))}</p><details class="proof"><summary>${html(G().proof)}</summary>${step.proof.map(line => `<div class="proof-line"><p>${html(text(line.lead))}</p><div class="proof-equation">${math(line.tex, true)}</div><p>${html(text(line.read))}</p></div>`).join("")}</details><p class="to-next"><strong>${html(G().link)} · </strong>${html(text(step.next))}</p></div></article>`;
+      return `<article class="note" id="reading-${i}" tabindex="-1"><div class="note-num">${String(i + 1).padStart(2, "0")}</div><div class="note-body"><h2>${html(text(item.title))}</h2><p class="source-label">${html(language === "zh" ? "教材对应：" : "Textbook reference: ")}${html(item.source || "")}</p><p class="build">${html(text(item.before))}</p><p class="build">${html(text(step.build))}</p><button type="button" class="compare-button" data-compare="${i}">${html(G().compare)} ↗</button><p class="operation-goal">${html(text(step.proof[0].lead))}</p><div class="proof-equation core-operation">${math(step.proof[0].tex, true)}</div><p class="operation-read">${html(text(step.proof[0].read))}</p><div class="equation" role="group" aria-label="${html(text(item.title))}">${math(item.tex, true)}</div><p class="read-formula">${html(text(item.after))}</p><p class="worked"><strong>${html(G().example)} · </strong>${html(text(step.example))}</p><details class="proof"><summary>${html(G().proof)}</summary>${step.proof.slice(1).map(line => `<div class="proof-line"><p>${html(text(line.lead))}</p><div class="proof-equation">${math(line.tex, true)}</div><p>${html(text(line.read))}</p></div>`).join("")}</details><p class="to-next"><strong>${html(G().link)} · </strong>${html(text(step.next))}</p></div></article>`;
     }).join("");
     $("content").innerHTML = `<div class="notes-layout"><div class="notes-reading">${intro}<div class="section-caption">${html(G().notes)}</div><div class="notes">${blocks}</div><button type="button" class="primary inline-next" data-view="quiz">${html(L().view[3])} →</button></div><aside class="notes-visual" aria-label="${html(L().chart)}">${workbenchMarkup(lab())}</aside></div>`;
     renderLabVisual();
   }
 
   function workbenchMarkup(state) {
+    if (lessonId.startsWith("1.3") || lessonId.startsWith("1.4")) {
+      const isPower = lessonId === "1.4.3";
+      const labels = language === "zh" ? [lessonId === "1.4.1" ? "第二信号中心 s" : "位移 x / 点位置 x₀", isPower ? "余弦周期 a" : "第二窗宽度 a"] : [lessonId === "1.4.1" ? "Second signal center s" : "Lag x / point x₀", isPower ? "Cosine period a" : "Second window width a"];
+      const range = (key, label, min, max) => `<label class="range-label">${html(label)} <output id="${key}-value">${state[key].toFixed(2)}</output><input data-lab="${key}" type="range" min="${min}" max="${max}" step="0.25" value="${state[key]}"></label>`;
+      const family = ["1.3.1", "1.4.2"].includes(lessonId) ? `<label>${html(language === "zh" ? "模型" : "Model")}<select data-lab="family"><option value="rect" ${state.family === "rect" ? "selected" : ""}>${html(L().rect)}</option><option value="gauss" ${state.family === "gauss" ? "selected" : ""}>${html(L().gauss)}</option></select></label>` : "";
+      const boundary = language === "zh" ? "无量纲一维模型计算，非实测。理想 δ 是分布；功率相关图为有限窗近似。积分和换序须有适用条件。" : "Dimensionless 1D model, not measured data. Delta is a distribution; power correlation uses a finite-window approximation. Integral rearrangement requires suitable conditions.";
+      const extra = lessonId === "1.4.1" ? range("lag", language === "zh" ? "相关位移 x" : "Correlation lag x", -3, 3) : isPower ? range("window", language === "zh" ? "积分半宽 X" : "Window half-width X", 1, 12) : "";
+      return `<div class="workbench"><div class="plot-header"><strong>${html(L().chart)}</strong></div><div id="plot" class="plot"></div><div id="readout" class="readout" aria-live="polite"></div><div class="controls">${range("x0", labels[0], -3, 3)}${range("a", labels[1], .5, 3)}${extra}${family}</div><p class="boundary"><strong>${html(L().boundary)}</strong> · ${html(boundary)}</p>${mode === "notes" && compareIndex !== null ? `<button type="button" class="return-reading" data-return-reading="${compareIndex}">${html(language === "zh" ? "返回刚才的讲解 ↓" : "Back to the explanation ↓")}</button>` : ""}</div>`;
+    }
     const controls = lessonId === "1.1" ? `<label>${html(L().func)}<select data-lab="func">${Object.keys(names).map(key => `<option value="${key}" ${key === state.func ? "selected" : ""}>${names[key]}</option>`).join("")}</select></label><label class="range-label">${html(L().scale)} <output id="a-value">${state.a.toFixed(2)}</output><input data-lab="a" type="range" min="0.5" max="3" step="0.25" value="${state.a}" ${["step", "sgn"].includes(state.func) ? "disabled" : ""}></label>` : lessonId === "1.2.1" ? `${state.plane ? "" : `<label>${html(L().family)}<select data-lab="family"><option value="rect" ${state.family === "rect" ? "selected" : ""}>${html(L().rect)}</option><option value="gauss" ${state.family === "gauss" ? "selected" : ""}>${html(L().gauss)}</option></select></label>`}<label class="range-label">${html(L().width)} <output id="n-value">${state.n}</output><input data-lab="n" type="range" min="1" max="12" step="1" value="${state.n}"></label>${state.plane ? "" : `<label class="range-label">${html(L().center)} <output id="x0-value">${state.x0.toFixed(1)}</output><input data-lab="x0" type="range" min="-2" max="2" step="0.25" value="${state.x0}"></label>`}` : `<label class="range-label">${html(L().spacing)} <output id="tau-value">${state.tau.toFixed(2)}</output><input data-lab="tau" type="range" min="0.75" max="2.5" step="0.25" value="${state.tau}"></label><label class="toggle"><input data-lab="grid" type="checkbox" ${state.grid ? "checked" : ""}><span>${html(L().grid)}</span></label>`;
     const boundary = lessonId === "1.2.1" && state.plane ? (language === "zh" ? "二维椭圆轮廓是有限宽数学近似，x、y 均为无量纲演示；颜色和线宽不代表测得的光斑。缩放权重须由面积积分判断。" : "The 2D ellipses are finite mathematical approximations with dimensionless axes; colors and line widths are not measured spots. Scaling weight follows from an area integral.") : L().labBoundary[lessons.findIndex(item => item.id === lessonId)];
     return `<div class="workbench"><div class="plot-header"><strong>${html(L().chart)}</strong><span>${lessonId === "1.1" ? html(L().compare) : ""}</span></div><div id="plot" class="plot"></div><div id="readout" class="readout" aria-live="polite"></div><div class="controls">${controls}</div><p class="boundary"><strong>${html(L().boundary)}</strong> · ${html(boundary)}</p>${mode === "notes" && compareIndex !== null ? `<button type="button" class="return-reading" data-return-reading="${compareIndex}">${html(language === "zh" ? "返回刚才的讲解 ↓" : "Back to the explanation ↓")}</button>` : ""}</div>`;
@@ -115,6 +143,15 @@
 
   function renderLabVisual() {
     const state = lab();
+    if (lessonId.startsWith("1.3") || lessonId.startsWith("1.4")) {
+      const index = state.stage || 0;
+      const hidden = mode === "explore" && index === guide().stages.length - 1 && state.stageAnswers?.[index] === undefined;
+      $("plot").innerHTML = window.FourierNewPlot(lessonId, state, language, hidden);
+      $("readout").textContent = hidden ? G().hidden : window.FourierNewReadout(lessonId, state, language);
+      for (const key of ["a", "x0", "lag", "window"]) if ($(`${key}-value`)) $(`${key}-value`).textContent = state[key].toFixed(2);
+      if ($("symbol-dialog").open) renderSymbols();
+      return;
+    }
     $("plot").innerHTML = lessonId === "1.1" ? functionPlot(state) : lessonId === "1.2.1" ? deltaPlot(state) : combPlot(state);
     const message = lessonId === "1.1" ? functionReadout(state) : lessonId === "1.2.1" ? deltaReadout(state) : combReadout(state);
     $("readout").textContent = message;
@@ -135,7 +172,8 @@
     $("symbol-dialog-note").textContent = quickUi[language].note;
     $("symbol-head").innerHTML = quickUi[language].headings.map(label => `<th scope="col">${html(label)}</th>`).join("");
     $("symbol-rows").innerHTML = lesson().symbols.map(item => {
-      const current = item.control ? lab()[item.control] : undefined;
+    const currentState = window.FourierIndependentLabs.has(lessonId) ? window.FourierIndependentLabs.currentValues(lessonId, mode) : lab();
+    const current = item.control ? currentState[item.control] : undefined;
       const condition = `${text(item.condition)}${current === undefined ? "" : ` · ${item.control === "n" ? current : current.toFixed(2)}`}`;
       return `<tr><th scope="row">${math(item.tex)}</th><td>${html(text(item.meaning))}</td><td>${html(text(item.unit))}</td><td>${html(condition)}</td></tr>`;
     }).join("");
@@ -226,6 +264,8 @@
     quizIndex = 0;
     $("chapter-label").parentElement.open = true;
     if (id.startsWith("1.2")) $("section-label").parentElement.open = true;
+    if (id.startsWith("1.3")) $("convolution-label").parentElement.open = true;
+    if (id.startsWith("1.4")) $("correlation-label").parentElement.open = true;
     location.hash = `lesson-${id}`;
     render();
     $("main").focus();
@@ -247,7 +287,7 @@
     if (compare) {
       const index = Number(compare.dataset.compare);
       compareIndex = index;
-      const stageIndex = lessonId === "1.2.1" ? [2, 0, 3, 3][index] : index;
+      const stageIndex = lessonId === "1.2.1" ? [2, 0, 3, 3][index] : Math.min(index, guide().stages.length - 1);
       lab().stage = stageIndex;
       Object.assign(lab(), guide().stages[stageIndex].preset);
       save(storage.labs, labs);
@@ -386,8 +426,12 @@
   window.addEventListener("scroll", updateBackToTop, { passive: true });
   updateBackToTop();
   $("language").addEventListener("click", () => { language = language === "zh" ? "en" : "zh"; save(storage.language, language); render(); });
+  document.addEventListener("fourier-lab-change", () => { if ($("symbol-dialog").open) renderSymbols(); });
   $("prev").addEventListener("click", () => navigate(lessons[lessons.findIndex(item => item.id === lessonId) - 1].id));
   $("next").addEventListener("click", () => navigate(lessons[lessons.findIndex(item => item.id === lessonId) + 1].id));
   window.addEventListener("hashchange", () => { const id = decodeURIComponent(location.hash.replace(/^#lesson-/, "")); if (byId[id] && id !== lessonId) navigate(id); });
+  // Expand the deep-linked branch once; later language changes preserve manual collapse.
+  const initialLabel = lessonId.startsWith("1.2") ? "section-label" : lessonId.startsWith("1.3") ? "convolution-label" : lessonId.startsWith("1.4") ? "correlation-label" : "chapter-label";
+  $(initialLabel).parentElement.open = true;
   render();
 })();

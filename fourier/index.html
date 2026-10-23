@@ -3,13 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>傅里叶光学 · 1.1–1.2</title>
+  <title>傅里叶光学 · 1.1–1.4</title>
   <link rel="icon" href="waveform.svg?v=2" type="image/svg+xml">
   <link rel="stylesheet" href="../course/optics-course/vendor/katex/katex.min.css">
   <link rel="stylesheet" href="fourier-course/style.css">
+  <link rel="stylesheet" href="fourier-course/convolution-sample.css">
+  <link rel="stylesheet" href="fourier-course/independent-labs.css">
   <script defer src="../course/optics-course/vendor/katex/katex.min.js"></script>
   <script defer src="fourier-course/lesson-data.js"></script>
   <script defer src="fourier-course/guided-data.js"></script>
+  <script defer src="fourier-course/convolution-correlation.js"></script>
+  <script defer src="fourier-course/teaching-audit.js"></script>
+  <script defer src="fourier-course/convolution-sample.js"></script>
+  <script defer src="fourier-course/independent-lab-data.js"></script>
+  <script defer src="fourier-course/independent-labs.js"></script>
   <script defer src="fourier-course/app.js"></script>
   <script defer src="fourier-course/cover-physics.js"></script>
   <script defer src="fourier-course/cover.js"></script>
@@ -17,7 +24,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="./" aria-label="傅里叶光学 / Fourier Optics"><span class="brand-symbol" aria-hidden="true">∿</span><span>傅里叶光学 <small>FOURIER OPTICS / VOL. 01</small></span></a>
-    <div class="top-actions"><a class="site-home-link" href="../">← 网站首页</a><span id="scope-label" class="scope">教材样章 · 1.1–1.2</span><button id="cover-open" type="button">开始页</button><button id="language" type="button" aria-label="切换语言 / Switch language">EN</button></div>
+    <div class="top-actions"><a class="site-home-link" href="../">← 网站首页</a><span id="scope-label" class="scope">教材样章 · 1.1–1.4</span><button id="cover-open" type="button">开始页</button><button id="language" type="button" aria-label="切换语言 / Switch language">EN</button></div>
   </header>
   <div class="layout">
     <aside class="sidebar" aria-label="课程目录">
@@ -27,6 +34,16 @@
         <details open><summary id="section-label">1.2 · 脉冲函数</summary>
           <button type="button" class="lesson-link nested" data-lesson="1.2.1"></button>
           <button type="button" class="lesson-link nested" data-lesson="1.2.2"></button>
+        </details>
+        <details><summary id="convolution-label">1.3 · 卷积</summary>
+          <button type="button" class="lesson-link nested" data-lesson="1.3.1"></button>
+          <button type="button" class="lesson-link nested" data-lesson="1.3.2"></button>
+          <button type="button" class="lesson-link nested" data-lesson="1.3.3"></button>
+        </details>
+        <details><summary id="correlation-label">1.4 · 相关</summary>
+          <button type="button" class="lesson-link nested" data-lesson="1.4.1"></button>
+          <button type="button" class="lesson-link nested" data-lesson="1.4.2"></button>
+          <button type="button" class="lesson-link nested" data-lesson="1.4.3"></button>
         </details>
       </details>
       <div class="side-foot" id="side-foot"></div>
