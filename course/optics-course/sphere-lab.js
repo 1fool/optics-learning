@@ -220,11 +220,6 @@ window.OpticsSphereLab = function createSphereLab(root, onMode) {
     root.setAttribute("aria-label", t("球面波互动实验", "Spherical wave interactive experiment"));
     const toolbar = node("div", "lab-toolbar");
     toolbar.append(node("span", "lab-edition", t("1.3.1 / 球面波实验室 · 样章", "1.3.1 / SPHERICAL WAVE LAB · PILOT")));
-    const map = button(t("课程地图", "Course map"), () => {
-      const open = document.body.classList.toggle("lab-map-open"); map.setAttribute("aria-expanded", String(open));
-    }, "lab-text-button");
-    map.id = "course-map-toggle"; map.setAttribute("aria-controls", "lesson-nav");
-    map.setAttribute("aria-expanded", String(document.body.classList.contains("lab-map-open"))); toolbar.append(map);
     const tabs = node("div", "lab-tabs"); tabs.setAttribute("aria-label", t("学习方式", "Learning view"));
     for (const [id, zh, en] of [["experiment", "动手探索", "Explore"], ["recap", "图解回顾", "Recap"], ["notes", "完整讲义", "Full notes"], ["quiz", "正式练习", "Formal quiz"]]) {
       const tab = button(t(zh, en), () => setMode(id), "lab-tab"); tab.dataset.labMode = id;
@@ -331,10 +326,7 @@ window.OpticsSphereLab = function createSphereLab(root, onMode) {
     const radius = r * unit;
     const circle = (x, y, rad, color, width = 1) => { ctx.beginPath(); ctx.arc(x, y, rad, 0, 2 * Math.PI); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); };
     const label = (value, x, y, color = "#a9b8cb", size = 12, align = "center") => { ctx.fillStyle = color; ctx.font = `500 ${size}px 'Microsoft YaHei UI',sans-serif`; ctx.textAlign = align; ctx.fillText(value, x, y); };
-    // A background coordinate grid, not a representation of matter or ether.
-    ctx.strokeStyle = "#ffffff07"; ctx.lineWidth = 1;
-    for (let x = 15; x < w; x += 30) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
-    for (let y = 15; y < h; y += 30) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+    // The decorative grid sits behind this transparent canvas on the scene.
     const offset = (time * .35 + phaseOffset) % 1;
     for (let i = 0; i < 5; i++) {
       const rr = (i + offset) * unit;

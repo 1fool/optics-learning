@@ -1,10 +1,7 @@
 /* The other section labs reuse the pilot's step/navigation language while
    keeping each section's own diagram and model controls. */
 .deep-lab-open { background: #f6f4ee; }
-.deep-lab-open .intro, .deep-lab-open .rail { display: none; }
-.deep-lab-open .layout { grid-template-columns: minmax(0, 1fr); }
-.deep-lab-open.lab-map-open .layout { grid-template-columns: 260px minmax(0, 1fr); }
-.deep-lab-open.lab-map-open .rail { display: block; }
+.deep-lab-open .intro { display: none; }
 .deep-lab-open .lesson-head { margin: 18px 0 10px; }
 .deep-lab-open:not([data-deep-mode="notes"]):not([data-deep-mode="quiz"]) .lesson-head { display: none; }
 .deep-lab-open .lesson-head .goals, .deep-lab-open .lesson-overview { display: none; }
@@ -36,8 +33,8 @@
 .deep-scene-cover { position: absolute; z-index: 2; inset: 45px 0 0; display: grid; place-items: center; padding: 25px; text-align: center; color: #f5f7e4; background: #142333f2; font-size: 18px; line-height: 1.8; }
 #deep-lab .lab-model { padding-bottom: 15px; }
 @media (max-width: 1100px) {
-  .deep-lab-open.lab-map-open .layout { grid-template-columns: minmax(0, 1fr); }
-  .deep-lab-open.lab-map-open .rail { position: static; max-height: 360px; }
+  .deep-lab-open .layout { grid-template-columns: minmax(0, 1fr); }
+  .deep-lab-open .rail { position: static; max-height: min(340px, 42vh); margin-bottom: 22px; }
   #deep-lab .lab-bench { grid-template-columns: minmax(0, 1.15fr) minmax(290px, 1fr); }
 }
 @media (max-width: 760px) {

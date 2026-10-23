@@ -149,8 +149,6 @@ window.OpticsDeepLab = function createDeepLab(root, figure, onMode) {
     detach(); root.replaceChildren(); root.dataset.mode = mode; root.dataset.step = state.step;
     const toolbar = el("div", "lab-toolbar");
     toolbar.append(el("span", "lab-edition", t(`${lesson.code} / 本节互动实验`, `${lesson.code} / SECTION LAB`)));
-    const map = button(t("课程地图", "Course map"), () => { document.body.classList.toggle("lab-map-open"); map.setAttribute("aria-expanded", String(document.body.classList.contains("lab-map-open"))); }, "lab-text-button");
-    map.setAttribute("aria-controls", "lesson-nav"); map.setAttribute("aria-expanded", String(document.body.classList.contains("lab-map-open"))); toolbar.append(map);
     const tabs = el("div", "lab-tabs");
     for (const [id, zh, en] of [["experiment", "动手探索", "Explore"], ["recap", "图解回顾", "Recap"], ["notes", "完整讲义", "Full notes"], ["quiz", "正式练习", "Formal quiz"]]) {
       const tab = button(t(zh, en), () => selectMode(id), "lab-tab"); tab.dataset.labMode = id; tab.setAttribute("aria-pressed", String(mode === id)); tabs.append(tab);

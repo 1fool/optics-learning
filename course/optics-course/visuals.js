@@ -124,8 +124,15 @@ window.OpticsVisuals = function createVisuals(canvas, controls, caption) {
     ctx.beginPath(); points.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
     ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); ctx.globalAlpha = 1;
   }
+  function drawGrid(x, y, width, height) {
+    ctx.save(); ctx.beginPath(); ctx.rect(x, y, width, height); ctx.clip(); ctx.beginPath();
+    for (let gx = x + 26.5; gx < x + width; gx += 52) { ctx.moveTo(gx, y); ctx.lineTo(gx, y + height); }
+    for (let gy = y + 26.5; gy < y + height; gy += 52) { ctx.moveTo(x, gy); ctx.lineTo(x + width, gy); }
+    ctx.strokeStyle = "#ffffff0b"; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
+  }
   function panel(x, y, width, height, title) {
     ctx.fillStyle = "#2a4536"; ctx.fillRect(x, y, width, height);
+    drawGrid(x, y, width, height);
     ctx.strokeStyle = "#67805f"; ctx.strokeRect(x + .5, y + .5, width - 1, height - 1);
     text(title, x + 16, y + 26, colors.text, 14);
   }
@@ -273,7 +280,7 @@ window.OpticsVisuals = function createVisuals(canvas, controls, caption) {
   }
   const painters = { maxwell, solution, periods, wavefronts, phasor, amplitude, orthogonal };
   for (const [key, figure] of Object.entries(extra)) {
-    painters[key] = (w, h) => figure.draw({ ctx, w, h, values, clock, language });
+    painters[key] = (w, h) => figure.draw({ ctx, w, h, values, clock, language, drawGrid });
   }
   function frame(now) {
     if (!paused && !document.hidden && last) clock += Math.min((now - last) / 1000, .05) * .45;
@@ -291,6 +298,7 @@ window.OpticsVisuals = function createVisuals(canvas, controls, caption) {
     gradient.addColorStop(0, background[0]); gradient.addColorStop(1, background[1]);
     ctx.fillStyle = gradient; ctx.fillRect(0, 0, w, h);
     ctx.save(); ctx.beginPath(); ctx.rect(0, 0, w, h); ctx.clip();
+    drawGrid(0, 0, w, h);
     painters[mode](w, h);
     ctx.restore();
     requestAnimationFrame(frame);

@@ -3,10 +3,6 @@
 [hidden] { display: none !important; }
 .sphere-sample { background: #f6f4ee; }
 .sphere-sample .intro { display: none; }
-.sphere-sample .layout { grid-template-columns: minmax(0, 1fr); }
-.sphere-sample .rail { display: none; }
-.sphere-sample.lab-map-open .layout { grid-template-columns: 260px minmax(0, 1fr); }
-.sphere-sample.lab-map-open .rail { display: block; }
 .sphere-sample .lesson-head { margin: 18px 0 10px; }
 .sphere-sample:not([data-lab-mode="notes"]):not([data-lab-mode="quiz"]) .lesson-head { display: none; }
 .sphere-sample .lesson-head .goals, .sphere-sample .lesson-overview { display: none; }
@@ -99,8 +95,8 @@
 .lab-recap-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .lab-mode-note { padding: 8px 0 8px 14px; border-left: 2px solid #aabda1; background: transparent; color: #4b6242; font-size: 14px; }
 @media (max-width: 1100px) {
-  .sphere-sample.lab-map-open .layout { grid-template-columns: minmax(0, 1fr); }
-  .sphere-sample.lab-map-open .rail { position: static; max-height: 360px; }
+  .sphere-sample .layout { grid-template-columns: minmax(0, 1fr); }
+  .sphere-sample .rail { position: static; max-height: min(340px, 42vh); margin-bottom: 22px; }
   .lab-bench { grid-template-columns: minmax(0, 1.2fr) minmax(320px, 1fr); }
   .lab-task { padding: 21px; }
   .lab-hero { display: block; }

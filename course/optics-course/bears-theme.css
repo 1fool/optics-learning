@@ -122,11 +122,14 @@ body.bears-theme {
 }
 .bears-theme :is(#deep-lab, #sphere-lab) .lab-step[aria-current] { background: #efbf73; border-color: #80603c; color: #4a3a26; box-shadow: 0 3px 0 #ab8253; }
 .bears-theme .lab-bench { border: 3px solid #715d42; border-radius: 22px 9px 22px 9px; box-shadow: 5px 5px 0 #c4ad82; }
-.bears-theme .lab-scene { background: #2b4434; }
+.bears-theme .lab-scene, .bears-theme .stage, .bears-theme .stage-controls, .bears-theme .stage figcaption {
+  background-color: #2b4434;
+  background-image: linear-gradient(#ffffff0b 1px, transparent 1px), linear-gradient(90deg, #ffffff0b 1px, transparent 1px);
+  background-size: 52px 52px;
+}
 .bears-theme .lab-scene-head { padding-top: 15px; padding-bottom: 14px; background: #826949; border-bottom: 2px solid #b7a37d; color: #fff5da; }
 .bears-theme :is(#deep-lab, #sphere-lab) .lab-scene-head, .bears-theme .lab-live { color: #fff5da; }
-.bears-theme .stage-controls, .bears-theme .stage figcaption { background: #2b4434; border-color: #62785b; }
-.bears-theme .stage { background: #2b4434; }
+.bears-theme .stage-controls, .bears-theme .stage figcaption { border-color: #62785b; }
 .bears-theme :is(#deep-lab, #sphere-lab) .lab-task {
   position: relative; background: #fffae9;
   background-image: repeating-linear-gradient(transparent, transparent 31px, #a58b5812 31px, #a58b5812 32px);

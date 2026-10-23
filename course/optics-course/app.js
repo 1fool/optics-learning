@@ -539,7 +539,6 @@ function showLesson(index, scroll = false, preserveVisual = false) {
   document.body.classList.toggle("sphere-sample", isSample);
   document.body.classList.toggle("deep-lab-open", !isSample);
   if (!isSample) {
-    document.body.classList.remove("lab-map-open");
     for (const node of [$("lesson-reading"), document.querySelector(".lesson-actions"), document.querySelector(".footer")]) node.hidden = false;
   }
   sphereLab.show(isSample, language, preserveVisual);

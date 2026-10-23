@@ -30,6 +30,8 @@ fs.mkdirSync(out, { recursive: true });
     const before = await page.evaluate(() => localStorage.getItem("optics-course-answers-v3"));
     for (const width of [1440, 390]) {
       await page.setViewportSize({ width, height: width === 1440 ? 1000 : 844 });
+      await page.waitForFunction(target => innerWidth === target
+        && getComputedStyle(document.querySelector(".shell")).paddingRight === (target === 390 ? "54px" : "78px"), width);
       for (let index = 0; index < codes.length; index++) {
         await page.evaluate(i => showLesson(i), index);
         const root = codes[index] === "1.3.1" ? "#sphere-lab" : "#deep-lab";
@@ -65,6 +67,37 @@ fs.mkdirSync(out, { recursive: true });
         await page.locator("#lang-toggle").click();
       }
     }
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    for (const index of [0, 7, 19]) {
+      await page.evaluate(i => showLesson(i), index);
+      const root = codes[index] === "1.3.1" ? "#sphere-lab" : "#deep-lab";
+      for (const mode of ["experiment", "recap", "notes", "quiz"]) {
+        await page.locator(`${root} [data-lab-mode="${mode}"]`).click();
+        assert.equal(await page.locator(".rail").isVisible(), true, `${codes[index]}/${mode}: contents hidden`);
+      }
+      await page.locator(`${root} [data-lab-mode="notes"]`).click();
+      await page.evaluate(() => scrollTo({ top: 320, behavior: "instant" }));
+      const rail = await page.locator(".rail").evaluate(node => ({
+        top: node.getBoundingClientRect().top, position: getComputedStyle(node).position,
+        height: node.getBoundingClientRect().height, viewport: innerHeight, scroll: scrollY,
+      }));
+      assert(rail.scroll >= 200 && rail.position === "sticky" && Math.abs(rail.top - 20) <= 2
+        && rail.height <= rail.viewport - 40 + 1, `${codes[index]}: ${JSON.stringify(rail)}`);
+    }
+    await page.screenshot({ path: path.join(out, "desktop-sticky-contents.png") });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.waitForFunction(() => getComputedStyle(document.querySelector(".rail")).maxHeight === "340px");
+    const mobileRail = await page.locator(".rail").evaluate(node => ({
+      visible: node.getBoundingClientRect().height > 0, position: getComputedStyle(node).position,
+      height: node.getBoundingClientRect().height, viewport: innerHeight,
+    }));
+    assert(mobileRail.visible && mobileRail.position === "static" && mobileRail.height <= Math.min(340, mobileRail.viewport * .42) + 1,
+      JSON.stringify(mobileRail));
+    await page.evaluate(() => showLesson(7));
+    const grid = await page.locator("#sphere-lab .lab-scene").evaluate(node => ({
+      image: getComputedStyle(node).backgroundImage, size: getComputedStyle(node).backgroundSize,
+    }));
+    assert(grid.image.includes("linear-gradient") && grid.size === "52px 52px, 52px 52px", JSON.stringify(grid));
     assert.equal(await page.evaluate(() => localStorage.getItem("optics-course-answers-v3")), before, "Theme altered formal answers");
     await page.locator("#quick-symbols").click();
     assert.equal(await page.locator("#symbol-dialog").isVisible(), true);

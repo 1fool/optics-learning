@@ -192,10 +192,11 @@
     note: pair("无自由面源、μ₁=μ₂。图中 n̂ 从 1 指向 2，E₁ₙ 固定 100 V/m。箭头仅示意连续/跳变，不是完整的反射场解。", "No free sheet sources, μ₁=μ₂. n̂ points from 1 to 2 and E₁ₙ=100 V/m. Arrows illustrate continuity/jumps, not a full reflected-field solution."),
     settings: [slider("epsilonRatio", "介电常数比 ε₂/ε₁", "Permittivity ratio ε₂/ε₁", 1, 6, .5, 4)],
     draw(a) {
-      const { ctx, w, h, values, tr, text, line, arrow, red, blue, green, muted } = setup(a);
+      const { ctx, w, h, values, tr, text, line, arrow, drawGrid, red, blue, green, muted } = setup(a);
       const y = h * .46, cx = w * .27, lx = w * .72, ratio = values.epsilonRatio;
       ctx.fillStyle = "#30475b"; ctx.fillRect(15, 60, w - 30, y - 60);
       ctx.fillStyle = "#3f354e"; ctx.fillRect(15, y, w - 30, h * .78 - y);
+      drawGrid(15, 60, w - 30, h * .78 - 60);
       line(15, y, w - 15, y, muted, 2);
       text(tr("介质 1", "Medium 1"), 24, 83, muted, 12); text(tr("介质 2", "Medium 2"), 24, h * .77 - 10, muted, 12);
       ctx.setLineDash([4, 4]); ctx.strokeStyle = blue; ctx.strokeRect(cx - 30, y - 43, 60, 86); ctx.strokeStyle = green; ctx.strokeRect(lx - 46, y - 27, 92, 54); ctx.setLineDash([]);
