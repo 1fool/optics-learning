@@ -119,3 +119,5 @@
   .convolution-sample-active .view-tabs { overflow: visible; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) { .conv-sample { scroll-behavior: auto; } }
+.conv-chart-explanation { margin-top: 18px; padding-top: 12px; border-top: 1px solid #d8cdb8; font-size: .88rem; overflow-wrap: anywhere; }
+.conv-chart-explanation h3 { margin-top: 0; font-size: 1rem; }

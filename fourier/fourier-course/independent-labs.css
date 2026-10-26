@@ -17,6 +17,7 @@
 .il-graph { display: block; width: 100%; height: auto; overflow: hidden; }
 .il-graph text { font-family: inherit; font-size: 13px; fill: #4b443b; }
 .il-legend { font-size: .84rem; margin: 0 0 8px; color: #4b514d; }
+.il-pulse-parameters { margin: 0 0 12px; padding: 8px 10px; border-left: 3px solid #54766a; background: #edf1df; font-size: .86rem; }
 .il-readout { padding: 12px 0; border-top: 1px solid #dfd4bf; font-size: .9rem; line-height: 1.8; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .il-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 10px 0; }
 .il-controls label { display: flex; flex-direction: column; gap: 5px; font-size: .9rem; font-weight: 600; min-width: 0; }
@@ -25,6 +26,34 @@
 .il-controls .il-check { flex-direction: row; align-items: center; gap: 10px; grid-column: 1 / -1; min-height: 44px; }
 .il-check input { width: 22px; height: 22px; accent-color: var(--il-ink); }
 .il-reset { padding: 7px 12px; background: transparent; border: 1px solid #bcb09c; border-radius: 5px; }
+.il-chart-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.chart-explanation-card[hidden], .il-explanation-slot[hidden], .conv-chart-explanation[hidden] { display: none !important; }
+.chart-explanation-card { position: fixed; z-index: 90; display: flex; flex-direction: column; box-sizing: border-box; padding: 0; color: #203c39; background: #fffef3; border: 2px solid #294e47; border-radius: 14px; box-shadow: 7px 9px 0 #203c3926, 0 16px 48px #102b3438; overflow: hidden; }
+.chart-explanation-card > header { display: flex; align-items: flex-start; gap: 10px; padding: 14px 14px 11px; background: #e9efcf; border-bottom: 1px solid #99ae7e; }
+.explanation-card-move { flex: 1; min-width: 0; cursor: move; touch-action: none; user-select: none; }
+.explanation-card-move h2 { font-size: 1.05rem; line-height: 1.5; margin: 0 0 4px; }
+.explanation-card-move small { display: block; font-size: .73rem; line-height: 1.5; color: #4f6554; }
+.chart-explanation-card button { min-height: 36px; padding: 5px 10px; border: 1px solid #829a70; border-radius: 6px; background: #fffef3; color: #294e47; }
+.chart-explanation-card :focus-visible { outline: 3px solid #a65720; outline-offset: -3px; }
+.explanation-card-body { flex: 1; min-height: 0; min-width: 0; overflow: auto; padding: 16px 18px 30px; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.explanation-card-body .il-explanation, .explanation-card-body .conv-chart-explanation { display: block; margin: 0; padding: 0; border: 0; font-size: .88rem; line-height: 1.8; }
+.explanation-card-body h3, .explanation-card-body h4 { font-size: 1rem; margin: 0 0 12px; }
+.explanation-card-body p { line-height: 1.85; margin: 10px 0; overflow-wrap: break-word; }
+.explanation-card-body .katex { font-weight: 600; }
+.explanation-card-body .katex-display { text-align: left; margin: 8px 0; }
+.explanation-card-body .katex-display > .katex { text-align: left; }
+.explanation-card-body .il-math, .explanation-card-body .conv-math { max-width: 100%; overflow-x: auto; padding: 8px 2px; }
+.chart-explanation-card .explanation-card-resize { position: absolute; right: 2px; bottom: 2px; width: 32px; height: 30px; min-height: 30px; padding: 0; border: 0; border-radius: 10px 0 10px 0; background: #e9efcf; font-size: 1.3rem; cursor: nwse-resize; touch-action: none; }
+.il-explanation { margin-top: 18px; padding-top: 12px; border-top: 1px solid #d8cdb8; font-size: .88rem; overflow-wrap: anywhere; }
+.il-explanation h3 { margin: 0 0 10px; }
+.il-explanation p { margin: 10px 0; }
+.il-explanation .il-math { font-size: .94rem; }
+.il-comparison { max-width: 100%; overflow-x: auto; }
+.il-comparison table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.il-comparison th, .il-comparison td { text-align: left; padding: 7px; border-bottom: 1px solid #d8cdb8; }
+.il-comparison [aria-current="true"] { background: #e4efed; font-weight: 700; }
+.il-question-context, .il-evidence { padding: 10px 13px; margin: 12px 0; border-left: 3px solid #a67b38; background: #f5eddf; font-size: .86rem; }
+.il-question-context p { margin: 6px 0; }
 .il-boundary { font-size: .8rem; margin-bottom: 0; }
 .il-choices { display: grid; gap: 10px; }
 .il-choices button { padding: 13px 16px; background: #fffdf8; color: #352f27; text-align: left; line-height: 1.6; border: 1px solid #cfc4af; border-radius: 9px; transition: background-color 130ms, border-color 130ms; }
@@ -36,6 +65,7 @@
 .il-math { max-width: 100%; overflow-x: auto; padding: 10px 3px; font-size: 1.02rem; }
 .il-math .katex { font-weight: 600; }
 .il-math .katex-display { margin: 8px 0; }
+.il-math .katex-display > .katex { text-align: left; }
 .il-step-actions { display: flex; justify-content: space-between; gap: 14px; margin-top: 18px; }
 .il-mobile-jump { display: none; }
 .il-step-actions button, .il-note > button, .il-recap > button, .il-reading > button { padding: 10px 16px; border: 1px solid #b7ab96; border-radius: 6px; background: #f8f1e4; }
