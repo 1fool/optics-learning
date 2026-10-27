@@ -130,4 +130,58 @@
     tex, meaning: P(zh, en), unit: P(unitZh, unitEn),
     condition: P("按当前实验步骤；未显示读数表示本步未指定", "Current experiment step; no reading means unspecified in this step"), control,
   }));
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.2.2"] = {
+    models: ["comb", "combScale", "combOperation", "combAlias"],
+    noteStages: [0, 1, 2, 3],
+      controls: {
+      tau: ["tau", P("采样间距 τ", "Sample spacing τ"), .75, 2.5, .25],
+      b: ["b", P("纵向间距 b", "Vertical spacing b"), .5, 2, .25],
+      sample: ["sample", P("样点编号 n", "Sample index n"), -1, 1, 1],
+      operation: ["operation", P("运算", "Operation"), [["multiply", P("相乘采样", "Multiply / sample")], ["convolve", P("卷积复制", "Convolve / replicate")]]],
+    },
+    create(tools) {
+      const { t, fmt, gauss, graph, stems, legend, block } = tools;
+      function drawScene(model, s) {
+        if (model.startsWith("comb")) {
+          const tau = s.tau;
+          if (s.grid) {
+            return { graphic: `<svg class="il-graph" viewBox="0 0 550 300" role="img" aria-label="${t("二维单位权重点列", "2D unit-weight lattice")}">${Array.from({ length: 7 }, (_, i) => Array.from({ length: 7 }, (_, j) => `<circle cx="${275 + (i - 3) * tau * 27}" cy="${150 - (j - 3) * s.b * 20}" r="4" fill="#245b66"/>`).join("")).join("")}<path d="M275 150h${tau * 27}m0 0l-5 -3m5 3l-5 3M275 150v${-s.b * 20}" stroke="#ae5130" fill="none"/><text x="280" y="180">τ=${tau}</text><text x="287" y="${148 - s.b * 10}">b=${s.b}</text><text x="20" y="24">(nτ,mb), ${t("每点权重1", "weight 1 per site")}</text></svg>`, readout: `${t("位置", "Sites")}: (n×${tau}, m×${s.b}) · ${t("权重补偿", "weight correction")}: 1/(τb)=${fmt(1 / (tau * s.b))}` };
+          }
+          const f = model === "combOperation" ? gauss : x => .5 + .4 * Math.cos(Math.PI * x / 2);
+          const xs = Array.from({ length: 2 * Math.floor(4 / tau) + 1 }, (_, i) => (i - Math.floor(4 / tau)) * tau);
+          if (model === "combScale") return { graphic: stems(xs.map(x => [x, tau]), "comb(x/τ)", 0, 3.5) + stems(xs.map(x => [x, 1]), "(1/τ) comb(x/τ)", 0, 3.5), readout: t(`位置相同；上：权重${tau}，下：权重1`, `Same sites; top weight ${tau}, bottom weight 1`) };
+          const curves = [{ fn: f }];
+          if (model === "combAlias") curves.push({ fn: x => f(x) + .3 * Math.sin(Math.PI * x / tau) });
+          if (model === "combOperation" && s.operation === "convolve") {
+            return { graphic: legend("蓝：原高斯；橙：n=−8…8的移位副本和", "Blue: original Gaussian; orange: shifted-copy sum for n=−8…8") + graph([curves[0], { fn: x => Array.from({ length: 17 }, (_, i) => gauss(x - (i - 8) * tau)).reduce((a, b) => a + b, 0) }], { xmin: -4, xmax: 4, ymax: 3 }), readout: t(`副本中心 n×${tau}；不是样点乘积`, `Replica centers n×${tau}; not a sampled product`) };
+          }
+          const weighted = s.weighted || model === "combOperation" || model === "combAlias";
+          return { graphic: graph(curves, { xmin: -4, xmax: 4, ymax: 1.3, marker: (s.sample || 0) * tau }) + stems(xs.map(x => [x, weighted ? f(x) : 1]), weighted ? "f(nτ) δ(x−nτ)" : "Σ δ(x−nτ)", 0, 1.4), readout: `τ=${tau} · n=${s.sample || 0} · nτ=${fmt((s.sample || 0) * tau)} · ${t("权重", "weight")}=${fmt(weighted ? f((s.sample || 0) * tau) : 1)}` };
+        }
+      }
+      function explanation(model, s) {
+        if (model.startsWith("comb")) {
+          if (s.grid) return block(
+            ["蓝点是理想脉冲的位置，不表示孔径大小。n、m取所有整数，τ是水平间距，b是竖直间距；橙线段示意这两个间距。每点权重为1，不由点的圆面积计算。", "Blue dots locate ideal impulses, not aperture sizes. n,m range over integers; τ,b are horizontal and vertical spacings, indicated by orange segments. Each site has weight 1, independent of drawn dot area."],
+            String.raw`\frac{1}{\tau b}\operatorname{comb}(x/\tau)\operatorname{comb}(y/b)=\sum_{n,m\in\mathbb Z}\delta(x-n\tau)\delta(y-mb)`,
+            [`本图位置为(n×${s.tau},m×${s.b})。未补偿的缩放会使每点权重变为τb=${fmt(s.tau * s.b)}；乘$\\frac{1}{\\tau b}$=${fmt(1 / (s.tau * s.b))}后才是单位点列。`, `Sites are (n×${s.tau},m×${s.b}). Uncompensated scaling gives each weight τb=${fmt(s.tau * s.b)}; multiplying by $\\frac{1}{\\tau b}$=${fmt(1 / (s.tau * s.b))} restores unit weights.`]);
+          if (model === "combScale") return block(
+            ["comb（梳状函数）是等距理想脉冲之和；δ读德尔塔，箭头只编码位置和积分权重，蓝橙交替仅为分辨相邻点，不代表两种信号。上图未补偿，下图补偿。", "Comb is a train of equally spaced ideal Dirac impulses δ. Arrows encode location and integral weight; alternating colors only distinguish adjacent sites. Top is uncorrected scaling, bottom corrected."],
+            String.raw`\operatorname{comb}(x/\tau)=\tau\sum_{n\in\mathbb Z}\delta(x-n\tau),\quad\frac1\tau\operatorname{comb}(x/\tau)=\sum_{n\in\mathbb Z}\delta(x-n\tau),\quad\tau>0`,
+            [`位置都在n×${s.tau}；上图每点权重${s.tau}，再乘$\\frac{1}{${s.tau}}$后下图每点权重为1。箭头不是普通曲线，不能把箭头围出的三角形面积当权重。`, `Sites are n×${s.tau} in both charts. Top weights ${s.tau}, multiplied by $\\frac{1}{${s.tau}}$ to give bottom weights 1. Arrow-triangle areas have no integral meaning.`]);
+          const op = model === "combOperation", replicated = op && s.operation === "convolve";
+          const n = s.sample || 0, x = n * s.tau, f = op ? gauss : u => .5 + .4 * Math.cos(Math.PI * u / 2);
+          return block(
+            [replicated ? "蓝线是原高斯$f(x)=e^{-\\pi x^2}$，橙线是整条函数的移位副本相加。τ是副本间隔，*表示卷积；这里不是逐点相乘取样。" : `上图蓝线是${op ? "高斯$f(x)=e^{-\\pi x^2}$" : "$f(x)=0.5+0.4\\cos(\\pi x/2)$"}，横轴x是位置；下图箭头表示位置nτ上的权重，非δ的实际峰高。n为整数编号，τ为间距，虚竖线标当前样点。`, replicated ? "Blue is the original Gaussian $f(x)=e^{-\\pi x^2}$; orange sums shifted copies of the whole function. τ is their spacing and * denotes convolution, not pointwise sampling." : `Blue is ${op ? "Gaussian $f(x)=e^{-\\pi x^2}$" : "$f(x)=0.5+0.4\\cos(\\pi x/2)$"}; x is position. Lower arrows give integral weights at nτ, not delta peak heights. n is an integer index, τ is spacing, and the vertical dashed line marks the sample.`],
+            replicated ? String.raw`(f*\sum_n\delta(\cdot-n\tau))(x)=\sum_n f(x-n\tau)` : String.raw`f(x)\sum_n\delta(x-n\tau)=\sum_n f(n\tau)\delta(x-n\tau)`,
+            [replicated ? `当前间距τ=${s.tau}；程序用n=−8到8的17个副本求和，每个副本先把横坐标改成x−nτ，再求高斯值；有限副本只近似无限点列的卷积。` : `当前n=${n}，位置nτ=${n}×${s.tau}=${fmt(x)}。${s.weighted || op || model === "combAlias" ? `将这个位置代入f得权重${fmt(f(x))}` : "本步是未加权单位点列，每支权重1，上方f仅作后续取样对照"}。上下图纵轴分别为函数值与积分权重，不能当同一种峰高比较。`, replicated ? `For τ=${s.tau}, the program sums 17 copies n=−8…8, evaluating the Gaussian at x−nτ for each. This finite sum only approximates convolution with an infinite train.` : `For n=${n}, nτ=${n}×${s.tau}=${fmt(x)}. ${s.weighted || op || model === "combAlias" ? `Substitution into f gives weight ${fmt(f(x))}` : "This unweighted train has weight 1 at every site; f is shown for the later sampling comparison"}. The two vertical axes are function value and integral weight, not comparable peak heights.`],
+            model === "combAlias" ? ["上图橙线是$f(x)+0.3\\sin(\\pi x/\\tau)$；在x=nτ处新增项为0，所以不同连续曲线可以有相同样点。此图不能证明能从样点唯一重建。", "Orange is $f(x)+0.3\\sin(\\pi x/\\tau)$. At x=nτ the added term is zero, so distinct continuous curves share these samples. Unique reconstruction does not follow."] : undefined);
+        }
+        return "";
+      }
+      return { drawScene, explanation, calculate: {} };
+    },
+  };
 })();

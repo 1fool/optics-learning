@@ -119,4 +119,68 @@
     tex, meaning: P(zh, en), unit: P(unitZh, unitEn),
     condition: P("按当前实验步骤；未显示读数表示本步未指定", "Current experiment step; no reading means unspecified in this step"), control,
   }));
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.3.3"] = {
+    legacyPlot: {
+      label: ["理想点位置 · 整条移位响应 h(x−x₀)", "Ideal point position · translated response h(x−x₀)"],
+      axisLabel: ["点位置", "point site"],
+      marker: state => state.x0,
+      norm: (state, x) => Math.exp(-Math.PI * ((x - state.x0) / .65) ** 2),
+      signal: (state, { line, gauss, rect, xSvg }) => `<line x1="${xSvg(state.x0)}" y1="150" x2="${xSvg(state.x0)}" y2="63" stroke="#58a8de" stroke-width="3"/><path d="M${xSvg(state.x0) - 8} 79 L${xSvg(state.x0)} 63 L${xSvg(state.x0) + 8} 79" fill="none" stroke="#315aa2" stroke-width="3"/>`,
+      readout: (state, language) => {
+        const zh = language === "zh";
+        return `${zh ? "理想点" : "Ideal point"} x₀=${state.x0.toFixed(2)}; h(x−x₀) ${zh ? "整条响应被平移；图中曲线非 δ 本身" : "is translated; the drawn curve is not delta itself"}.`;
+      },
+    },
+    models: ["impulses"],
+    noteStages: [0, 1, 3, 5],
+      controls: {
+      n: ["n", P("窄化参数 N", "Narrowing parameter N"), 1, 12, 1],
+      x0: ["x0", P("点位置 x₀", "Point position x₀"), -2, 2, .25],
+      weight: ["weight", P("第一点权重 c", "First-point weight c"), -1, 3, .5],
+      second: ["second", P("第二点权重 b", "Second-point weight b"), -1, 2, .5],
+      spacing: ["spacing", P("点列间隔 d", "Point separation d"), .75, 3, .25],
+      invariant: ["invariant", P("固定形状（空间不变）", "Fixed shape (shift-invariant)"), "check"],
+    },
+    create(tools) {
+      const { P, text, h, t, fmt, gauss, integrate, graph, stems, legend, block, pulseParameterMarkup } = tools;
+      function impulseValue(s, x) {
+        if (s.variant === "finite") return s.n * integrate(u => gauss(x - u), -.5 / s.n, .5 / s.n, 80);
+        if (s.variant === "train") return Array.from({ length: 9 }, (_, i) => gauss(x - (i - 4) * s.spacing)).reduce((a, b) => a + b, 0);
+        const width = s.variant === "system" && !s.invariant ? 1 + .6 * Math.abs(s.x0) : 1;
+        const first = s.weight * gauss((x - s.x0) / width);
+        return first + (s.variant === "pair" ? s.second * gauss(x - s.x0 - s.spacing) : 0);
+      }
+      function drawScene(model, s) {
+        if (model === "impulses") {
+          const curves = [{ fn: gauss, dash: true }, { fn: x => impulseValue(s, x) }];
+          if (s.variant === "pair") curves.push({ fn: x => s.second * gauss(x - s.x0 - s.spacing), dash: true });
+          const ymax = Math.max(2.5, Math.abs(s.weight) + Math.abs(s.second || 0) + .5, s.variant === "train" ? 4 : 0);
+          const xmin = Math.min(-4, s.x0 - 2, s.variant === "pair" ? s.x0 + s.spacing - 2 : 0), xmax = Math.max(4, s.x0 + 2, s.variant === "pair" ? s.x0 + s.spacing + 2 : 0);
+          return { graphic: legend("蓝虚线：原响应h；橙实线：计算输出；紫虚线：第二点分响应（有时显示）", "Blue dashed: original h; orange solid: computed output; purple dashed: second-point component when present") + graph(curves, { xmin, xmax, ymin: -2, ymax, marker: s.x0 }) + (["pair", "ideal", "system"].includes(s.variant) ? stems([[s.x0, s.weight], ...(s.variant === "pair" ? [[s.x0 + s.spacing, s.second]] : [])], text(P("输入点的位置和权重", "Input sites and weights")), -2, 3) : ""), readout: `${t("位置", "Site")} x₀=${fmt(s.x0)} · ${t("该位置输出", "Output at that site")}=${fmt(impulseValue(s, s.x0))} · ${t("模型", "model")}: ${t({ finite: "有限脉冲近似", ideal: "理想单点", pair: "两点叠加", train: "有限点列", system: "系统响应" }[s.variant], s.variant)}` };
+        }
+      }
+      function explanation(model, s) {
+        if (model === "impulses") {
+          const variant = s.variant;
+          const formulas = {
+            finite: String.raw`g_N(x)=N\int_{-1/(2N)}^{1/(2N)}h(x-u)\,du,\quad h(z)=e^{-\pi z^2}`,
+            ideal: String.raw`g(x)=\int c\delta(u-x_0)h(x-u)du=c\,h(x-x_0)`,
+            pair: String.raw`g(x)=c\,h(x-x_0)+b\,h(x-x_0-d)`,
+            train: String.raw`g(x)=\sum_{n=-4}^{4}h(x-nd)`,
+            system: String.raw`g(x)=c\exp[-\pi((x-x_0)/w)^2],\quad w=\begin{cases}1,&\text{invariant},\\1+0.6|x_0|,&\text{otherwise}.\end{cases}`,
+          };
+          return block(
+            [(variant === "finite" ? `当前 $N=${s.n}$ 是有限输入脉冲的收缩参数，越大输入越窄；它不是积分算法的80个分格。` : "") + "蓝虚线h是原点单位输入的高斯响应$h(z)=e^{-\\pi z^2}$，橙实线是输出g，不是δ本身；紫虚线（如有）是第二点单独的输出。下方箭头才表示输入点及带符号权重。x是输出位置，u是被积分的输入位置；δ是理想脉冲，c是第一点权重，b是第二点权重，d是间距。", (variant === "finite" ? `Here $N=${s.n}$ controls the finite input pulse's concentration: larger values give narrower inputs. It is not the integration algorithm's 80-cell count. ` : "") + "Blue dashed h is the Gaussian response $h(z)=e^{-\\pi z^2}$ to a unit input at the origin. Orange is output g, not delta; optional purple dashes show the second-point output. Lower arrows mark input sites and signed weights. x is output position and u the integration coordinate. δ denotes an ideal impulse; c,b are point weights and d their separation."],
+            formulas[variant],
+            [variant === "finite" ? `有限单位脉冲宽$\\frac1N$=${fmt(1 / s.n)}、高N=${s.n}，u在[${fmt(-.5 / s.n)},${fmt(.5 / s.n)}]内变化；程序用80等格中点和算加权积分。此模型脉冲固定在0，“位置x₀=${s.x0}”只选择输出曲线上的读数点，$g_N(x_0)$≈${fmt(impulseValue(s, s.x0))}，不是把输入脉冲移到x₀。` : variant === "train" ? `本图只累加n=−4…4的9个单位输入响应，间距d=${s.spacing}。在x=${s.x0}处，把9个h(x−nd)相加得${fmt(impulseValue(s, s.x0))}；有限点列并非严格无限周期。` : `在第一点位置x=x₀=${s.x0}求值：${variant === "pair" ? `c h(0)+b h(−d)=${s.weight}+${s.second}e^(−π×${s.spacing}²)` : `c h(0)=${s.weight}×1`}=${fmt(impulseValue(s, s.x0))}；一个点值不代表整条曲线。`, variant === "finite" ? `A unit pulse has width $\\frac1N$=${fmt(1 / s.n)}, height N=${s.n}, and u∈[${fmt(-.5 / s.n)},${fmt(.5 / s.n)}]. The program uses 80 midpoint cells. This pulse stays at zero; x₀=${s.x0} selects an output probe only: $g_N(x_0)$≈${fmt(impulseValue(s, s.x0))}. It does not shift the input pulse.` : variant === "train" ? `This chart sums only 9 unit responses n=−4…4, spacing d=${s.spacing}. At x=${s.x0}, summing h(x−nd) gives ${fmt(impulseValue(s, s.x0))}; a finite train is not exactly infinite-periodic.` : `At x=x₀=${s.x0}: ${variant === "pair" ? `c h(0)+b h(−d)=${s.weight}+${s.second}e^(−π×${s.spacing}²)` : `c h(0)=${s.weight}×1`}=${fmt(impulseValue(s, s.x0))}. This one value is not the whole function.`],
+            ["理想点的筛选是在积分内使用，不计算δ(0)。空间不变关闭时，w（响应宽度因子）随输入位置变化；这是反例系统，不能再用同一个h的卷积描述全部输入。", "Ideal sampling acts under an integral; never evaluate δ(0) as a number. With invariance disabled, response-width factor w depends on input location: this counterexample cannot use convolution with one fixed h for every input."]);
+        }
+        return "";
+      }
+        const parameters = (model, s, adjustable) => s.variant === "finite" ? pulseParameterMarkup(s.n, false, adjustable) : "";
+      return { drawScene, explanation, parameters, calculate: { impulseValue } };
+    },
+  };
 })();

@@ -145,4 +145,79 @@
     tex, meaning: P(zh, en), unit: P(unitZh, unitEn),
     condition: P("按当前实验步骤；未显示读数表示本步未指定", "Current experiment step; no reading means unspecified in this step"), control,
   }));
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.4.1"] = {
+    legacyPlot: {
+      label: ["上：f(ξ) 与 g*(ξ−x) · 下：相关输出", "Top: f(ξ) and g*(ξ−x) · bottom: correlation"],
+      axisLabel: ["相关位移", "correlation lag"],
+      marker: state => state.lag,
+      norm: (state, x) => Math.max(0, Math.min(.5, x + state.x0 + state.a / 2) - Math.max(-.5, x + state.x0 - state.a / 2)),
+      signal: (state, { line, gauss, rect, xSvg }) => `${rect(0, 1, 1, "#58a8de")}${rect(state.x0 + state.lag, state.a, 1, "#b74739")}`,
+    },
+    models: ["crossPlane", "crossKernel", "cross"],
+    noteStages: [6, 1, 4],
+    noteOrder: [1, 0, 2],
+    noteTitles: [P("把相关扩展到平面", "Extend correlation to a plane"), P("用一维条带建立相关", "Build correlation with 1D strips"), P("把相关改写为卷积", "Rewrite correlation as convolution")],
+      controls: {
+      lag: ["lag", P("试探位移 x", "Trial lag x"), -3, 3, .25],
+      shift: ["shift", P("第二信号原中心 s", "Original second-signal center s"), -1.5, 1.5, .25],
+      ly: ["ly", P("竖直试探位移 y", "Vertical trial lag y"), -1, .5, .25],
+      phase: ["phase", P("第二信号相位 φ", "Second-signal phase φ"), [[0, "0"], [Math.PI / 2, "π/2"], [Math.PI, "π"]]],
+      swap: ["swap", P("交换两个输入", "Swap inputs"), "check"],
+      reflected: ["reflected", P("显示折转并共轭的 g*(−u)", "Show reflected/conjugated g*(−u)"), "check"],
+    },
+    create(tools) {
+      const { t, fmt, overlap, graph, legend, block } = tools;
+      function crossValue(s, x) {
+        const lag = s.swap ? -x : x;
+        const area = overlap(-.5, .5, s.shift + lag - .5, s.shift + lag + .5)
+          + (s.repeated ? overlap(-.5, .5, s.shift + 2 + lag - .5, s.shift + 2 + lag + .5) : 0);
+        const phase = (s.phase || 0) * (s.swap ? 1 : -1);
+        return { re: area * Math.cos(phase), im: area * Math.sin(phase), abs: area };
+      }
+      function drawScene(model, s) {
+        if (model === "crossPlane") {
+          const cx = s.shift + s.lag, cy = s.sy + s.ly;
+          const area = overlap(-.5, .5, cx - .5, cx + .5) * overlap(-.5, .5, cy - .5, cy + .5);
+          return { graphic: `<svg class="il-graph" viewBox="0 0 550 320" role="img" aria-label="${t("两个单位方窗的平面交叠", "Planar overlap of two unit squares")}"><path d="M50 160H500M275 20V300" stroke="#aaa"/><rect x="225" y="110" width="100" height="100" fill="#b9d4d9" fill-opacity=".6" stroke="#245b66" stroke-width="3"/><rect x="${225 + cx * 100}" y="${110 - cy * 100}" width="100" height="100" fill="#eabf86" fill-opacity=".5" stroke="#ae5130" stroke-width="3"/><text x="40" y="25">ξ,η</text><text x="35" y="295">(s+x, sᵧ+y)=(${fmt(cx)}, ${fmt(cy)})</text></svg>`, readout: `${t("乘积面积", "Product area")}=${fmt(area)}` };
+        }
+        if (model === "crossKernel") {
+          const center = s.reflected ? -s.shift : s.shift, phase = (s.phase || 0) * (s.reflected ? -1 : 1);
+          return { graphic: legend("蓝实线：实部；橙虚线：虚部", "Blue solid: real; orange dashed: imaginary") + graph([{ fn: x => Math.abs(x - center) <= .5 ? Math.cos(phase) : 0 }, { fn: x => Math.abs(x - center) <= .5 ? Math.sin(phase) : 0, dash: true }], { ymin: -1.2, ymax: 1.2, axis: "u", marker: center }), readout: `${s.reflected ? "g*(−u)" : "g(u)"} · ${t("中心", "center")}=${fmt(center)} · φ=${fmt(phase)}` };
+        }
+        if (model === "cross") {
+          // For a swapped correlation, the original f is translated instead.
+          const fCenter = s.swap ? s.lag : 0, gCenter = s.shift + (s.swap ? 0 : s.lag);
+          const top = graph([{ fn: x => Math.abs(x - fCenter) <= .5 ? 1 : 0 }, { fn: x => (Math.abs(x - gCenter) <= .5 ? 1 : 0) + (s.repeated && Math.abs(x - gCenter - 2) <= .5 ? 1 : 0) }], { xmin: Math.min(-3, fCenter - .75, gCenter - .75), xmax: Math.max(3, fCenter + .75, gCenter + .75 + (s.repeated ? 2 : 0)), axis: "ξ", ymax: 1.3 });
+          const v = crossValue(s, s.lag);
+          return { graphic: legend("上：蓝f、橙g的支撑（不表示复值）；下：实部实线、虚部虚线、模点线", "Top: blue f/orange g supports, not complex values; bottom: real solid, imaginary dashed, magnitude dotted") + top + graph([{ fn: x => crossValue(s, x).re }, { fn: x => crossValue(s, x).im, dash: true }, { fn: x => crossValue(s, x).abs, dot: true }], { xmin: -4, xmax: 4, ymin: -1.2, ymax: 1.3, marker: s.lag }), readout: `s=${fmt(s.shift)}, x=${fmt(s.lag)} · r=${fmt(v.re)} ${v.im < 0 ? "−" : "+"} ${fmt(Math.abs(v.im))}i · |r|=${fmt(v.abs)}` };
+        }
+      }
+      function explanation(model, s) {
+        if (model === "crossPlane") {
+          const cx = s.shift + s.lag, cy = s.sy + s.ly;
+          const lx = Math.max(0, 1 - Math.abs(cx)), ly = Math.max(0, 1 - Math.abs(cy));
+          return block(
+            ["ξ、η（xi、eta）是输入平面坐标，x、y是本次试探位移。蓝方窗f固定在原点，橙方窗g(ξ−x,η−y)的中心变成(s+x,sᵧ+y)；两个窗内部都为1、外部0。颜色重叠不是自动相乘，积分用的是两函数数值的乘积。", "ξ,η (xi,eta) are input-plane coordinates; x,y are trial lags. Blue f stays centered at zero. Orange g(ξ−x,η−y) moves to (s+x,sᵧ+y). Each square is 1 inside and 0 outside. Color blending is not numerical multiplication; the integral uses their actual values."],
+            String.raw`r(x,y)=\iint f(\xi,\eta)g(\xi-x,\eta-y)d\xi d\eta=L_xL_y,\quad L_x=\max(0,1-|s+x|),\ L_y=\max(0,1-|s_y+y|)`,
+            [`中心(${fmt(cx)},${fmt(cy)})，交叠宽${fmt(lx)}、高${fmt(ly)}；乘积高1，故双重积分=1×${fmt(lx)}×${fmt(ly)}=${fmt(lx * ly)}。这里只因实单位方窗才可直接算交叠面积。`, `Center (${fmt(cx)},${fmt(cy)}), overlap width ${fmt(lx)}, height ${fmt(ly)}. Product height is 1, so the double integral is 1×${fmt(lx)}×${fmt(ly)}=${fmt(lx * ly)}. This area shortcut relies on real unit-height squares.`]);
+        }
+        if (model === "crossKernel") return block(
+          ["u是横坐标，g是宽1、中心s的复矩窗：窗内值$e^{i\\phi}=\\cos\\phi+i\\sin\\phi$，窗外0；$i^2=-1$，φ以弧度计。蓝实线是实部、橙虚线是虚部，两者共同定义一个复函数，不是两个独立输入。上标*是复共轭，使虚部变号；不是卷积号。", "u is position. g is a width-1 complex window centered at s: inside $e^{i\\phi}=\\cos\\phi+i\\sin\\phi$, outside zero. $i^2=-1$ and φ is in radians. Blue solid and orange dashed are real and imaginary parts of one function. Superscript * means complex conjugation, reversing the imaginary part, not convolution."],
+          String.raw`\widetilde g(u)=g^*(-u),\quad r_{fg}=f*\widetilde g`,
+          [`${s.reflected ? "折转把中心s变成−s，共轭把φ变成−φ" : "当前显示原函数，尚未折转或共轭"}；当前中心${fmt(s.reflected ? -s.shift : s.shift)}、相位${fmt((s.reflected ? -1 : 1) * (s.phase || 0))} rad。复窗的实部、虚部按cos与sin分别计算。`, `${s.reflected ? "Reflection takes center s to −s; conjugation takes φ to −φ" : "The original function is shown, without reflection or conjugation"}. Current center ${fmt(s.reflected ? -s.shift : s.shift)}, phase ${fmt((s.reflected ? -1 : 1) * (s.phase || 0))} rad. Evaluate cos and sin for its two components.`]);
+        if (model === "cross") {
+          const v = crossValue(s, s.lag), area = v.abs;
+          return block(
+            ["上图横轴ξ（xi）遍历输入位置：蓝色是f的支撑，橙色是平移后g的支撑，只画非零区间，不画复幅值。s是g原中心，x是试探位移；未交换时橙中心s+x。下图横轴是位移x：蓝实线Re r、橙虚线Im r、紫点线|r|，虚竖线标当前x；重合时曲线会互相遮盖。", "Top horizontal ξ (xi) sweeps input position. Blue/orange show supports of f/shifted g, not complex amplitudes. s is g's original center, x the trial lag; without swapping the orange center is s+x. Bottom horizontal axis is lag x: blue solid Re r, orange dashed Im r, purple dotted |r|; vertical dashes mark current x. Coincident curves can hide one another."],
+            String.raw`r_{fg}(x)=\int f(\xi)g^*(\xi-x)d\xi=L(x)e^{-i\phi},\quad |r|=\sqrt{(\Re r)^2+(\Im r)^2}=L(x)`,
+            [`*在g上方表示复共轭。L是交叠总长度：先分别求两个非零区间的交集，再把“窗内乘积×长度”相加。本次${s.repeated ? "两段橙窗的交叠长度求和" : `max(0,1−|${s.shift}${s.swap ? "−" : "+"}(${s.lag})|)`}=${fmt(area)}；乘相位因子后r=${fmt(v.re)}${v.im < 0 ? "−" : "+"}${fmt(Math.abs(v.im))}i。${s.swap ? "交换后使用$r_{gf}(x)=r_{fg}^*(-x)$，所以位移和虚部都反号。" : "单位实窗φ=0时，结果才等于交叠长度。"}`, `Superscript * conjugates g. L is total overlap length: intersect the supports and add product × length on each intersection. Here ${s.repeated ? "the overlap lengths of two orange windows sum to" : `max(0,1−|${s.shift}${s.swap ? "−" : "+"}(${s.lag})|)=`} ${fmt(area)}. Including phase gives r=${fmt(v.re)}${v.im < 0 ? "−" : "+"}${fmt(Math.abs(v.im))}i. ${s.swap ? "Swapping uses $r_{gf}(x)=r_{fg}^*(-x)$, reversing lag and imaginary sign." : "Only for real unit windows with φ=0 does r equal overlap length."}`],
+            ["这是原始相关，不是相似度百分比；重复结构可能给多个峰。不同高度、负值或复数信号必须保留乘积与相位，不能只量几何交叠。", "This is raw correlation, not a similarity percentage. Repeated structures may give multiple peaks. Amplitudes, signs and complex phases must be retained; geometry alone is insufficient."]);
+        }
+        return "";
+      }
+      return { drawScene, explanation, calculate: { crossValue } };
+    },
+  };
 })();

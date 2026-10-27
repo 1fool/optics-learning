@@ -126,4 +126,67 @@
     tex, meaning: P(zh, en), unit: P(unitZh, unitEn),
     condition: P("按当前实验步骤；未显示读数表示本步未指定", "Current experiment step; no reading means unspecified in this step"), control,
   }));
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.3.2"] = {
+    legacyPlot: {
+      label: ["蓝：第一窗 · 红：第二窗 · 橙：卷积输出", "Blue: first window · red: second window · orange: convolution"],
+      axisLabel: ["输出位移", "output shift"],
+      marker: state => state.x0,
+      norm: (state, x) => Math.max(0, Math.min(.5, x + state.a / 2) - Math.max(-.5, x - state.a / 2)),
+      signal: (state, { line, gauss, rect, xSvg }) => `${rect(0, 1, 1, "#58a8de")}${rect(state.x0, state.a, 1, "#b74739")}`,
+    },
+    models: ["laws", "lawWindows"],
+    noteStages: [0, 1, 2, 5],
+      controls: {
+      a: ["a", P("尺度 a（圆孔为半径）", "Scale a (radius for circle)"), .5, 3, .25],
+      gain: ["gain", P("第二路系数 c", "Second-path coefficient c"), -1, 2, .5],
+      lag: ["lag", P("试探位移 x", "Trial lag x"), -3, 3, .25],
+      group: ["group", P("先算哪一组", "Compute which group first"), [["left", "(f*h)*k"], ["right", "f*(h*k)"]]],
+      swap: ["swap", P("交换两个输入", "Swap inputs"), "check"],
+    },
+    create(tools) {
+      const { P, text, h, t, fmt, overlap, convolve, add, graph, stems, legend, block } = tools;
+      function lawValues(s) {
+        const f = [1, 2], g = [1, 1], k = [1, 0, 1];
+        if (s.law === "commute") return { first: s.swap ? g : f, second: s.swap ? f : g, left: convolve(f, g), right: convolve(g, f) };
+        if (s.law === "distribute") {
+          const u = [1, 0], v = [0, 2 * s.gain];
+          return { first: convolve(u, g), second: convolve(v, g), left: convolve(add(u, v), g), right: add(convolve(u, g), convolve(v, g)) };
+        }
+        return { first: s.group === "right" ? convolve(g, k) : convolve(f, g), second: s.group === "right" ? f : k, left: convolve(convolve(f, g), k), right: convolve(f, convolve(g, k)) };
+      }
+      function drawScene(model, s) {
+        if (model === "laws") {
+          const v = lawValues(s), range = Math.max(5, ...v.left.map(Math.abs), ...v.right.map(Math.abs));
+          const array = a => `[${a.map(fmt).join(", ")}]`;
+          return { graphic: `<div class="il-flow"><p>${s.law === "commute" ? t("依次输入", "Input order") : t("中间分支", "Intermediate branches")}: <b>${array(v.first)}</b> &nbsp; / &nbsp; <b>${array(v.second)}</b></p><p>${t("路线甲", "Path A")}: <b>${array(v.left)}</b></p><p>${t("路线乙", "Path B")}: <b>${array(v.right)}</b></p></div>` + stems(v.left.map((x, i) => [i, x]), text(P("共同的最终输出；编号从0开始", "Common final output; indices start at 0")), -range, range), readout: t(`逐项差值：${array(v.left.map((x, i) => x - v.right[i]))}`, `Indexwise differences: ${array(v.left.map((x, i) => x - v.right[i]))}`) };
+        }
+        if (model === "lawWindows") {
+          const fn = x => overlap(-.5, .5, x - s.a / 2, x + s.a / 2);
+          return { graphic: legend("蓝：f；橙：移动响应；下图是乘积积分", "Blue: f; orange: shifted response; bottom: product integral") + graph([{ fn: x => Math.abs(x) <= .5 ? 1 : 0 }, { fn: x => Math.abs(x - s.lag) <= s.a / 2 ? 1 : 0 }], { xmin: Math.min(-3, s.lag - s.a / 2 - .5), xmax: Math.max(3, s.lag + s.a / 2 + .5), marker: s.lag, axis: "τ" }) + graph([{ fn }], { marker: s.lag }), readout: `${t("交叠积分", "Overlap integral")}=${fmt(fn(s.lag))} · ${t("支撑边界", "Support edges")}: ±${fmt((1 + s.a) / 2)}` };
+        }
+      }
+      function explanation(model, s) {
+        const array = a => `[${a.map(fmt).join(", ")}]`;
+        if (model === "laws") {
+          const v = lawValues(s);
+          return block(
+            ["这里是有限数组，不是连续曲线。序号从0开始，范围外的数组元素为0；*是离散卷积，先乘再按相同输出序号相加。箭头编码数组元素值，交替颜色仅分辨序号。甲乙是两种计算次序，中间分支不是总输出。", "These are finite arrays, not continuous curves. Indices start at zero and omitted entries are zero. * is discrete convolution: multiply pairs with the same total index and add. Arrows encode array values; alternating colors distinguish indices. A/B are evaluation paths, and intermediate branches are not final outputs."],
+            String.raw`(a*b)[k]=\sum_j a[j]b[k-j],\quad ([1,2]*[1,1])[1]=1\times1+2\times1=3`,
+            [`固定输入f=[1,2]、h=[1,1]、k=[1,0,1]。${s.law === "distribute" ? `本步u=[1,0]、v=[0,2c]，c=${s.gain}，故u+v=[1,${fmt(2 * s.gain)}]。` : "此处数组k是第三个输入的名称，公式[k]中的k则是输出编号。"} 两条路线得到${array(v.left)}与${array(v.right)}，逐项相减为${array(v.left.map((x, i) => x - v.right[i]))}。`, `Fixed inputs: f=[1,2], h=[1,1], k=[1,0,1]. ${s.law === "distribute" ? `Here u=[1,0], v=[0,2c] with c=${s.gain}, so u+v=[1,${fmt(2 * s.gain)}].` : "The array name k denotes the third input; [k] in the general formula is an output index."} Paths give ${array(v.left)} and ${array(v.right)}, with indexwise difference ${array(v.left.map((x, i) => x - v.right[i]))}.`],
+            ["有限数组演算是检验例，不是无限连续函数定律的证明；后者须满足讲义中的存在与换序条件。", "Finite-array agreement is an example, not proof for arbitrary infinite continuous functions; the notes state existence and interchange conditions."]);
+        }
+        if (model === "lawWindows") {
+          const l = Math.max(-.5, s.lag - s.a / 2), r = Math.min(.5, s.lag + s.a / 2), length = Math.max(0, r - l);
+          return block(
+            ["上图蓝线f在[−0.5,0.5]高1，橙线是折转平移后的h(x−τ)，在[x−$\\frac a2$,x+$\\frac a2$]高1；τ是输入积分坐标，x是固定求输出的位置，a是响应全宽。下图蓝线是随x变化的卷积值，不是另一输入。虚竖线定位当前x。", "Top: blue f is height 1 on [−0.5,0.5], orange h(x−τ) is height 1 on [x−$\\frac a2$,x+$\\frac a2$]. τ is the integration coordinate, x the fixed output location, and a the response full width. Bottom blue is the convolution versus x, not another input. Vertical dashes locate the current x."],
+            String.raw`g(x)=\int f(\tau)h(x-\tau)d\tau=\max(0,\min(0.5,x+a/2)-\max(-0.5,x-a/2))`,
+            [`x=${s.lag}、a=${s.a}：交集左端${fmt(l)}、右端${fmt(r)}；${r > l ? `乘积高1，所以积分=1×(${fmt(r)}−(${fmt(l)}))=${fmt(length)}` : "右端不大于左端，无正长度交集，积分为0"}。输出非零区间边界为$\\pm\\frac{1+a}{2}$=±${fmt((1 + s.a) / 2)}。`, `x=${s.lag}, a=${s.a}: intersection endpoints ${fmt(l)}, ${fmt(r)}. ${r > l ? `Product height is 1, hence integral=1×(${fmt(r)}−(${fmt(l)}))=${fmt(length)}` : "No positive-length intersection, so the integral is zero"}. Output support edges are $\\pm\\frac{1+a}{2}$=±${fmt((1 + s.a) / 2)}.`]);
+        }
+        return "";
+      }
+      return { drawScene, explanation, calculate: { lawValues } };
+    },
+  };
 })();

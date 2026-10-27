@@ -15,3 +15,10 @@
 网站包含第三方 KaTeX 资源，其许可文本保存在 `course/optics-course/vendor/katex/LICENSE`。本仓库没有为原创课程内容或其余代码声明开源许可。
 
 首页采用 JoJo 风格漫画分镜，保留科学家切换、雷达图与两个独立课程入口。角色图与主视觉的来源记录见 `assets/jojo/SOURCES.md`，首页本地动效库的版本及许可来源见 `assets/vendor/SOURCES.md`。布局与交互回归可运行 `node tests/check-manga-home.cjs` 和 `node tests/check-scientist-home.cjs`（需要本机 Playwright 与 Chrome）。
+
+
+## 傅里叶逐节维护（2026-10-27）
+
+当前九节实际显示的教学内容、图示说明、专属计算与控件配置由各自的 `fourier/fourier-course/section-*.js` 维护。其余八节用 `FourierSectionRuntime` 注册模型、说明、控件和讲义切图映射；1.3.1 的专属实验运行代码也在本节文件，原 `convolution-sample.js` 已移除。共用脚本继续处理绘图原语、界面、导航、进度和说明卡拖动缩放。
+
+本次同步包括 1.3.1 完整讲义的共享右侧图板、逐段按钮切图、二维卷积公式同行显示，以及最后一道探索题提交后的“查看说明：求解过程”。题目 ID、选项答案与学习记录键保持。首页和网站专用的教材页码提示保持；教材 PDF、本机安装的 skill 与临时迁移脚本不随网站发布。

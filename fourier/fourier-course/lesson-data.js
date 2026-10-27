@@ -23,6 +23,7 @@
   const commonSymbols = [sym("x", "卷积输出位移或理想点位置", "Convolution output lag or ideal point position", "长度", "length", "图中无量纲", "Dimensionless chart", "x0"), sym("\\tau", "卷积积分坐标", "Convolution integration coordinate", "长度", "length"), sym("f", "输入函数或信号", "Input function or signal", "依模型定义", "model-dependent"), sym("h", "卷积核／响应", "Convolution kernel / response", "依模型定义", "model-dependent"), sym("a", "可调窗宽；余弦时为周期", "Window width; cosine period in power example", "长度", "length", "a>0", "a>0", "a")];
   const corrSymbols = [sym("x", "相关的相对位移", "Correlation lag", "长度", "length", "图中无量纲", "Dimensionless chart"), sym("\\xi", "积分扫描坐标", "Integration coordinate", "长度", "length"), sym("f,g", "待比较信号", "Signals compared", "依模型定义", "model-dependent"), sym("g^{*}", "g 的复共轭（并非相关运算符）", "Complex conjugate of g (not correlation operator)", "与 g 相同", "same as g"), sym("a", "窗口宽度或余弦周期", "Window width or cosine period", "长度", "length", "a>0", "a>0", "a")];
   window.FourierSectionBuilders = { pair, formula, question, symbol, p, stage, step, sym, block, q, origin, P, S, commonSymbols, corrSymbols };
+  window.FourierSectionRuntime = {};
   window.FourierLessons = [];
   window.FourierGuides = {};
   window.FourierSectionSymbolOverrides = {};

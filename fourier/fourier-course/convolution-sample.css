@@ -18,8 +18,11 @@
 .conv-scene figcaption { font-size: 14px; line-height: 1.7; color: #4c514c; }
 .conv-scene svg { margin-top: 12px; }
 .conv-scene svg { width: 100%; height: auto; display: block; color: #242520; background: #fdfbf5; }
-.conv-live, .conv-explanation { min-width: 0; }
-.conv-live .conv-scene { margin-top: 0; }
+.conv-reading, .conv-notes-bench { min-width: 0; }
+.conv-notes-bench { position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto; scrollbar-gutter: stable; }
+.conv-notes-bench .conv-scene { margin: 0 0 12px; }
+.conv-notes-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(310px, .75fr); align-items: start; gap: 30px; }
+.conv-note > [data-conv-note] { margin: 8px 0 16px; }
 .conv-sample > details { clear: both; }
 .conv-scene svg text { fill: currentColor; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
 .conv-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 24px; padding-top: 16px; }
@@ -80,7 +83,6 @@
 .conv-challenge > div { padding: 14px 0; border-top: 1px solid var(--hairline); font-size: 20px; }
 .conv-note { margin-top: 24px; }
 .conv-note > p { max-width: 40em; }
-.conv-notes .conv-work-row { margin-top: 24px; }
 .conv-sample .conv-storyboard { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .conv-storyboard figure { margin: 0; padding: 20px; background: #fdfbf5; border: 1px solid var(--hairline); min-width: 0; }
 .conv-storyboard figcaption { display: flex; align-items: baseline; gap: 14px; }
@@ -95,10 +97,9 @@
 @media (max-width: 1150px) {
   .conv-lab-grid { grid-template-columns: minmax(0, 1.2fr) minmax(250px, 1fr); gap: 20px; }
 }
-@media (min-width: 1300px) {
-  .conv-work-row { display: grid; grid-template-columns: minmax(0, 40em) minmax(300px, .85fr); align-items: start; gap: 40px; }
-  .conv-live { grid-column: 2; grid-row: 1; position: sticky; top: 20px; }
-  .conv-explanation { grid-column: 1; grid-row: 1; }
+@media (max-width: 1100px) {
+  .conv-notes-layout { grid-template-columns: minmax(0, 1fr); }
+  .conv-notes-bench { position: static; max-height: none; grid-row: 1; }
 }
 @media (max-width: 650px) {
   .conv-lab-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }

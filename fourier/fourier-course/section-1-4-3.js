@@ -122,4 +122,78 @@
     tex, meaning: P(zh, en), unit: P(unitZh, unitEn),
     condition: P("按当前实验步骤；未显示读数表示本步未指定", "Current experiment step; no reading means unspecified in this step"), control,
   }));
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.4.3"] = {
+    legacyPlot: {
+      label: ["周期余弦 · 平均相关 ½cos(2πx/a)", "Periodic cosine · mean correlation ½cos(2πx/a)"],
+      axisLabel: ["周期位移", "periodic lag"],
+      marker: state => state.x0,
+      norm: (state, x) => .5 * Math.cos(2 * Math.PI * x / state.a),
+      signal: (state, { line, gauss, rect, xSvg }) => `<polyline points="${line(x => .28 + .5 * Math.cos(2 * Math.PI * x / state.a))}" fill="none" stroke="#58a8de" stroke-width="3"/>`,
+      readout: (state, language) => {
+        const zh = language === "zh";
+      const k = 2 * Math.PI / state.a, X = state.window;
+      const osc = Math.abs(Math.sin(2 * k * X) / (2 * k * X)) < 1e-10 ? 0 : Math.sin(2 * k * X) / (2 * k * X);
+      const finite = .5 * Math.cos(k * state.x0) + .5 * osc * Math.cos(k * state.x0);
+      return `${zh ? "周期" : "Period"} a=${state.a.toFixed(2)}; X=${X.toFixed(2)}; ${zh ? "有限窗均值" : "finite-window mean"} ≈${finite.toFixed(3)}; ${zh ? "极限" : "limit"}=${(.5 * Math.cos(2 * Math.PI * state.x0 / state.a)).toFixed(3)}.`;
+      },
+    },
+    models: ["power"],
+    noteStages: [0, 1, 2, 5],
+      controls: {
+      lag: ["lag", P("试探位移 x", "Trial lag x"), -3, 3, .25],
+      amp: ["amp", P("信号幅度 A", "Signal amplitude A"), .5, 3, .5],
+      period: ["period", P("周期 T", "Period T"), 1, 3, .5],
+      window: ["window", P("观察窗半宽 X", "Window half-width X"), .5, 8, .25],
+      phase: ["phase", P("第二信号相位 φ", "Second-signal phase φ"), [[0, "0"], [Math.PI / 2, "π/2"], [Math.PI, "π"]]],
+      ratio: ["ratio", P("第二频率 / 第一频率", "Second / first frequency"), [[1, "1"], [2, "2"]]],
+    },
+    create(tools) {
+      const { P, t, prose, fmt, sinc, graph, legend, equation } = tools;
+      function powerValue(s, x) {
+        const k = 2 * Math.PI / s.period, q = k * (s.ratio || 1);
+        const phase = q * x - (s.phase || 0), factor = s.amp * s.amp / 2;
+        const finite = factor * Math.cos(phase) * (sinc((k - q) * s.window) + sinc((k + q) * s.window));
+        const limit = (s.ratio || 1) === 1 ? factor * Math.cos(phase) : 0;
+        return { finite, limit, total: finite * 2 * s.window };
+      }
+      function drawScene(model, s) {
+        if (model === "power") {
+          const k = 2 * Math.PI / s.period, q = k * (s.ratio || 1), v = powerValue(s, s.lag);
+          return { graphic: legend("上：窗[−X,X]内两信号；下：蓝实线有限平均，橙虚线无限窗极限", "Top: signals within [−X,X]; bottom: blue solid finite mean, orange dashed infinite-window limit") + graph([{ fn: x => s.amp * Math.cos(k * x) }, { fn: x => s.amp * Math.cos(q * (x - s.lag) + (s.phase || 0)), dash: true }], { xmin: -s.window, xmax: s.window, ymin: -s.amp * 1.2, ymax: s.amp * 1.2, axis: "ξ" }) + graph([{ fn: x => powerValue(s, x).finite }, { fn: x => powerValue(s, x).limit, dash: true }], { ymin: -s.amp * s.amp, ymax: s.amp * s.amp, marker: s.lag }), readout: `2X=${fmt(2 * s.window)} · ${t("积分", "integral")}=${fmt(v.total)} · ${t("有限平均", "finite mean")}=${fmt(v.finite)} · ${t("极限", "limit")}=${fmt(v.limit)}` };
+        }
+        throw new Error(`Unknown independent-lab model: ${model}`);
+      }
+      function explanation(model, s) {
+        if (model === "power") {
+          const v = powerValue(s, s.lag), k = 2 * Math.PI / s.period, q = k * (s.ratio || 1), theta = q * s.lag - (s.phase || 0);
+          const paragraph = (zh, en) => `<p>${prose(P(zh, en))}</p>`;
+          return `<section class="il-explanation"><h3>${t("图中对象与坐标", "Objects and coordinates")}</h3>`
+            + paragraph("上图横轴是输入位置 $\\xi$。蓝实线是第一条余弦，橙虚线是移动后的第二条余弦。$A$ 是幅度，$T$ 是第一条信号的周期；$k$、$q$ 分别控制两条余弦随位置的变化快慢。$\\phi$ 是初相位，以弧度计。", "The upper horizontal coordinate is input position $\\xi$. Blue is the first cosine; orange dashes show the shifted second cosine. $A$ is amplitude and $T$ the first period; $k,q$ set their spatial rates. $\\phi$ is initial phase in radians.")
+            + equation(String.raw`\begin{aligned}f(\xi)&=A\cos(k\xi),& k&=\frac{2\pi}{T},\\g(\xi-x)&=A\cos\bigl(q(\xi-x)+\phi\bigr).\end{aligned}`)
+            + paragraph("小写 $x$ 是试探位移；大写 $X$ 是积分窗口半宽，不能混淆。下图横轴是位移，蓝实线是有限窗平均，橙虚线是无限窗极限，竖虚线标出当前位移。", "Lowercase $x$ is trial lag; uppercase $X$ is integration half-width. The lower chart uses lag horizontally: blue is the finite-window mean, orange dashes the infinite-window limit, and vertical dashes the current lag.")
+            + `<h3>${t("先求总量，再求平均", "Total first, then mean")}</h3>`
+            + paragraph("$J_X$ 表示窗内乘积的积分总量，$M_X$ 表示总量除以窗口全长后的平均。$R$ 是窗口不断增大时的极限。沿输入位置累加，不是对下图的曲线积分；两条信号都是实数，共轭不改变它们。", "$J_X$ names the integral total of the product; $M_X$ divides that total by full window length. $R$ is the limit as the window grows. Accumulate over input positions, not under the lower curves. Both signals are real, so conjugation leaves them unchanged.")
+            + equation(String.raw`\begin{aligned}J_X(x)&=\int_{-X}^{X}f(\xi)g(\xi-x)\,d\xi,\\M_X(x)&=\frac{J_X(x)}{2X},\\R(x)&=\lim_{X\to\infty}M_X(x).\end{aligned}`)
+            + paragraph("代入当前窗口和信号，得到：", "Substituting the current window and signals gives:")
+            + equation(String.raw`\begin{aligned}J_X(x)&\approx${fmt(v.total)},\\2X&=${fmt(2 * s.window)},\\M_X(x)&\approx\frac{${fmt(v.total)}}{${fmt(2 * s.window)}}\approx${fmt(v.finite)}.\end{aligned}`)
+            + `<h3>${t("有限窗公式从哪里来", "Where the finite-window formula comes from")}</h3>`
+            + paragraph("先用积化和差把两个余弦的乘积改成两个余弦之和；$a$、$b$ 在这条恒等式中表示两个角度。", "Use the product-to-sum identity; $a,b$ here denote two angles.")
+            + equation(String.raw`\cos a\cos b=\frac{\cos(a-b)+\cos(a+b)}{2}`)
+            + paragraph("把两个角度代入，再在对称窗口积分。为简写结果，定义辅助函数 $S$；它在零处取极限值一。注意这里的自变量没有额外乘 $\\pi$，不同于1.1中的归一化 sinc。", "Substitute the two angles and integrate over the symmetric window. Define auxiliary function $S$ to abbreviate the result; its value at zero is its limit, one. No extra $\\pi$ multiplies its argument, unlike normalized sinc in 1.1.")
+            + equation(String.raw`S(z)=\begin{cases}\dfrac{\sin z}{z},&z\ne0,\\1,&z=0.\end{cases}`)
+            + equation(String.raw`\begin{aligned}M_X(x)={}&\frac{A^2}{2}\cos(qx-\phi)\\&\cdot\bigl[S((k-q)X)+S((k+q)X)\bigr].\end{aligned}`)
+            + equation(String.raw`k\approx${fmt(k)},\quad q\approx${fmt(q)},\quad qx-\phi\approx${fmt(theta)}`)
+            + `<h3>${t("极限参考值怎样得到", "How the limit reference is obtained")}</h3>`
+            + paragraph("同频时，第一项始终取零处的值，第二项随窗口增大趋于零。不同的正频率使两项都趋于零。因此：", "For equal frequencies the first term stays at its value at zero, while the second tends to zero. For distinct positive frequencies both terms tend to zero. Thus:")
+            + equation(String.raw`R(x)=\begin{cases}\dfrac{A^2}{2}\cos(kx-\phi),&k=q>0,\\0,&k,q>0,\ k\ne q.\end{cases}`)
+            + equation(String.raw`R(${s.lag})\approx${fmt(v.limit)}`)
+            + paragraph("这个参考值由极限推导得到，不是把当前有限窗口的读数取整；显示数值经过四位小数舍入，内部计算保留原精度。", "This reference follows from the limit, not rounding the finite-window result. Displayed numbers are rounded to four decimal places; internal calculations retain their precision.") + `</section>`;
+        }
+        return "";
+      }
+      return { drawScene, explanation, calculate: { powerValue } };
+    },
+  };
 })();

@@ -141,4 +141,59 @@
     tex, meaning: P(zh, en), unit: P(unitZh, unitEn),
     condition: P("按当前实验步骤；未显示读数表示本步未指定", "Current experiment step; no reading means unspecified in this step"), control,
   }));
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.1"] = {
+    models: ["function"],
+    noteStages: [0, 1, 2, 3, 4, 5],
+      controls: {
+      a: ["a", P("尺度 a（圆孔为半径）", "Scale a (radius for circle)"), .5, 3, .25],
+      probe: ["probe", P("探针位置 x", "Probe position x"), -3, 3, .25],
+      shapeSwitch: ["shape", P("函数", "Function"), [["step", "step"], ["sgn", "sgn"]]],
+    },
+    create(tools) {
+      const { h, t, fmt, sinc, gauss, graph, block } = tools;
+      function functionValue(shape, x, a) {
+        if (shape === "step") return x === 0 ? .5 : x > 0 ? 1 : 0;
+        if (shape === "sgn") return Math.sign(x);
+        if (shape === "rect") return Math.abs(x) <= a / 2 ? 1 : 0;
+        if (shape === "tri") return Math.max(0, 1 - Math.abs(x) / a);
+        if (shape === "sinc") return sinc(Math.PI * x / a);
+        return gauss(x / a);
+      }
+      function drawScene(model, s) {
+        if (model === "function") {
+          if (s.shape === "circ") {
+            const radius = 42 * s.a;
+            return { graphic: `<svg class="il-graph" viewBox="0 0 550 320" role="img" aria-label="${t("圆内透过值1，圆外0；标记半径a", "Transmission 1 inside, 0 outside; radius a marked")}"><path d="M45 160H505M275 20V300" stroke="#b1a493"/><circle cx="275" cy="160" r="${radius}" fill="#bed7d9" stroke="#245b66" stroke-width="3"/><path d="M275 160h${radius}" stroke="#ae5130" stroke-width="3"/><text x="${275 + radius / 2}" y="148">a=${fmt(s.a)}</text><text x="285" y="180">1</text><text x="490" y="145">0</text><text x="505" y="180">x</text><text x="285" y="25">y</text></svg>`, readout: t(`半径=${fmt(s.a)}；面积 πa²=${fmt(Math.PI * s.a * s.a)}`, `Radius=${fmt(s.a)}; area πa²=${fmt(Math.PI * s.a * s.a)}`) };
+          }
+          const value = functionValue(s.shape, s.probe, s.a);
+          return { graphic: graph([{ fn: x => functionValue(s.shape, x, s.a) }], { xmin: -4, xmax: 4, ymin: -1.15, ymax: 1.3, marker: s.probe, label: `${s.shape}, a=${s.a}, x=${s.probe}` }), readout: `${h(s.shape)} · a=${fmt(s.a)} · x=${fmt(s.probe)} · ${t("函数值", "value")}=${fmt(value)}` };
+        }
+      }
+      function explanation(model, s) {
+        if (model === "function") {
+          if (s.shape === "circ") return block(
+            ["圆面是理想圆孔的平面示意，不是函数的立体高度。x、y是位置，$r=\\sqrt{x^2+y^2}$是离圆心的距离；蓝圆内函数值1、圆外0，橙线段是半径a。", "This is a planar ideal pupil, not a 3D function height. x,y are positions; $r=\\sqrt{x^2+y^2}$ is distance from the center. Blue interior has value 1, exterior 0; the orange segment marks radius a."],
+            String.raw`F(x,y)=\begin{cases}1,&x^2+y^2\le a^2,\\0,&x^2+y^2>a^2,\end{cases}\qquad \iint F\,dx\,dy=\pi a^2`,
+            [`面积=π×${s.a}²=${fmt(Math.PI * s.a ** 2)}，是坐标平面上的面积；透过值为1才可直接等同函数积分。`, `Area=π×${s.a}²=${fmt(Math.PI * s.a ** 2)}, measured in the coordinate plane; it equals the function integral because transmission is 1 inside.`]);
+          const formulas = {
+            step: String.raw`f(x)=\begin{cases}0,&x<0,\\1/2,&x=0,\\1,&x>0,\end{cases}`,
+            sgn: String.raw`f(x)=\begin{cases}-1,&x<0,\\0,&x=0,\\1,&x>0,\end{cases}`,
+            rect: String.raw`f(x)=\operatorname{rect}(x/a)=\begin{cases}1,&|x|\le a/2,\\0,&|x|>a/2,\end{cases}`,
+            tri: String.raw`f(x)=\operatorname{tri}(x/a)=\max(0,1-|x|/a)`,
+            sinc: String.raw`f(x)=\operatorname{sinc}(x/a)=\frac{\sin(\pi x/a)}{\pi x/a},\quad f(0)=1`,
+            gauss: String.raw`f(x)=\exp[-\pi(x/a)^2]`,
+          };
+          return block(
+            ["蓝线是所选函数f，横轴x是输入位置，纵轴是函数值；虚竖线标当前探针位置，不是另一条函数。a是横向尺度：rect的全宽、tri的半底宽、sinc第一个正零点、高斯的横向尺度；不是统一的峰高。", "Blue is the selected function f: horizontal x is position, vertical is function value. The vertical dashed line marks the probe, not a second function. Scale a means full rect width, tri half-base width, first positive sinc zero, or Gaussian scale, not a common peak height."],
+            formulas[s.shape],
+            [`代入 a=${s.a}、x=${s.probe} 得 f(x)=${fmt(functionValue(s.shape, s.probe, s.a))}。|x|是绝对值，max取较大者，sin是正弦（弧度），$\\exp(z)=e^z$，π≈3.14159。sinc在x=0用极限值1，不直接除以0。`, `Substitute a=${s.a}, x=${s.probe} to get f(x)=${fmt(functionValue(s.shape, s.probe, s.a))}. |x| is absolute value, max selects the larger value, sin uses radians, $\\exp(z)=e^z$, and π≈3.14159. At zero, sinc uses its limit 1, not division by zero.`],
+            ["rect与tri在有限区间外为0；sinc与高斯并没有以画面边框为界的有限定义域。高斯的全域面积为a（使用标准高斯积分），并非因为峰高为1就面积为1。", "Rect and tri vanish outside finite supports; sinc and Gaussian are not restricted to the displayed horizontal window. Gaussian area is a by the standard Gaussian integral, not always 1 merely because its peak is 1."]);
+        }
+        return "";
+      }
+      return { drawScene, explanation, calculate: { functionValue } };
+    },
+  };
 })();

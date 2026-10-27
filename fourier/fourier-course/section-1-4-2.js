@@ -121,4 +121,53 @@
     tex, meaning: P(zh, en), unit: P(unitZh, unitEn),
     condition: P("按当前实验步骤；未显示读数表示本步未指定", "Current experiment step; no reading means unspecified in this step"), control,
   }));
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.4.2"] = {
+    legacyPlot: {
+      label: ["同一函数左右错位 · 下：自相关输出", "The same function shifted · bottom: autocorrelation"],
+      axisLabel: ["相关位移", "correlation lag"],
+      marker: state => state.x0,
+      norm: (state, x) => state.family === "gauss" ? state.a / Math.sqrt(2) * Math.exp(-Math.PI * x ** 2 / (2 * state.a ** 2)) : Math.max(0, state.a - Math.abs(x)),
+      signal: (state, { line, gauss, rect, xSvg }) => state.family === "gauss" ? `<polyline points="${line(x => gauss(x, 0, 1))}" fill="none" stroke="#58a8de" stroke-width="3"/><polyline points="${line(x => gauss(x, state.x0, state.a))}" fill="none" stroke="#b74739" stroke-width="3"/>` : `${rect(0, state.a, 1, "#58a8de")}${rect(-state.x0, state.a, 1, "#b74739")}`,
+    },
+    models: ["auto"],
+    noteStages: [0, 3, 4, 2],
+      controls: {
+      a: ["a", P("尺度 a（圆孔为半径）", "Scale a (radius for circle)"), .5, 3, .25],
+      lag: ["lag", P("试探位移 x", "Trial lag x"), -3, 3, .25],
+      amp: ["amp", P("信号幅度 A", "Signal amplitude A"), .5, 3, .5],
+      omega: ["omega", P("相位斜率 ω", "Phase slope ω"), [[0, "0"], [Math.PI / 2, "π/2"], [Math.PI, "π"]]],
+    },
+    create(tools) {
+      const { fmt, overlap, graph, legend, block } = tools;
+      function autoValue(s, x) {
+        if (s.signed) {
+          const intervals = [[-1, 0, 1], [0, 1, -1]];
+          const value = intervals.reduce((sum, [a, b, f]) => sum + intervals.reduce((v, [c, d, g]) => v + f * g * overlap(a, b, c + x, d + x), 0), 0);
+          return { re: value, im: 0, abs: Math.abs(value), energy: 2 };
+        }
+        const area = s.amp * s.amp * Math.max(0, s.a - Math.abs(x));
+        return { re: area * Math.cos((s.omega || 0) * x), im: area * Math.sin((s.omega || 0) * x), abs: area, energy: s.amp * s.amp * s.a };
+      }
+      function drawScene(model, s) {
+        if (model === "auto") {
+          const fn = x => s.signed ? x >= -1 && x < 0 ? 1 : x >= 0 && x <= 1 ? -1 : 0 : Math.abs(x) <= s.a / 2 ? s.amp * Math.cos((s.omega || 0) * x) : 0;
+          const v = autoValue(s, s.lag);
+          return { graphic: legend("上：输入实部及移位副本实部；下：自相关实部、虚部虚线、模点线", "Top: input real part and shifted real part; bottom: autocorrelation real, imaginary dashed, magnitude dotted") + graph([{ fn }, { fn: x => fn(x - s.lag), dash: true }], { xmin: Math.min(-3, s.lag - s.a / 2 - .5), xmax: Math.max(3, s.lag + s.a / 2 + .5), ymin: -3.2, ymax: 3.2, axis: "ξ" }) + graph([{ fn: x => autoValue(s, x).re }, { fn: x => autoValue(s, x).im, dash: true }, { fn: x => autoValue(s, x).abs, dot: true }], { ymin: -v.energy * 1.15, ymax: v.energy * 1.15, marker: s.lag, bound: v.energy }), readout: `x=${fmt(s.lag)} · r=${fmt(v.re)} ${v.im < 0 ? "−" : "+"} ${fmt(Math.abs(v.im))}i · |r|=${fmt(v.abs)} · E=${fmt(v.energy)}` };
+        }
+      }
+      function explanation(model, s) {
+        if (model === "auto") {
+          const v = autoValue(s, s.lag), length = Math.max(0, s.a - Math.abs(s.lag));
+          return block(
+            ["上图横轴ξ：蓝实线是f(ξ)的实部，橙虚线是f(ξ−x)的实部；x是固定试探位移，A是幅度，a是窗全宽，ω是相位随位置的斜率（rad/坐标单位）。复数模型$f(\\xi)=A e^{i\\omega\\xi}$在|ξ|≤$\\frac a2$内，外面0；图未画的虚部仍参与计算。下图横轴x，蓝实线Re r、橙虚线Im r、紫点线|r|；横虚线是能量上界E，竖虚线定位当前x。", "Top horizontal ξ: blue solid is Re f(ξ), orange dashed is Re f(ξ−x). x is the fixed lag, A amplitude, a full window width, and ω phase slope in rad per coordinate unit. For the complex model $f(\\xi)=A e^{i\\omega\\xi}$ within |ξ|≤$\\frac a2$, zero outside; unseen imaginary parts still enter calculations. Bottom: blue solid Re r, orange dashed Im r, purple dotted |r|. Horizontal dashes mark energy E, vertical dashes current x."],
+            s.signed ? String.raw`f=1\text{ on }[-1,0),\quad f=-1\text{ on }[0,1];\quad r(x)=\int f(\xi)f(\xi-x)d\xi,\quad E=1^2\times1+(-1)^2\times1=2` : String.raw`r(x)=\int f(\xi)f^*(\xi-x)d\xi=A^2\max(0,a-|x|)e^{i\omega x},\quad E=\int|f|^2d\xi=A^2a`,
+            [s.signed ? `本步用正负阶梯替换复矩窗，逐对求两区间交集；每项=原段值×移位段值×交叠长度，再把四项相加。x=${s.lag}时得到r=${fmt(v.re)}、|r|=${fmt(v.abs)}；例如x=1只有异号段交叠，r=−1而非+1。` : `本次交叠长max(0,${s.a}−|${s.lag}|)=${fmt(length)}，乘A²=${fmt(s.amp ** 2)}，再乘$\\cos(\\omega x)+i\\sin(\\omega x)$，得r=${fmt(v.re)}${v.im < 0 ? "−" : "+"}${fmt(Math.abs(v.im))}i。能量E=${s.amp}²×${s.a}=${fmt(v.energy)}；比较的是|r|=${fmt(v.abs)}≤E，不是要求r本身总为正。`, s.signed ? `This step replaces the complex window by a signed two-step signal. Intersect each original/shifted interval pair and sum its value product × overlap length over four pairs. At x=${s.lag}, r=${fmt(v.re)}, |r|=${fmt(v.abs)}. For example, x=1 overlaps only opposite signs, giving r=−1, not +1.` : `Overlap max(0,${s.a}−|${s.lag}|)=${fmt(length)}, multiplied by A²=${fmt(s.amp ** 2)} and $\\cos(\\omega x)+i\\sin(\\omega x)$, gives r=${fmt(v.re)}${v.im < 0 ? "−" : "+"}${fmt(Math.abs(v.im))}i. E=${s.amp}²×${s.a}=${fmt(v.energy)}. Compare |r|=${fmt(v.abs)}≤E; r need not always be positive.`]);
+        }
+        return "";
+      }
+      return { drawScene, explanation, calculate: { autoValue } };
+    },
+  };
 })();

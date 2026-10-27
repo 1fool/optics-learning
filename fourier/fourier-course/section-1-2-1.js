@@ -200,4 +200,101 @@
   deltaProductNote.tex = String.raw`\begin{aligned}&h(x,y)\delta(x-x_0,y-y_0)\\&\quad=h(x_0,y_0)\delta(x-x_0,y-y_0)\\&\delta(ax,by)=\frac{1}{|ab|}\delta(x,y)\end{aligned}`;
   deltaProductNote.after = P("相乘改权重，缩放改面积因子；都不是给 δ 指定一个普通峰高。", "Multiplication changes weight; scaling changes the area factor. Neither assigns delta an ordinary peak height.");
   deltaProductStep.example = P("相乘例：$(2,3)$ 处权重变7；缩放例：$\\delta(2x,3y)$ 权重为 $1/6$。", "Product example: weight 7 at $(2,3)$; scaling example: $\\delta(2x,3y)$ has weight $1/6$.");
+
+  // Section-owned chart models, explanations, controls and notes mapping.
+  window.FourierSectionRuntime["1.2.1"] = {
+    models: ["delta", "deltaPlane"],
+    noteStages: [2, 0, 4, 4],
+      controls: {
+      n: ["n", P("窄化参数 N", "Narrowing parameter N"), 1, 12, 1],
+      x0: ["x0", P("点位置 x₀", "Point position x₀"), -2, 2, .25],
+      weight: ["weight", P("第一点权重 c", "First-point weight c"), -1, 3, .5],
+      ax: ["ax", P("横向缩放 α", "Horizontal scaling α"), 1, 4, 1],
+      by: ["by", P("纵向缩放 β", "Vertical scaling β"), 1, 4, 1],
+      jumpFamily: ["family", P("近似族（改变左右分布，不只是改N）", "Family (change left/right allocation, not only N)"), [["left", P("左侧：只覆盖负半轴", "Left: negative side only")], ["rect", P("对称：左右各一半", "Symmetric: half on each side")], ["right", P("右侧：只覆盖正半轴", "Right: positive side only")]]],
+      family: ["family", P("脉冲轮廓", "Pulse profile"), [["rect", P("矩形", "Rectangle")], ["gauss", P("高斯", "Gaussian")]]],
+    },
+    create(tools) {
+      const { P, text, h, t, prose, fmt, gauss, integrate, graph, legend, equation, block, math, pulseParameterMarkup } = tools;
+      const test = x => 1 / (1 + x * x);
+      function deltaBounds(s) {
+        if (s.family === "left") return [s.x0 - 1 / s.n, s.x0];
+        if (s.family === "right") return [s.x0, s.x0 + 1 / s.n];
+        const half = (s.family === "gauss" ? 6 : .5) / s.n;
+        return [s.x0 - half, s.x0 + half];
+      }
+      function deltaValue(s) {
+        const f = s.discontinuous ? x => x > 0 ? 1 : x < 0 ? 0 : .5 : test;
+        const [left, right] = deltaBounds(s);
+        return s.family === "gauss"
+          ? integrate(x => s.weight * s.n * gauss(s.n * (x - s.x0)) * f(x), left, right)
+          : s.weight * s.n * integrate(f, left, right);
+      }
+      function jumpComparison(s) {
+        return `<div class="il-comparison"><p><strong>${t("必须比较的三个条件（同一N、同一面积）", "Three required comparisons (same N and area)")}</strong></p><table><thead><tr><th>${t("近似族", "Family")}</th><th>${t("非零区间", "Support interval")}</th><th>${t("乘阶跃后积分", "Integral against step")}</th></tr></thead><tbody>${[
+          ["left", P("左侧", "Left"), `[${fmt(-1 / s.n)}, 0]`, "0"],
+          ["rect", P("对称", "Symmetric"), `[${fmt(-.5 / s.n)}, ${fmt(.5 / s.n)}]`, fmt(s.weight / 2)],
+          ["right", P("右侧", "Right"), `[0, ${fmt(1 / s.n)}]`, fmt(s.weight)],
+        ].map(([family, label, interval, value]) => `<tr ${s.family === family ? 'aria-current="true"' : ""}><th>${h(text(label))}</th><td>${interval}</td><td>${value}</td></tr>`).join("")}</tbody></table><p>${t("先取单位权重：左侧脉冲只乘到阶跃的零值；对称脉冲只有正半边贡献；右侧脉冲全部乘到一。分别计算：", "Take unit weight: the left pulse sees only zero, the symmetric pulse contributes only on its positive half, and the right pulse sees one throughout. Compute:")}</p>${equation(String.raw`\begin{aligned}\text{left: }&N\times\frac1N\times0=0,\\\text{symmetric: }&N\times\frac1{2N}\times1=\frac12,\\\text{right: }&N\times\frac1N\times1=1.\end{aligned}`)}<p>${t("改变N只改变宽度和高度，不改变落在阶跃右侧的面积比例；更换近似族才改变这个比例。单点的函数值约定不改变积分。", "Changing N changes width and height, not the fraction of area to the right of the jump; changing families changes that fraction. Assigning a value at a single point cannot change the integral.")}</p>${equation(String.raw`\int p_N(\xi)f(\xi)\,d\xi=\int_0^\infty p_N(\xi)\,d\xi`)}<p>${prose(P("为什么三者都能近似 $\\delta$？对在零处连续的函数 $\\varphi$，收缩区间里的函数值都趋近 $\\varphi(0)$，所以单位面积平均也趋近该值。阶跃在零处不连续，这段理由失效：当前对称例的一半不是通用取样目标。", "Why do all three approximate $\\delta$? For a function $\\varphi$ continuous at zero, values throughout each shrinking interval approach $\\varphi(0)$, as does their unit-area average. The step is discontinuous there, so this argument fails: the symmetric one-half is not a universal target."))}</p></div>`;
+      }
+      function deltaExplanation(s) {
+        const [left, right] = deltaBounds(s);
+        const paragraph = (zh, en) => `<p>${prose(P(zh, en))}</p>`;
+        const f = s.discontinuous
+          ? String.raw`f(\xi)=\begin{cases}0,&\xi<0,\\\frac12,&\xi=0,\\1,&\xi>0.\end{cases}`
+          : String.raw`f(\xi)=\frac{1}{1+\xi^2}`;
+        const pulse = s.family === "gauss"
+          ? String.raw`p_N(\xi)=cN e^{-\pi N^2(\xi-x_0)^2}`
+          : String.raw`p_N(\xi)=\begin{cases}cN,&${fmt(left)}\le\xi\le${fmt(right)},\\0,&\text{otherwise}.\end{cases}`;
+        const integral = s.family === "gauss"
+          ? String.raw`\begin{aligned}I_N&=\int_{-\infty}^{\infty}p_N(\xi)f(\xi)\,d\xi\\&\approx\int_{x_0-6/N}^{x_0+6/N}\!cN e^{-\pi N^2(\xi-x_0)^2}f(\xi)\,d\xi\end{aligned}`
+          : String.raw`\begin{aligned}I_N&=\int_{-\infty}^{\infty}p_N(\xi)f(\xi)\,d\xi\\&=cN\int_{${fmt(left)}}^{${fmt(right)}}f(\xi)\,d\xi\end{aligned}`;
+        let result = `<section class="il-explanation"><h3>${t("先认清图与记号", "Identify the plot and notation")}</h3>`
+          + paragraph(`当前演示给定 $N=${s.n}$。$N$ 是收缩参数，越大脉冲越窄；不是积分分格数，也不是需要从积分结果反求的未知量。理想 $\\delta$ 的取样积分不依赖这个有限宽演示参数。`, `The current demonstration uses $N=${s.n}$. $N$ controls concentration: larger values give narrower pulses. It is not the integration cell count or an unknown to infer from the result. Ideal $\\delta$ sampling does not depend on this finite-width demonstration parameter.`)
+          + paragraph("$p_N$ 读作‘p下标N’，是参数为 $N$ 的有限宽脉冲函数。$p$ 只是函数名，下标用来区分宽度，不是乘法或幂。$p_N(\\xi)$ 表示它在输入位置 $\\xi$ 处的值。它是近似理想脉冲的普通函数，不是理想脉冲本身。", "$p_N$, read p subscript N, names the finite-width pulse for parameter $N$. The letter $p$ is only a function name; the subscript labels its width, not multiplication or a power. $p_N(\\xi)$ is its value at input position $\\xi$. It approximates an ideal impulse but is not that impulse itself.")
+          + paragraph("$\\delta$ 读作德尔塔，表示理想狄拉克脉冲，不是有限高度的曲线。$\\xi$ 读作克西，是横轴上的积分坐标；$x_0$ 是极限取样位置，$c$ 是带符号的积分权重，$N$ 控制脉冲收缩。", "$\\delta$ (delta) denotes the ideal Dirac impulse, not a finite-height curve. $\\xi$ (xi) is the horizontal integration coordinate; $x_0$ is the limiting sample site, $c$ is signed integral weight, and $N$ controls concentration.")
+          + paragraph("蓝线是被取样函数 $f$。橙线显示有限脉冲的真实高度除以 $N$，以免峰过高；它不是两条线相乘的结果。虚竖线标极限位置；左、右侧脉冲不以该位置为中心。", "Blue is the sampled function $f$. Orange displays true finite-pulse height divided by $N$ to keep the peak visible; it is not the product of the curves. Vertical dashes mark the limiting site; left/right pulses are not centered there.")
+          + equation(f) + equation(pulse)
+          + equation(String.raw`\text{orange: }\frac{p_N(\xi)}{N},\qquad\text{true peak: }cN=${s.weight}\times${s.n}=${fmt(s.weight*s.n)}`)
+          + `<h3>${t("分清两个积分", "Distinguish the two integrals")}</h3>`
+          + paragraph("脉冲自身的积分是权重 $c$；当权重为一时，称为单位面积。加权积分 $I_N$ 则先把蓝线值与真实脉冲值逐点相乘，再沿横坐标累加，一般不等于脉冲面积。", "The pulse alone integrates to weight $c$; weight one is called unit area. The weighted integral $I_N$ first multiplies the blue function by the true pulse point by point, then accumulates over the horizontal coordinate. It generally differs from the pulse area.")
+          + equation(String.raw`\int_{-\infty}^{\infty}p_N(\xi)\,d\xi=c=${s.weight}`)
+          + equation(integral)
+          + paragraph(`当前计算区间为 [${fmt(left)}, ${fmt(right)}]。` + (s.family === "gauss" ? "高斯在全实轴都不严格为零；$\\frac1N$ 是特征尺度，不是有限支撑宽度。程序只在中心两侧各六倍特征尺度处截断。" : "矩形在这段之外为零，故那里乘积没有贡献；蓝线仍定义在整个实轴。这里没有把橙线宽度重新定义成蓝线的定义域。") + "值域是输出值的集合，不是这里的积分区域。", `The current calculation interval is [${fmt(left)}, ${fmt(right)}]. ` + (s.family === "gauss" ? "A Gaussian is nonzero on the whole line; $\\frac1N$ is a characteristic scale, not compact support width. The program truncates at six such scales on either side of the center. " : "Outside this interval the rectangle is zero, so the product contributes nothing; blue remains defined on the whole line. This does not redefine the domain of blue. ") + "The range is a set of output values, not this integration region.")
+          + `<h3>${t("怎样算出当前读数", "Calculate the current reading")}</h3>`
+          + paragraph("程序把区间分成500等格，取每格中点的‘脉冲值 × 蓝线值 × 格宽’，再相加。显示保留四位小数，内部计算不先舍入。", "The program divides the interval into 500 equal cells, evaluates pulse value × blue value × cell width at each midpoint, then sums. Display uses four decimals without first rounding internal values.");
+        if (!s.discontinuous && s.family !== "gauss") {
+          result += paragraph("矩形例还可用反正切作为原函数独立验算；反正切的导数正好是这条蓝线。代入上下限，得到：", "For the rectangle, inverse tangent is an independent antiderivative check: its derivative is exactly the blue function. Substituting both limits gives:")
+            + equation(String.raw`\begin{aligned}I_N&=cN\left[\arctan\xi\right]_{${fmt(left)}}^{${fmt(right)}}\\&=${s.weight}\times${s.n}\,[\arctan(${fmt(right)})-\arctan(${fmt(left)})]\\&\approx${fmt(deltaValue(s))}.\end{aligned}`);
+        }
+        if (s.discontinuous) result += jumpComparison(s);
+        else result += `<h3>${t("取样极限参考值从哪里来", "Derive the sampling reference")}</h3>`
+          + paragraph("蓝线在取样位置连续时，脉冲不断收窄后的加权积分趋于该点函数值乘权重。这是理想脉冲的取样规则，不是由画出的橙线面积算出，也不要求有限宽脉冲恰好达到。", "When blue is continuous at the sampling site, its integral against the narrowing pulse approaches the local function value times weight. This ideal-impulse sampling rule is not the displayed orange area and is not an exact finite-width requirement.")
+          + equation(String.raw`\begin{aligned}c f(x_0)&=\frac{${s.weight}}{1+(${fmt(s.x0)})^2}\\&=${fmt(s.weight*test(s.x0))},\\I_N&\longrightarrow c f(x_0)\quad(N\to\infty).\end{aligned}`);
+        return result + "</section>";
+      }
+      function drawScene(model, s) {
+        if (model === "delta") {
+          const f = s.discontinuous ? x => x > 0 ? 1 : x < 0 ? 0 : .5 : test;
+          const [left, right] = deltaBounds(s);
+          const pulse = x => s.weight * (s.family === "gauss" ? gauss(s.n * (x - s.x0)) : x >= left && x <= right ? 1 : 0);
+          const pulseCurve = { fn: pulse, points: s.family === "gauss" ? undefined : [[-3, 0], [left, 0], [left, s.weight], [right, s.weight], [right, 0], [3, 0]] };
+          const testCurve = { fn: f, points: s.discontinuous ? [[-3, 0], [0, 0], [0, 1], [3, 1]] : undefined };
+          return { weightedIntegral: deltaValue(s), graphic: legend("蓝：被取样函数；橙：有限宽脉冲，真实高度除以N显示（不是δ）；虚竖线：极限取样位置x₀。点击“查看说明”了解记号和计算。", "Blue: sampled function; orange: finite-width pulse with true height divided by N for display (not delta); vertical dashed line: limiting sample site x₀. Use View explanation for notation and calculations.") + graph([testCurve, pulseCurve], { xmin: -3, xmax: 3, ymin: -1.2, ymax: 3.2, marker: s.x0, axis: "ξ" }), readout: `${t(s.family === "gauss" ? "高斯特征尺度" : "矩形宽", s.family === "gauss" ? "Gaussian scale" : "Rectangle width")} 1/N=${fmt(1 / s.n)} · ${t("脉冲自身积分", "Pulse integral")} c=${s.weight} · ${t("真实峰高", "true peak")}=${fmt(s.weight * s.n)} · ${t("有限脉冲加权积分", "Finite-pulse weighted integral")} ${math(String.raw`I_N\approx${fmt(deltaValue(s))}`)} · ${s.discontinuous ? t("跳变点：不设通用目标值；查看说明中的三族对照", "Jump: no universal target; compare three families in the guide") : `${t("取样极限参考值", "Ideal sampling reference")}=${fmt(s.weight * f(s.x0))}`}`, explanation: deltaExplanation(s) };
+        }
+        if (model === "deltaPlane") {
+          return { graphic: `<svg class="il-graph" viewBox="0 0 550 300" role="img" aria-label="${t("虚线原轮廓，实线横纵分别压缩的轮廓", "Dashed original contour and solid horizontally/vertically compressed contour")}"><path d="M60 150H490M275 25V275" stroke="#a59b8f"/><ellipse cx="275" cy="150" rx="130" ry="110" fill="none" stroke="#a59b8f" stroke-dasharray="6 4"/><ellipse cx="275" cy="150" rx="${130 / s.ax}" ry="${110 / s.by}" fill="#bed7d9" stroke="#245b66" stroke-width="3"/><text x="285" y="32">y</text><text x="492" y="165">x</text><text x="25" y="290">α=${s.ax}, β=${s.by}</text></svg>`, readout: `${t("相对积分权重：", "Relative integral weight: ")}${math(String.raw`\frac{1}{|\alpha\beta|}\approx${fmt(1 / Math.abs(s.ax * s.by))}`)}` };
+        }
+      }
+      function explanation(model, s) {
+        if (model === "deltaPlane") return block(
+          ["$\\delta(x,y)$是理想点脉冲；虚椭圆表示缩放前有限近似的等值轮廓，蓝椭圆是$\\delta(\\alpha x,\\beta y)$的近似轮廓，不是光斑照片或δ的高度图。α、β分别压缩横向、纵向坐标。", "$\\delta(x,y)$ is an ideal point impulse. The dashed ellipse is an original finite-approximation contour; blue is a contour for $\\delta(\\alpha x,\\beta y)$, not a photograph or a height plot of delta. α,β compress the two coordinates."],
+          String.raw`u=\alpha x,\ v=\beta y,\quad dx\,dy=\frac{du\,dv}{|\alpha\beta|},\quad\iint\delta(\alpha x,\beta y)dx\,dy=\frac{1}{|\alpha\beta|}`,
+          [`横向宽变为$\\frac{1}{${s.ax}}$，纵向宽变为$\\frac{1}{${s.by}}$，积分权重因此为$\\frac{1}{|${s.ax}\\times${s.by}|}$=${fmt(1 / Math.abs(s.ax * s.by))}。α、β非零；若想保持单位权重，还须把整个函数乘|αβ|。`, `Widths scale by $\\frac{1}{${s.ax}}$ horizontally and $\\frac{1}{${s.by}}$ vertically, so integral weight is $\\frac{1}{|${s.ax}\\times${s.by}|}$=${fmt(1 / Math.abs(s.ax * s.by))}. α,β must be nonzero. Multiply the whole distribution by |αβ| to retain unit weight.`]);
+        return "";
+      }
+        const parameters = (model, s, adjustable) => model === "delta" ? pulseParameterMarkup(s.n, s.family === "gauss", adjustable) : "";
+      return { drawScene, explanation, parameters, calculate: { deltaValue } };
+    },
+  };
 })();
